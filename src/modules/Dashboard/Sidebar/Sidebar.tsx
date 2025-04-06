@@ -20,32 +20,42 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      <Link className="" href="/">
-        <Image src={LogoImage} alt="logo" className="mx-auto" />
-      </Link>
-      <div className="no-scrollbar flex flex-col px-8 pb-6 pt-8 overflow-y-auto grow">
-        <BalanceCard />
+      <div className="ml-8 pb-6.5 border-b border-black-border pt-6">
+        <Link href={"/"}>
+          <Image
+            src={LogoImage}
+            alt="logo"
+            className=""
+            width={211}
+            height={48}
+          />
+        </Link>
+      </div>
+      <div className="flex flex-col justify-between px-8 pb-6 pt-8 overflow-y-auto h-[calc(100vh_-_100px)]">
+        <div>
+          <BalanceCard />
 
-        <ul className="mt-8 flex flex-col gap-3 text-xs">
-          {sidebarItems.map((item) => {
-            const isActive = pathname === item.href;
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "py-1 flex items-center justify-between text-grey-600",
-                    isActive && ""
-                  )}
-                >
-                  {item.name}
-                  <ChevronDownIcon className="text-grey-700" />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="w-full mt-auto">
+          <ul className="mt-8 flex flex-col gap-3 text-xs">
+            {sidebarItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "py-1 flex items-center justify-between text-grey-600",
+                      isActive && ""
+                    )}
+                  >
+                    {item.name}
+                    <ChevronDownIcon className="text-grey-700" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="w-full">
           <HelpCenterCard />
         </div>
       </div>
