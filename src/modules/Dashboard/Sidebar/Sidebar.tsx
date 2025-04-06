@@ -52,9 +52,6 @@ export default function Sidebar({
         <p className="text-base font-medium text-others-o21">MENU</p>
         <ul className="mt-5 flex flex-col gap-1 text-base font-medium">
           {sidebarItems.map((item) => {
-            if (item.children?.length) {
-              return <> </>;
-            }
             const isActive = pathname === item.href;
             return (
               <li key={item.href}>
@@ -75,7 +72,7 @@ export default function Sidebar({
         <div className="w-full mt-auto">
           <Button
             loading={loading}
-            variant="text"
+            variant="none"
             className="w-full text-white justify-start py-4 border border-white/5"
             onClick={handleLogout}
           >

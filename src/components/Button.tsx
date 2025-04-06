@@ -7,7 +7,7 @@ import cn from "@/utils/cn";
 type Url = string | UrlObject;
 
 type CustomProps = {
-  variant?: "primary" | "outlined" | "primaryBig" | "secondary";
+  variant?: "primary" | "outlined" | "primaryBig" | "secondary" | "none";
   className?: string;
   loading?: boolean;
   disabled?: boolean;
