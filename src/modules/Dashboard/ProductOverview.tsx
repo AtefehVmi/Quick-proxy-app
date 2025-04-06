@@ -1,6 +1,7 @@
 import Card from "@/components/Card/Card";
 import ProductIcon from "public/icons/product-overview.svg";
 import LineCharts from "../Charts/LineCharts";
+import Filter from "@/components/Filter";
 
 const mockData = [
   { day: "Mon", sales: 1200 },
@@ -26,6 +27,10 @@ const ProductOverview = () => {
         className="mt-14"
         data={mockData}
       />
+
+      <div className="mt-4.5">
+        <Filter filterItems={["1 d", "1 w", "1 m", "1 y", "all"]} />
+      </div>
     </Card>
   );
 };
