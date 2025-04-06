@@ -19,10 +19,19 @@
   --color-black-border: #2b2b2b;
 
   --shadow-tooltip: 0px 4px 12px 0px #00000061;
+
+  --text-32: 32px;
 }
 
 .bg-help {
   background-image: url("/images/help-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-balance {
+  background-image: url("/images/balance-bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
