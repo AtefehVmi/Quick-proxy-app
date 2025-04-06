@@ -7,7 +7,8 @@ import LogoImage from "public/logo.png";
 import sidebarItems from "./SidebarItems";
 import cn from "@/utils/cn";
 import ChevronDownIcon from "public/icons/angle-down.svg";
-import BalanceCard from "../BalanceCard";
+import BalanceCard from "./BalanceCard";
+import HelpCenterCard from "./HelpCenterCard";
 
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
@@ -44,7 +45,9 @@ export default function Sidebar({ className }: { className?: string }) {
             );
           })}
         </ul>
-        <div className="w-full mt-auto"></div>
+        <div className="w-full mt-auto">
+          <HelpCenterCard />
+        </div>
       </div>
     </div>
   );

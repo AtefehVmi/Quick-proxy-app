@@ -19,11 +19,17 @@
 
   --shadow-tooltip: 0px 4px 12px 0px #00000061;
 }
+
+.bg-help {
+  background-image: url("/images/help-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @font-face {
