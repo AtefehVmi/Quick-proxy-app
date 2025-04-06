@@ -2,14 +2,12 @@ import ROUTES from "@/constants/routes";
 
 const sidebarItems = [
   {
-    name: "Dashboard",
-    icon: "sidebar/dashboard.svg",
+    name: "General",
     href: ROUTES.DASHBOARD,
     children: [],
   },
   {
-    name: "Products",
-    icon: "sidebar/product.svg",
+    name: "Residential",
     href: ROUTES.PRODUCTS,
     children: [
       {
@@ -31,14 +29,12 @@ const sidebarItems = [
     ],
   },
   {
-    name: "Settings",
-    icon: "sidebar/settings.svg",
+    name: "Mobile",
     href: "/referrals",
     children: [],
   },
   {
-    name: "Profile",
-    icon: "sidebar/profile.svg",
+    name: "Support",
     href: "/referrals",
     children: [],
   },
