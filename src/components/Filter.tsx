@@ -18,6 +18,7 @@ const Filter: React.FC<FilterProps> = ({ filterItems }) => {
     <div className="flex items-center justify-center gap-2 overflow-auto">
       {filterItems.map((item, index) => (
         <div
+          onClick={() => handleFilterClick(item)}
           key={index}
           className={cn(
             "py-2 px-8 whitespace-nowrap text-sm font-semibold",

@@ -3,16 +3,6 @@ import ProductIcon from "public/icons/product-overview.svg";
 import LineCharts from "../Charts/LineCharts";
 import Filter from "@/components/Filter";
 
-const mockData = [
-  { day: "Mon", sales: 1200 },
-  { day: "Tue", sales: 2100 },
-  { day: "Wed", sales: 1800 },
-  { day: "Thu", sales: 2600 },
-  { day: "Fri", sales: 3200 },
-  { day: "Sat", sales: 2800 },
-  { day: "Sun", sales: 1500 },
-];
-
 const ProductOverview = () => {
   return (
     <Card className="px-0 pt-4.5">
@@ -25,7 +15,7 @@ const ProductOverview = () => {
         dataKey={"sales"}
         XdataKey={"day"}
         className="mt-14"
-        data={mockData}
+        data={[]}
       />
 
       <div className="mt-4.5">
