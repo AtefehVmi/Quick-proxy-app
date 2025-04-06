@@ -1,4 +1,5 @@
 import Balance from "@/modules/Dashboard/Balance";
+import ProductOverview from "@/modules/Dashboard/ProductOverview";
 import StatsCard from "@/modules/Dashboard/StatsCard";
 import Heading from "@/modules/shared/Heading";
 import DashboardIcon from "public/icons/dashboard-icon.svg";
@@ -27,6 +28,12 @@ const Dashboard = () => {
         <StatsCard title="Product" data={6} bgImage={BgCubeImage} />
 
         <Balance />
+      </div>
+
+      <div className="grid grid-cols-24 gap-5 mt-6">
+        <div className="col-span-9">
+          <ProductOverview />
+        </div>
       </div>
     </div>
   );
