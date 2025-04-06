@@ -7,7 +7,7 @@ import cn from "@/utils/cn";
 type Url = string | UrlObject;
 
 type CustomProps = {
-  variant?: "primary" | "outlined";
+  variant?: "primary" | "outlined" | "black";
   className?: string;
   loading?: boolean;
   disabled?: boolean;
@@ -40,13 +40,15 @@ const Button = ({
   ...props
 }: PropsType) => {
   const baseStyle =
-    "flex items-center justify-center gap-2.5 cursor-pointer text-center px-2 text-sm leading-4 font-medium disabled:cursor-default";
+    "flex items-center justify-center gap-2.5 cursor-pointer text-center text-sm leading-4 font-medium disabled:cursor-default";
 
   const variantStyle = cn(
     variant === "primary" &&
       "bg-primary-400 text-black hover:bg-primary-500 disabled:bg-black-3",
     variant === "outlined" &&
-      "border border-primary-400 text-primary-500 bg-transparent hover:bg-black-3"
+      "border border-primary-400 text-primary-500 bg-transparent hover:bg-black-3",
+    variant === "black" &&
+      "bg-black-2 text-white hover:bg-black-3 hover:text-primary-400"
   );
 
   const isDisabled = loading || disabled;
