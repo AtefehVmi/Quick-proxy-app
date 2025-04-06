@@ -1,3 +1,4 @@
+import Navbar from "@/modules/Dashboard/Navbar/Navbar";
 import Sidebar from "@/modules/Dashboard/Sidebar/Sidebar";
 
 const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
@@ -8,6 +9,7 @@ const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
       <Sidebar className="hidden md:block" />
 
       <div className="grow flex flex-col min-h-screen">
+        <Navbar />
         <main className="flex-1 p-5 overflow-auto">{children}</main>
       </div>
     </div>
