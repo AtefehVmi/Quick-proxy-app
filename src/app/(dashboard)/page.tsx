@@ -1,6 +1,7 @@
 import Balance from "@/modules/Dashboard/Balance";
 import ProductCard from "@/modules/Dashboard/ProductCard";
 import ProductOverview from "@/modules/Dashboard/ProductOverview";
+import ProxyUsage from "@/modules/Dashboard/ProxyUsage";
 import RecentActivities from "@/modules/Dashboard/RecentActivities";
 import StatsCard from "@/modules/Dashboard/StatsCard";
 import Heading from "@/modules/shared/Heading";
@@ -41,6 +42,7 @@ const Dashboard = () => {
         </div>
         <div className="col-span-6">
           <ProductCard />
+          <ProxyUsage className="mt-5" />
         </div>
       </div>
     </div>
