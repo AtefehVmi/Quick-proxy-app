@@ -1,4 +1,5 @@
 import Balance from "@/modules/Dashboard/Balance";
+import ProductCard from "@/modules/Dashboard/ProductCard";
 import ProductOverview from "@/modules/Dashboard/ProductOverview";
 import RecentActivities from "@/modules/Dashboard/RecentActivities";
 import StatsCard from "@/modules/Dashboard/StatsCard";
@@ -37,6 +38,9 @@ const Dashboard = () => {
         </div>
         <div className="col-span-9">
           <RecentActivities />
+        </div>
+        <div className="col-span-6">
+          <ProductCard />
         </div>
       </div>
     </div>

@@ -78,35 +78,8 @@ const columns = [
   }),
 ];
 
-const mockData: RecentActivity[] = [
-  {
-    name: "John Doe",
-    purchase: "$150.75",
-    date: "2025-04-05T14:30:00Z",
-  },
-  {
-    name: "Jane Smith",
-    purchase: "$95.40",
-    date: "2025-04-05T13:00:00Z",
-  },
-  {
-    name: "Alice Johnson",
-    purchase: "$200.50",
-    date: "2025-04-04T18:45:00Z",
-  },
-  {
-    name: "Bob Brown",
-    purchase: "$50.20",
-    date: "2025-04-03T09:15:00Z",
-  },
-  {
-    name: "Charlie Williams",
-    purchase: "$300.00",
-    date: "2025-04-02T16:30:00Z",
-  },
-];
-
 const RecentActivities = () => {
+  const data: RecentActivity[] = [];
   return (
     <Card className="px-0 pt-4.5 pb-0">
       <div className="flex items-center gap-2">
@@ -115,14 +88,16 @@ const RecentActivities = () => {
       </div>
 
       <div className="mt-7.5">
-        <Table columns={columns} data={mockData} />
+        <Table columns={columns} data={data} />
       </div>
 
-      <div className="mt-2.5">
-        <Button variant="black" className="py-4 w-full" Icon={EyeIcon}>
-          View All
-        </Button>
-      </div>
+      {data.length > 0 && (
+        <div className="mt-2.5">
+          <Button variant="black" className="py-4 w-full" Icon={EyeIcon}>
+            View All
+          </Button>
+        </div>
+      )}
     </Card>
   );
 };

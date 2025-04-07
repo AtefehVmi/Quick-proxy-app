@@ -84,7 +84,7 @@ const Table = <T extends object>({
             <tr>
               <td
                 colSpan={table.getAllColumns().length}
-                className="py-4 px-4 text-center text-grey3 font-medium"
+                className="py-4 px-4 text-center text-white font-medium"
               >
                 No data to show
               </td>
