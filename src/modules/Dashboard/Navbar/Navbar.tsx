@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div
       className={cn(
-        "h-25 bg-black border-b border-black-border mr-8",
+        "h-25 border-b border-black-border mr-8",
         "flex items-center justify-between"
       )}
     >

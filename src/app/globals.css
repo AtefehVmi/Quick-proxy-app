@@ -37,6 +37,13 @@
   background-repeat: no-repeat;
 }
 
+.bg-wallet {
+  background-image: url("/images/wallet-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
