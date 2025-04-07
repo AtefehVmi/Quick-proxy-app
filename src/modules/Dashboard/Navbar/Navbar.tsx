@@ -1,7 +1,6 @@
 import cn from "@/utils/cn";
 import UserIcon from "public/icons/user.svg";
 import NotifIcon from "public/icons/cowbell.svg";
-import SettingsIcon from "public/icons/settings.svg";
 import SearchIcon from "public/icons/search.svg";
 
 const Navbar = () => {
@@ -26,7 +25,6 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3 py-5.5">
-        <SettingsIcon className="m-4 cursor-pointer" />
         <UserIcon className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
         <div className="flex items-center gap-2">

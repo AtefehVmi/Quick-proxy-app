@@ -10,7 +10,7 @@ const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
 
       <div className="grow flex flex-col min-h-screen">
         <Navbar />
-        <main className="flex-1 px-8 pt-6 pb-8 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto">{children}</main>
       </div>
     </div>
   );

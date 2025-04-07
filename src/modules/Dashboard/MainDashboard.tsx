@@ -12,7 +12,7 @@ import BgCubeImage from "public/images/cube.png";
 
 const MainDashboard = () => {
   return (
-    <div className="w-full">
+    <div className="w-full px-8 pt-6 pb-8">
       <Heading title="Dashboard" Icon={DashboardIcon} />
 
       <div className="grid grid-cols-4 gap-5 mt-6">
