@@ -28,7 +28,7 @@ const ProductCard = () => {
       <div className="mt-6 flex flex-col gap-3 mx-6">
         {products.map((product, index) => (
           <div key={index} className="flex justify-between items-center py-1">
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center text-grey-600">
               <product.icon />
               <p className="text-white text-base leading-6">
                 {product.product}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/angle-small-right.svg";
 import ProductCard from "./ProductCard";
@@ -9,29 +9,52 @@ import RotatingDataIcon from "public/icons/database.svg";
 import StaticResiIcon from "public/icons/location.svg";
 import StaticDataIcon from "public/icons/network.svg";
 import MobileIcon from "public/icons/mobile.svg";
+import Button from "@/components/Button";
 
 const Products = ({ className }: { className?: string }) => {
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleProductClick = (product: string) => {
     setActiveProduct(activeProduct === product ? null : product);
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollRef.current) {
+      const scrollAmount = 260;
+      scrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <div className={cn(className)}>
       <div className="flex items-center justify-between">
         <p className="text-2xl font-bold text-white">Products</p>
-        <div className={cn("flex items-center gap-1 *:bg-black-2")}>
-          <div className="w-10 h-10 flex items-center justify-center">
+        <div className={cn("flex items-center gap-1")}>
+          <Button
+            onClick={() => scroll("left")}
+            variant="black"
+            className="w-10 h-10 flex items-center justify-center"
+          >
             <ChevronIcon className="rotate-180 cursor-pointer" />
-          </div>
-          <div className="w-10 h-10 flex items-center justify-center">
+          </Button>
+          <Button
+            onClick={() => scroll("right")}
+            variant="black"
+            className="w-10 h-10 flex items-center justify-center"
+          >
             <ChevronIcon className="cursor-pointer" />
-          </div>
+          </Button>
         </div>
       </div>
 
-      <div className="flex gap-5 mt-6 overflow-auto scrollbar-hide">
+      <div
+        ref={scrollRef}
+        className="flex gap-5 mt-6 overflow-auto scrollbar-hide"
+      >
         <ProductCard
           Icon={RotatingResiIcon}
           title="Rotating Residential"
