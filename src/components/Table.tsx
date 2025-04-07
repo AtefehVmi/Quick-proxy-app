@@ -29,11 +29,11 @@ const Table = <T extends object>({
   return (
     <div className="mt-5 overflow-auto">
       <table className="w-full text-left">
-        <thead className="bg-grey5">
+        <thead className="bg-black-2 border-b border-black">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className="py-2 px-4">
+                <th key={header.id} className="p-3">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -60,7 +60,7 @@ const Table = <T extends object>({
               <React.Fragment key={row.id}>
                 <tr>
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="py-1 px-4">
+                    <td key={cell.id} className="pt-2.5 px-3">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -72,9 +72,9 @@ const Table = <T extends object>({
                   <tr>
                     <td
                       colSpan={table.getAllColumns().length}
-                      className="px-4 py-3"
+                      className="px-4 pt-3"
                     >
-                      <div className="h-0.5 bg-grey2 w-full"></div>
+                      <div className="h-px bg-black-2 w-full"></div>
                     </td>
                   </tr>
                 )}
