@@ -102,7 +102,6 @@ const CustomPieChart: React.FC<PieChartProps> = ({ isLoading, data }) => {
           </PieChart>
         </ResponsiveContainer>
 
-        {/* Center Logo */}
         <div className="absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2">
           <div className="w-20 h-20 rounded-full bg-black-border flex items-center justify-center">
             <Image src={Logo} alt="logo" quality={100} />
@@ -110,7 +109,6 @@ const CustomPieChart: React.FC<PieChartProps> = ({ isLoading, data }) => {
         </div>
       </div>
 
-      {/* Legend */}
       <div className="mt-14 flex flex-wrap items-center gap-4.5 px-6">
         {data?.map((item, index) => (
           <div key={index} className="flex gap-1 items-center">

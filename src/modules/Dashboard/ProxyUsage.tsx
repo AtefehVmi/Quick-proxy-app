@@ -10,7 +10,7 @@ const ProxyUsage = ({ className }: { className?: string }) => {
     <Card className={cn("px-0", className)}>
       <div className="flex items-center gap-2">
         <ProxyUsageImage />
-        <p className="text-white text-lg font-bold">Product</p>
+        <p className="text-white text-lg font-bold">Proxy Usage</p>
       </div>
 
       <div className="mt-6">
