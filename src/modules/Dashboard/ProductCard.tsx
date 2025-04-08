@@ -7,6 +7,7 @@ import StaticDataIcon from "public/icons/network.svg";
 import MobileIcon from "public/icons/mobile.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Link from "next/link";
+import cn from "@/utils/cn";
 
 const products = [
   { product: "Rotating Residential Proxies", icon: RotatingResiIcon, href: "" },
@@ -17,9 +18,9 @@ const products = [
   { product: "Static Mobile Proxies", icon: MobileIcon, href: "" },
 ];
 
-const ProductCard = () => {
+const ProductCard = ({ className }: { className?: string }) => {
   return (
-    <Card className="px-0">
+    <Card className={cn("px-0", className)}>
       <div className="flex items-center gap-2">
         <ProductImage />
         <p className="text-white text-lg font-bold">Product</p>

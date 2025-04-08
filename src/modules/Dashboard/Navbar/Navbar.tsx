@@ -2,16 +2,19 @@ import cn from "@/utils/cn";
 import SearchIcon from "public/icons/search.svg";
 import ProfileDropdown from "@/modules/Dropdown/ProfileDropdown";
 import NotifModal from "@/modules/Modals/NotifModal";
+import Logo from "public/logo-small.png";
+import BurgerMenuIcon from "public/icons/burger-menu.svg";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
     <div
       className={cn(
-        "h-25 border-b border-black-border mr-8",
+        "h-25 border-b border-black-border ml-5 mr-5 md:ml-0 md:mr-8",
         "flex items-center justify-between"
       )}
     >
-      <div className="relative text-white ml-7">
+      <div className="relative text-white ml-7 hidden md:block">
         <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
@@ -22,6 +25,13 @@ const Navbar = () => {
             "py-4 pl-12 pr-4"
           )}
         />
+      </div>
+
+      <div className="flex items-center gap-3 md:hidden">
+        <div className="w-14 h-14 flex items-center justify-center bg-black-3">
+          <BurgerMenuIcon />
+        </div>
+        <Image src={Logo} alt="logo" />
       </div>
 
       <div className="flex items-center gap-3 py-5.5">

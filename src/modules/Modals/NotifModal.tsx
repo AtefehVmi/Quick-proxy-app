@@ -24,7 +24,7 @@ const NotifModal = ({ className }: { className?: string }) => {
     <div>
       <button onClick={() => setOpen(true)} className={cn(className)}>
         <NotifIcon className="m-4 cursor-pointer" />
-        <div className="bg-primary-400 py-0.5 px-2.5">
+        <div className="bg-primary-400 py-0.5 px-2.5 hidden md:block">
           {notifications.length}
         </div>
       </button>
