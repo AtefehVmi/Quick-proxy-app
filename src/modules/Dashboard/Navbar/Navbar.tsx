@@ -1,8 +1,7 @@
 import cn from "@/utils/cn";
-import UserIcon from "public/icons/user.svg";
-import NotifIcon from "public/icons/cowbell.svg";
 import SearchIcon from "public/icons/search.svg";
 import NotifDropdown from "@/modules/Dropdown/NotifDropdown";
+import ProfileDropdown from "@/modules/Dropdown/ProfileDropdown";
 
 const Navbar = () => {
   return (
@@ -26,11 +25,10 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3 py-5.5">
-        <UserIcon className="m-4 cursor-pointer" />
+        <ProfileDropdown className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
-        <div className="flex items-center gap-2">
-          <NotifDropdown className="m-4 cursor-pointer" />
-          <div className="bg-primary-400 py-0.5 px-2.5">4</div>
+        <div className="">
+          <NotifDropdown className="flex items-center gap-2" />
         </div>
       </div>
     </div>

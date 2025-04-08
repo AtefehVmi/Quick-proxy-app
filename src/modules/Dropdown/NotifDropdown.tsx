@@ -46,7 +46,10 @@ const NotifDropdown = ({ className }: { className?: string }) => {
   return (
     <div ref={dropdownRef}>
       <button onClick={() => setIsOpen(!isOpen)} className={cn(className)}>
-        <NotifIcon />
+        <NotifIcon className="m-4 cursor-pointer" />
+        <div className="bg-primary-400 py-0.5 px-2.5">
+          {notifications.length}
+        </div>
       </button>
 
       {isOpen && (
@@ -60,7 +63,10 @@ const NotifDropdown = ({ className }: { className?: string }) => {
             <p className="text-2xl leading-9 font-bold text-white">
               Notification
             </p>
-            <CrossIcon />
+            <CrossIcon
+              className="cursor-pointer"
+              onClick={() => setIsOpen(!isOpen)}
+            />
           </div>
 
           {notifications.length <= 0 ? (
