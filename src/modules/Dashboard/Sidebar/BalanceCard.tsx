@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import Card from "@/components/Card/Card";
 import WalletIcon from "public/icons/wallet.svg";
 import AddIcon from "public/icons/add.svg";
+import BalanceModal from "@/modules/Modals/BalanceModal";
 
 const BalanceCard = () => {
   return (
@@ -17,9 +18,7 @@ const BalanceCard = () => {
         </p>
       </div>
 
-      <Button className="p-2.5 h-fit w-fit">
-        <AddIcon />
-      </Button>
+      <BalanceModal />
     </Card>
   );
 };
