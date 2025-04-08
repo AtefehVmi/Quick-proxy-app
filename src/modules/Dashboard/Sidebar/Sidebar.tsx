@@ -35,13 +35,17 @@ export default function Sidebar({
   return (
     <div
       className={cn(
-        "bg-black w-full flex flex-col max-w-79 border-r border-black-3",
+        "bg-black w-full flex flex-col max-w-60 2xl:max-w-79 border-r border-black-3",
         className
       )}
     >
       <div className="ml-8 pb-6.5 border-b border-black-border pt-6 relative">
         <Link href={"/"}>
-          <Image src={LogoImage} alt="logo" width={211} height={48} />
+          <Image
+            src={LogoImage}
+            alt="logo"
+            className="w-46 h-10 2xl:w-53 2xl:h-12"
+          />
         </Link>
         <Button
           onClick={onCollapse}

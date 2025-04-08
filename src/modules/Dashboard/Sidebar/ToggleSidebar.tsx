@@ -13,9 +13,9 @@ const ToggleSidebar = ({ className }: { className?: string }) => {
   return (
     <Fragment>
       {isCollapsed ? (
-        <SmallSidebar onExpand={handleToggle} className={className} />
-      ) : (
         <Sidebar onCollapse={handleToggle} className={className} />
+      ) : (
+        <SmallSidebar onExpand={handleToggle} className={className} />
       )}
     </Fragment>
   );

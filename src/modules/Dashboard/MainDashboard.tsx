@@ -34,13 +34,15 @@ const MainDashboard = () => {
       </div>
 
       <div className="grid grid-cols-24 gap-5 mt-6">
-        <div className="col-span-9">
-          <ProductOverview />
+        <div className="col-span-16 2xl:col-span-18 flex flex-col 2xl:flex-row gap-5 w-full">
+          <div className="w-full 2xl:w-1/2">
+            <ProductOverview />
+          </div>
+          <div className="w-full 2xl:w-1/2">
+            <RecentActivities />
+          </div>
         </div>
-        <div className="col-span-9">
-          <RecentActivities />
-        </div>
-        <div className="col-span-6">
+        <div className="col-span-8 2xl:col-span-6">
           <ProductCard />
           <ProxyUsage className="mt-5" />
         </div>

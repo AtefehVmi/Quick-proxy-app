@@ -15,7 +15,7 @@ const Filter: React.FC<FilterProps> = ({ filterItems }) => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-2 overflow-auto">
+    <div className="flex items-center justify-center gap-2 overflow-auto scrollbar-hide">
       {filterItems.map((item, index) => (
         <div
           onClick={() => handleFilterClick(item)}
