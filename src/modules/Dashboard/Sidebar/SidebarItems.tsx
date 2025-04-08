@@ -1,42 +1,49 @@
 import ROUTES from "@/constants/routes";
+import RotatingResiIcon from "public/icons/rotating-resi.svg";
+import IspIcon from "public/icons/isp.svg";
+import RotatingMobileIcon from "public/icons/rotating-mobile.svg";
+import MobileIcon from "public/icons/mobile-lte.svg";
+import UserIcon from "public/icons/user-small.svg";
+import DashboardIcon from "public/icons/dashboard.svg";
 
 const sidebarItems = [
   {
     name: "General",
-    href: ROUTES.DASHBOARD,
-    children: [],
+    children: [
+      { name: "Dashboard", href: ROUTES.DASHBOARD, icon: DashboardIcon },
+    ],
   },
   {
     name: "Residential",
-    href: ROUTES.PRODUCTS,
     children: [
       {
         name: "Rotating Residential",
         href: ROUTES.ROTATING_RESIDENTIAL,
+        icon: RotatingResiIcon,
       },
       {
-        name: "Static Residential",
+        name: "ISP Proxies",
         href: ROUTES.ISP,
-      },
-      {
-        name: "Mobile",
-        href: ROUTES.STATIC_LTE,
-      },
-      {
-        name: "Rotating Mobile",
-        href: ROUTES.ROTATING_LTE,
+        icon: IspIcon,
       },
     ],
   },
   {
     name: "Mobile",
-    href: "/",
-    children: [],
+    children: [
+      {
+        name: "Rotating Mobile",
+        href: ROUTES.ROTATING_LTE,
+        icon: RotatingMobileIcon,
+      },
+      { name: "Mobile / LTE", href: ROUTES.STATIC_LTE, icon: MobileIcon },
+    ],
   },
   {
     name: "Support",
-    href: "/referrals",
-    children: [],
+    children: [
+      { name: "Profile & Billing", href: ROUTES.PROFILE, icon: UserIcon },
+    ],
   },
 ];
 

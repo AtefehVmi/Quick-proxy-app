@@ -1,6 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import LogoImage from "public/logo.png";
@@ -20,6 +21,16 @@ export default function Sidebar({
   onCollapse: () => void;
 }) {
   const pathname = usePathname();
+  const [expandedSections, setExpandedSections] = useState<
+    Record<number, boolean>
+  >({});
+
+  const toggleSection = (index: number) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   return (
     <div
@@ -28,20 +39,9 @@ export default function Sidebar({
         className
       )}
     >
-      <div
-        className={cn(
-          "ml-8 pb-6.5 border-b border-black-border pt-6",
-          "relative"
-        )}
-      >
+      <div className="ml-8 pb-6.5 border-b border-black-border pt-6 relative">
         <Link href={"/"}>
-          <Image
-            src={LogoImage}
-            alt="logo"
-            className=""
-            width={211}
-            height={48}
-          />
+          <Image src={LogoImage} alt="logo" width={211} height={48} />
         </Link>
         <Button
           onClick={onCollapse}
@@ -52,31 +52,60 @@ export default function Sidebar({
         </Button>
       </div>
 
-      <div className="flex flex-col justify-between px-8 pb-6 pt-8 overflow-y-auto h-[calc(100vh_-_100px)]">
+      <div className="flex flex-col scrollbar-hide justify-between px-8 pb-6 pt-8 overflow-y-auto h-[calc(100vh_-_100px)]">
         <div>
           <BalanceCard />
 
           <ul className="mt-8 flex flex-col gap-3 text-xs">
-            {sidebarItems.map((item) => {
-              const isActive = pathname === item.href;
+            {sidebarItems.map((item, index) => {
+              const isExpanded = expandedSections[index];
+
               return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "py-1 flex items-center justify-between text-grey-600",
-                      isActive && ""
+                <li key={index}>
+                  <div className="flex flex-col text-base leading-6 text-grey-600">
+                    <button
+                      onClick={() => toggleSection(index)}
+                      className="cursor-pointer py-1 w-full flex items-center justify-between text-grey-600"
+                    >
+                      {item.name}
+                      <ChevronDownIcon
+                        className={cn(
+                          "text-grey-700 transition-transform duration-300",
+                          isExpanded ? "rotate-180" : ""
+                        )}
+                      />
+                    </button>
+
+                    {isExpanded && (
+                      <div className="flex flex-col gap-1">
+                        {item.children.map((child, childIndex) => {
+                          const isActive = pathname === child.href;
+                          return (
+                            <Link
+                              href={child.href}
+                              key={childIndex}
+                              className={cn(
+                                "flex px-8 py-4 items-center gap-2 transition-colors",
+                                isActive
+                                  ? "bg-black-2 border-l-4 border-primary-400 text-white"
+                                  : "text-grey-600 hover:bg-grey-900"
+                              )}
+                            >
+                              <child.icon />
+                              {child.name}
+                            </Link>
+                          );
+                        })}
+                      </div>
                     )}
-                  >
-                    {item.name}
-                    <ChevronDownIcon className="text-grey-700" />
-                  </Link>
+                  </div>
                 </li>
               );
             })}
           </ul>
         </div>
-        <div className="w-full">
+
+        <div className="w-full mt-8">
           <HelpCenterCard />
         </div>
       </div>
