@@ -14,7 +14,13 @@ const paymentOptions = [
   { label: "Crypto currency", value: "2" },
 ];
 
-const BalanceModal = ({ className }: { className?: string }) => {
+const BalanceModal = ({
+  className,
+  variant,
+}: {
+  className?: string;
+  variant: "primary" | "outlined" | "black";
+}) => {
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState(paymentOptions[0].value);
 
@@ -24,6 +30,7 @@ const BalanceModal = ({ className }: { className?: string }) => {
   return (
     <div>
       <Button
+        variant={variant}
         onClick={() => setOpen(true)}
         className={cn("p-2.5 h-fit w-fit", className)}
       >

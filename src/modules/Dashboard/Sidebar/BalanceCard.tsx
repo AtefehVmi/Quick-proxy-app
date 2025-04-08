@@ -18,7 +18,7 @@ const BalanceCard = () => {
         </p>
       </div>
 
-      <BalanceModal />
+      <BalanceModal variant="primary" />
     </Card>
   );
 };
