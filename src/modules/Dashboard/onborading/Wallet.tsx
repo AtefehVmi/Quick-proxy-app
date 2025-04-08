@@ -39,8 +39,7 @@ const Wallet = ({ className }: { className?: string }) => {
           </div>
         </div>
 
-        {/* <BalanceModal variant="black" className="w-10 h-10 mr-6" /> */}
-        <SuccessPayment />
+        <BalanceModal variant="black" className="w-10 h-10 mr-6" />
       </div>
     </div>
   );

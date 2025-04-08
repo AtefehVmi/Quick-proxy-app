@@ -32,7 +32,7 @@ const BalanceModal = ({
       <Button
         variant={variant}
         onClick={() => setOpen(true)}
-        className={cn("p-2.5 h-fit w-fit", className)}
+        className={cn("p-3.5 h-fit w-fit", className)}
       >
         <AddIcon />
       </Button>
