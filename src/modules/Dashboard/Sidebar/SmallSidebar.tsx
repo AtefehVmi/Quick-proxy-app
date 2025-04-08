@@ -12,6 +12,8 @@ import SettingIcon from "public/icons/setting.svg";
 import UserIcon from "public/icons/user-small.svg";
 import BellIcon from "public/icons/bell-small.svg";
 import QuestionMarkImage from "public/images/help.png";
+import Button from "@/components/Button";
+import DoubleArrowRight from "public/icons/angle-double-left.svg";
 
 const sidebarItems = [
   { Icon: DashboardIcon, href: "/" },
@@ -21,7 +23,13 @@ const sidebarItems = [
   { Icon: BellIcon, href: "/notifications" },
 ];
 
-const SmallSidebar = ({ className }: { className?: string }) => {
+const SmallSidebar = ({
+  className,
+  onExpand,
+}: {
+  className?: string;
+  onExpand: () => void;
+}) => {
   const pathname = usePathname();
 
   return (
@@ -31,10 +39,18 @@ const SmallSidebar = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <div className="ml-8 border-b border-black-border pt-6 pb-8.75">
+      <div className="ml-8 border-b border-black-border pt-6 pb-8.75 relative">
         <Link href={"/"}>
           <Image src={Logo} alt="logo" quality={100} />
         </Link>
+
+        <Button
+          onClick={onExpand}
+          variant="black"
+          className="absolute -right-3 top-1/3"
+        >
+          <DoubleArrowRight className="m-1.5 rotate-180" />
+        </Button>
       </div>
 
       <div className="flex flex-col justify-between items-center h-[calc(100dvh_-_100px)]">

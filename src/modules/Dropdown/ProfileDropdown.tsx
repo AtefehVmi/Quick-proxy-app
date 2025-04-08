@@ -55,7 +55,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
                 "flex items-center gap-1.75 cursor-pointer"
               )}
             >
-              <item.icon height={18} width={18} />
+              <item.icon height={18} width={18} className="text-grey-600" />
               <p className="text-base text-grey-600 leading-6">{item.name}</p>
             </div>
           ))}

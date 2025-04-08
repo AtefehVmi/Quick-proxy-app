@@ -12,7 +12,13 @@ import HelpCenterCard from "./HelpCenterCard";
 import Button from "@/components/Button";
 import DoubleArrowRight from "public/icons/angle-double-left.svg";
 
-export default function Sidebar({ className }: { className?: string }) {
+export default function Sidebar({
+  className,
+  onCollapse,
+}: {
+  className?: string;
+  onCollapse: () => void;
+}) {
   const pathname = usePathname();
 
   return (
@@ -37,7 +43,11 @@ export default function Sidebar({ className }: { className?: string }) {
             height={48}
           />
         </Link>
-        <Button variant="black" className="absolute -right-3 top-1/3">
+        <Button
+          onClick={onCollapse}
+          variant="black"
+          className="absolute -right-3 top-1/3"
+        >
           <DoubleArrowRight className="m-1.5" />
         </Button>
       </div>
