@@ -78,16 +78,17 @@ const columns = [
   }),
 ];
 
+const data: RecentActivity[] = [];
+
 const RecentActivities = () => {
-  const data: RecentActivity[] = [];
   return (
-    <Card className="px-0 pt-4.5 pb-0">
+    <Card className="px-0 pt-4.5 pb-0 max-h-[500px] h-full">
       <div className="flex items-center gap-2">
         <RecentImage />
         <p className="text-white text-lg font-bold">Recent Activities</p>
       </div>
 
-      <div className="mt-7.5">
+      <div className="mt-7.5 max-h-[355px] overflow-auto scrollbar-hide">
         <Table columns={columns} data={data} />
       </div>
 
