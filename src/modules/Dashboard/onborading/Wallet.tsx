@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
 import BalanceModal from "@/modules/Modals/BalanceModal";
+import SuccessPayment from "@/modules/Modals/SuccessPayment";
 import cn from "@/utils/cn";
 import AddIcon from "public/icons/add.svg";
 
@@ -38,7 +39,8 @@ const Wallet = ({ className }: { className?: string }) => {
           </div>
         </div>
 
-        <BalanceModal variant="black" className="w-10 h-10 mr-6" />
+        {/* <BalanceModal variant="black" className="w-10 h-10 mr-6" /> */}
+        <SuccessPayment />
       </div>
     </div>
   );

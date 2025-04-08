@@ -22,7 +22,7 @@ const BalanceModal = ({
   variant: "primary" | "outlined" | "black";
 }) => {
   const [open, setOpen] = useState(false);
-  const [payment, setPayment] = useState(paymentOptions[0].value);
+  const [payment, setPayment] = useState("");
 
   const handleCloseButton = () => {
     setOpen(false);
@@ -69,6 +69,7 @@ const BalanceModal = ({
                 options={paymentOptions}
                 label="Payment method"
                 variant="primary"
+                placeholder="Select"
               />
             </div>
 
