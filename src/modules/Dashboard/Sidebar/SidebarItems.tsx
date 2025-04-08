@@ -30,7 +30,7 @@ const sidebarItems = [
   },
   {
     name: "Mobile",
-    href: "/referrals",
+    href: "/",
     children: [],
   },
   {

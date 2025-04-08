@@ -41,6 +41,7 @@ export default function Sidebar({ className }: { className?: string }) {
           <DoubleArrowRight className="m-1.5" />
         </Button>
       </div>
+
       <div className="flex flex-col justify-between px-8 pb-6 pt-8 overflow-y-auto h-[calc(100vh_-_100px)]">
         <div>
           <BalanceCard />
