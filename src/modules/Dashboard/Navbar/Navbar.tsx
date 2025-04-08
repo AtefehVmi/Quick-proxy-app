@@ -2,6 +2,7 @@ import cn from "@/utils/cn";
 import UserIcon from "public/icons/user.svg";
 import NotifIcon from "public/icons/cowbell.svg";
 import SearchIcon from "public/icons/search.svg";
+import NotifDropdown from "@/modules/Dropdown/NotifDropdown";
 
 const Navbar = () => {
   return (
@@ -28,7 +29,7 @@ const Navbar = () => {
         <UserIcon className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
         <div className="flex items-center gap-2">
-          <NotifIcon className="m-4 cursor-pointer" />
+          <NotifDropdown className="m-4 cursor-pointer" />
           <div className="bg-primary-400 py-0.5 px-2.5">4</div>
         </div>
       </div>
