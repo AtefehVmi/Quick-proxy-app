@@ -36,11 +36,13 @@ const Locations = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center gap-7.75 justify-center">
+      <div className="mt-8 flex items-center gap-7.75 justify-center overflow-auto scrollbar-hide">
         {locationItems.map((item, index) => (
           <div key={index} className="flex items-center gap-2">
             <item.flag />
-            <TextSm className="text-white">{item.name}</TextSm>
+            <TextSm className="text-white whitespace-nowrap">
+              {item.name}
+            </TextSm>
           </div>
         ))}
       </div>

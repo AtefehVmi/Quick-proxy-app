@@ -65,16 +65,18 @@ const InputText = (props: InputTextProps) => {
     label: cn(
       "absolute -top-2.5 left-3 px-1 text-sm pointer-events-none z-10",
       focus ? "text-primary-400" : "text-grey",
+      error && "text-danger",
       "bg-black-3"
     ),
     description: cn(
       "text-sm font-normal",
-      error && "text-grey-250",
+      error && "text-danger",
       description ? "visible" : "invisible"
     ),
     inputWrapper: cn(
       `relative flex justify-center items-center border border-solid p-3
-       border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`
+       border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`,
+      error && "focus-within:border-danger"
     ),
     input: cn(
       "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white",
