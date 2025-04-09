@@ -32,6 +32,13 @@ export default function Sidebar({
     }));
   };
 
+  const isActiveLink = (href: string) => {
+    if (href === "/") {
+      return pathname === href;
+    }
+    return pathname.startsWith(href);
+  };
+
   return (
     <div
       className={cn(
@@ -40,7 +47,7 @@ export default function Sidebar({
       )}
     >
       <div className="ml-8 pb-6.5 border-b border-black-border pt-6 relative">
-        <Link href={"/"}>
+        <Link href="/">
           <Image
             src={LogoImage}
             alt="logo"
@@ -83,7 +90,7 @@ export default function Sidebar({
                     {isExpanded && (
                       <div className="flex flex-col gap-1">
                         {item.children.map((child, childIndex) => {
-                          const isActive = pathname === child.href;
+                          const isActive = isActiveLink(child.href);
                           return (
                             <Link
                               href={child.href}
