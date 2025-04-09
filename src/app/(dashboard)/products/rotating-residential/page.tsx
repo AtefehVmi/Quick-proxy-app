@@ -1,3 +1,4 @@
+import Locations from "@/modules/Products/RotatingResi/Locations";
 import ProxyCard from "@/modules/Products/RotatingResi/ProxyCard";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
@@ -9,6 +10,7 @@ const RotatingResidential = () => {
       <div className="col-span-16 px-8 pt-6 pb-8">
         <Heading title="Rotating Residential" Icon={RotatingResiIcon} />
         <ProxyCard className="mt-6" />
+        <Locations className="mt-5" />
       </div>
     </div>
   );
