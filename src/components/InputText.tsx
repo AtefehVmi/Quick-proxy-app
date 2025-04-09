@@ -7,6 +7,7 @@ import cn from "@/utils/cn";
 type CustomProps = {
   ref?: Ref<HTMLInputElement>;
   error?: boolean;
+  success?: boolean;
   fullWidth?: boolean;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
@@ -25,6 +26,7 @@ const InputText = (props: InputTextProps) => {
     disabled,
     fullWidth,
     error,
+    success,
     label,
     description,
     startAdornment,
@@ -66,17 +68,20 @@ const InputText = (props: InputTextProps) => {
       "absolute -top-2.5 left-3 px-1 text-sm pointer-events-none z-10",
       focus ? "text-primary-400" : "text-grey",
       error && "text-danger",
+      success && "text-success",
       "bg-black-3"
     ),
     description: cn(
       "text-sm font-normal",
       error && "text-danger",
+      success && "text-success",
       description ? "visible" : "invisible"
     ),
     inputWrapper: cn(
       `relative flex justify-center items-center border border-solid p-3
        border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`,
-      error && "focus-within:border-danger"
+      error && "focus-within:border-danger",
+      success && "focus-within:border-success"
     ),
     input: cn(
       "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white",

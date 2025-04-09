@@ -5,10 +5,14 @@ import InputText from "@/components/InputText";
 import TextBase from "@/components/Typography/TextBase";
 import cn from "@/utils/cn";
 import { useState } from "react";
+import WalletIcon from "public/icons/wallet-small.svg";
 
 const RotatingSidebar = () => {
-  const [amount, setAmount] = useState<number>();
+  const [amount, setAmount] = useState<number>(0);
   const [coupon, setCoupon] = useState<string>();
+
+  const discount = "";
+  const balance = 0;
 
   return (
     <div
@@ -38,6 +42,24 @@ const RotatingSidebar = () => {
             className="mt-6 w-full"
           />
         </div>
+
+        {balance < amount && (
+          <div
+            className={cn(
+              "mt-8 bg-black-2 border-b border-danger py-3 px-4.5",
+              "flex items-center justify-between"
+            )}
+          >
+            <div className="flex items-center gap-2">
+              <WalletIcon />
+              <TextBase className="font-semibold text-white">
+                Balance is not enough!
+              </TextBase>
+            </div>
+
+            <Button variant="black">Add charge</Button>
+          </div>
+        )}
       </div>
 
       <div className="bg-black-2 p-4.5 mb-8">
@@ -52,13 +74,17 @@ const RotatingSidebar = () => {
 
         <div className="mt-8 flex items-center justify-between">
           <p className="text-white text-base leading-6">Price</p>
-          <TextBase className="font-semibold text-white">$ {amount}</TextBase>
+          <TextBase className="font-semibold text-white">
+            $ {amount ?? 0}
+          </TextBase>
         </div>
 
-        <div className="mt-3 flex items-center justify-between">
-          <p className="text-primary-200 text-base leading-6">Discount</p>
-          <TextBase className="font-semibold text-primary-200">20%</TextBase>
-        </div>
+        {discount ?? (
+          <div className="mt-3 flex items-center justify-between">
+            <p className="text-primary-200 text-base leading-6">Discount</p>
+            <TextBase className="font-semibold text-primary-200">20%</TextBase>
+          </div>
+        )}
 
         <div className="bg-black-border h-px w-full my-6"></div>
 
