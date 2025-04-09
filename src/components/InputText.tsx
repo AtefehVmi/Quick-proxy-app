@@ -69,7 +69,8 @@ const InputText = (props: InputTextProps) => {
       focus ? "text-primary-400" : "text-grey",
       error && "text-danger",
       success && "text-success",
-      "bg-black-3"
+      "bg-black-3",
+      disabled && "bg-transparent"
     ),
     description: cn(
       "text-sm font-normal",
@@ -81,7 +82,8 @@ const InputText = (props: InputTextProps) => {
       `relative flex justify-center items-center border border-solid p-3
        border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`,
       error && "focus-within:border-danger",
-      success && "focus-within:border-success"
+      success && "focus-within:border-success",
+      disabled && "bg-[#FEFEFE]/5"
     ),
     input: cn(
       "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white",

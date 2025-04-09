@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
+import ChangePassModal from "@/modules/Modals/ChangePassModal";
 import cn from "@/utils/cn";
-import EditIcon from "public/icons/file-edit.svg";
 
 const UserCard = ({ className }: { className?: string }) => {
   return (
@@ -30,9 +30,7 @@ const UserCard = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <Button className="p-2">
-        <EditIcon />
-      </Button>
+      <ChangePassModal />
     </div>
   );
 };
