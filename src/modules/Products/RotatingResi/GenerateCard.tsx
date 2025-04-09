@@ -27,7 +27,7 @@ const GenerateCard = ({ className }: { className?: string }) => {
           data
         ) : (
           <div className="flex items-center justify-center py-17.5">
-            <Image src={NoDataImage} alt="" />
+            <Image src={NoDataImage} alt="" quality={100} />
           </div>
         )}
       </div>
