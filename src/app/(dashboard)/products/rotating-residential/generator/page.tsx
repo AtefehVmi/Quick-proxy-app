@@ -1,4 +1,5 @@
 import GenerateCard from "@/modules/Products/RotatingResi/GenerateCard";
+import GenerateSide from "@/modules/Products/RotatingResi/GenerateSide";
 import ProxyGenerator from "@/modules/Products/RotatingResi/ProxyGenerator";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
@@ -11,6 +12,10 @@ const RotatingGenerator = () => {
         <Heading title="Rotating Residential" Icon={RotatingResiIcon} />
         <ProxyGenerator className="mt-6" />
         <GenerateCard className="mt-6" />
+      </div>
+
+      <div className="col-span-8">
+        <GenerateSide />
       </div>
     </div>
   );
