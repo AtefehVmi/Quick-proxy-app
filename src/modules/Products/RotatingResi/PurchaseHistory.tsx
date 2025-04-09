@@ -6,6 +6,7 @@ import CaretRightIcon from "public/icons/arrow-right.svg";
 import cn from "@/utils/cn";
 import NoPurchaseImage from "public/images/no-purchase.png";
 import Image from "next/image";
+import ArrowRightIcon from "public/icons/arrow-small-right.svg";
 
 type PurchaseItem = {
   gb: number;
@@ -56,7 +57,9 @@ const PurhcaseHistroy = () => {
               <Image src={NoPurchaseImage} alt="" quality={100} />
 
               <div className="mt-8">
-                <Button className="py-3 px-10">Get Started</Button>
+                <Button className="py-3 px-10">
+                  Get Started <ArrowRightIcon />
+                </Button>
               </div>
             </div>
           </div>

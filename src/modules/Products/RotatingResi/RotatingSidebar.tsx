@@ -6,6 +6,7 @@ import TextBase from "@/components/Typography/TextBase";
 import cn from "@/utils/cn";
 import { useState } from "react";
 import WalletIcon from "public/icons/wallet-small.svg";
+import ArrowIcon from "public/icons/arrow-small-right.svg";
 
 const RotatingSidebar = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -94,7 +95,9 @@ const RotatingSidebar = () => {
         </div>
 
         <div className="mt-6">
-          <Button className="font-semibold w-full py-4">Purchase</Button>
+          <Button className="font-semibold w-full py-4" RightIcon={ArrowIcon}>
+            Purchase
+          </Button>
         </div>
       </div>
     </div>

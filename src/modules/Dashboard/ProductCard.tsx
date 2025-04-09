@@ -36,7 +36,7 @@ const ProductCard = ({ className }: { className?: string }) => {
               </p>
             </div>
             <Link href={product.href}>
-              <ArrowIcon className="cursor-pointer" />
+              <ArrowIcon className="cursor-pointer text-white" />
             </Link>
           </div>
         ))}
