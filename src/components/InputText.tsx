@@ -34,7 +34,7 @@ const InputText = (props: InputTextProps) => {
     allocateSpaceForDescription = false,
     onFocus,
     onBlur,
-    paddingY = "py-6",
+    paddingY = "py-7",
     type,
     ...rest
   } = props;
@@ -84,8 +84,8 @@ const InputText = (props: InputTextProps) => {
       success && "focus-within:border-success"
     ),
     input: cn(
-      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white",
-      startAdornment && "pl-17",
+      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white",
+      startAdornment && "pl-11",
       endAdornment && "pr-9"
     ),
     startAdornment: "absolute left-3 text-grey-300 z-20",

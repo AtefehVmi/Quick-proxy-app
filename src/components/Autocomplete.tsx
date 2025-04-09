@@ -111,11 +111,11 @@ const Autocomplete = <A extends string | number | null, B extends any>(
     ),
     inputWrapper: cn(
       `relative flex justify-center items-center border border-solid
-       border-[#EAEAEA]/15 focus-within:border-primary-400 p-3 py-6`
+       border-[#EAEAEA]/15 focus-within:border-primary-400 p-3 py-7`
     ),
     input: cn(
-      "w-full h-full absolute text-xs focus:outline-none bg-transparent text-white pt-2 pb-2 px-4",
-      startAdornment && "pl-8",
+      "w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white pt-2 pb-2 px-4",
+      startAdornment && "pl-11",
       !searchable && "cursor-default caret-transparent"
     ),
   };
