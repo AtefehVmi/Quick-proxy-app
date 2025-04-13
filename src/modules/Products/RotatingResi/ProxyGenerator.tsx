@@ -10,9 +10,8 @@ import RotationIcon from "public/icons/rotation.svg";
 import FormatIcon from "public/icons/format.svg";
 import QuantityIcon from "public/icons/quantity.svg";
 import InputText from "@/components/InputText";
-import Button from "@/components/Button";
-import MagicwandIcon from "public/icons/magic-wand.svg";
 import ChangePassModal from "@/modules/Modals/ChangePassModal";
+import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 
 const portOptions = [{ label: "", value: "" }];
 const formatOptions = [{ label: "", value: "" }];
@@ -82,9 +81,7 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex items-center justify-end py-6 pr-6">
-        <Button Icon={MagicwandIcon} className="py-3 px-10 font-semibold">
-          Generate proxy
-        </Button>
+        <GenerateProxyModal />
       </div>
     </Card>
   );
