@@ -1,34 +1,37 @@
 import Card from "@/components/Card/Card";
 import TextXs from "@/components/Typography/TextXs";
 import cn from "@/utils/cn";
-import Image from "next/image";
-import DatabaseImage from "public/images/database_folders.png";
+import Image, { StaticImageData } from "next/image";
 import CheckIcon from "public/icons/check.svg";
 import TextSm from "@/components/Typography/TextSm";
+import React from "react";
 
-const features = [
-  "Premium ISP providers",
-  "Unlimited traffic",
-  "State and city targeting",
-  "31+ countries covered",
-  "SOCKS5 support",
-];
+type Props = {
+  title: string;
+  desc: string;
+  features: string[];
+  image: StaticImageData;
+  children?: React.ReactNode;
+  collapsible?: boolean;
+  className?: string;
+};
 
-const ProxyCard = ({ className }: { className?: string }) => {
+const ProxyCard: React.FC<Props> = ({
+  className,
+  title,
+  desc,
+  image,
+  children,
+  collapsible = true,
+  features,
+}) => {
   return (
     <Card className={cn("p-7.5", className)}>
       <div className="flex">
         <div className="flex-1">
-          <p className="text-2xl font-bold text-white leading-9">
-            Rotating Residential Proxy
-          </p>
+          <p className="text-2xl font-bold text-white leading-9">{title}</p>
 
-          <p className="text-base text-white leading-6 mt-4">
-            Bypass toughest targets using trusted ASN provider IPs and
-            unlimited-duration sessions. ISP (Static Residential) proxies have
-            99.9% success rate with most popular targets. Get proxies with
-            exceptional speed and transparent pricing.
-          </p>
+          <p className="text-base text-white leading-6 mt-4">{desc}</p>
 
           <div className="mt-4 flex items-center gap-1">
             <TextXs className="text-grey-600">Start from:</TextXs>
@@ -38,7 +41,7 @@ const ProxyCard = ({ className }: { className?: string }) => {
         </div>
 
         <Image
-          src={DatabaseImage}
+          src={image}
           alt=""
           className="flex-1 max-w-[226px] max-h-[226px]"
           quality={100}

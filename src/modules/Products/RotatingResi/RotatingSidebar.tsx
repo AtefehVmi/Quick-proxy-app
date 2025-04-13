@@ -10,7 +10,7 @@ import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Bandwidth from "./Bandwidth";
 
 const RotatingSidebar = () => {
-  const [amount, setAmount] = useState<number>(5);
+  const [amount, setAmount] = useState<number>(0);
   const [coupon, setCoupon] = useState<string>();
 
   const discount = "";
