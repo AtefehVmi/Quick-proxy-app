@@ -12,6 +12,7 @@ import QuantityIcon from "public/icons/quantity.svg";
 import InputText from "@/components/InputText";
 import Button from "@/components/Button";
 import MagicwandIcon from "public/icons/magic-wand.svg";
+import ChangePassModal from "@/modules/Modals/ChangePassModal";
 
 const portOptions = [{ label: "", value: "" }];
 const formatOptions = [{ label: "", value: "" }];
@@ -31,9 +32,7 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
           <p className="text-white text-lg font-bold">Proxy Generator</p>
         </div>
         <div className="pr-6">
-          <Button className="py-1 px-4" variant="black">
-            Change Password
-          </Button>
+          <ChangePassModal />
         </div>
       </div>
 

@@ -29,8 +29,6 @@ const UserCard = ({ className }: { className?: string }) => {
           <TextSm className="font-semibold text-white">22 may, 2025</TextSm>
         </div>
       </div>
-
-      <ChangePassModal />
     </div>
   );
 };

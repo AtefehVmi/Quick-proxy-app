@@ -17,8 +17,12 @@ const ChangePassModal = ({ className }: { className?: string }) => {
   };
   return (
     <div>
-      <Button onClick={() => setOpen(true)} className="p-2">
-        <EditIcon />
+      <Button
+        onClick={() => setOpen(true)}
+        className="py-1 px-4"
+        variant="black"
+      >
+        Change Password
       </Button>
 
       {open && (
