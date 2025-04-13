@@ -14,6 +14,7 @@ import ChangePassModal from "@/modules/Modals/ChangePassModal";
 import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 import { toast } from "react-toastify";
 import MagicwandIcon from "public/icons/magic-wand.svg";
+import ErrorIcon from "public/icons/document.svg";
 
 import Button from "@/components/Button";
 
@@ -30,7 +31,9 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
 
   const handleGenerateProxyButtonClick = () => {
     if (!port || !format || !rotation || !quantity) {
-      toast.error("Fill in the fields first");
+      toast.error("Fill in the fields first", {
+        icon: <ErrorIcon />,
+      });
       return;
     }
 
