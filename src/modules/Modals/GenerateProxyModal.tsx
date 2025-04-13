@@ -21,14 +21,7 @@ const GenerateProxyModal = ({ className }: { className?: string }) => {
     setOpen(false);
   };
 
-  const data = `username = "customer-USER"
-password = "PASS"
-proxy = "core.proxy.io:7777"
-
-proxies = {
-  'http': f'http://{username}:{password}@{proxy}',
-  'https': f'http://{username}:{password}@{proxy}'
-}`;
+  const data = ``;
 
   const copyText = () => {
     navigator.clipboard.writeText(data);
@@ -38,7 +31,13 @@ proxies = {
   };
 
   const downloadText = () => {
-    navigator.clipboard.writeText(data);
+    const blob = new Blob([data], { type: "text/plain" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data.txt";
+    link.click();
+
     toast.success("Downloaded successfully.", {
       icon: <DownloadedIcon />,
     });
