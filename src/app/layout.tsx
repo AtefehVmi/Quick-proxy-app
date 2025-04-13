@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +14,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          toastClassName="custom-toast"
+        />
+        {children}
+      </body>
     </html>
   );
 }

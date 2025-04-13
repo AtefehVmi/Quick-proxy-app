@@ -8,6 +8,11 @@ import CopyIcon from "public/icons/copy.svg";
 import DownloadIcon from "public/icons/file-download.svg";
 import Button from "@/components/Button";
 import MagicwandIcon from "public/icons/magic-wand.svg";
+import NoDataImage from "public/images/no-data.png";
+import Image from "next/image";
+import { toast } from "react-toastify";
+import CopiedIcon from "public/icons/assept-document.svg";
+import DownloadedIcon from "public/icons/file-download-small.svg";
 
 const GenerateProxyModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
@@ -24,6 +29,20 @@ proxies = {
   'http': f'http://{username}:{password}@{proxy}',
   'https': f'http://{username}:{password}@{proxy}'
 }`;
+
+  const copyText = () => {
+    navigator.clipboard.writeText(data);
+    toast.success("Copied to your clipboard.", {
+      icon: <CopiedIcon />,
+    });
+  };
+
+  const downloadText = () => {
+    navigator.clipboard.writeText(data);
+    toast.success("Downloaded successfully.", {
+      icon: <DownloadedIcon />,
+    });
+  };
 
   return (
     <div>
@@ -42,7 +61,7 @@ proxies = {
           transition
           className="z-50 fixed inset-0 flex w-screen items-center justify-center bg-modal-bg transition duration-300 ease-out data-[closed]:opacity-0"
         >
-          <DialogPanel as="form" className={cn("w-139", "bg-black-3 p-6")}>
+          <DialogPanel className={cn("w-139", "bg-black-3 p-6")}>
             <div className="flex items-center justify-between pb-6 border-b border-black-border">
               <p className="text-2xl leading-9 font-bold text-white">
                 Generate
@@ -54,14 +73,29 @@ proxies = {
             </div>
 
             <div className="bg-black-2 p-5 mt-13.5 whitespace-pre-line h-78 overflow-y-auto">
-              {data ?? ""}
+              {data ? (
+                data
+              ) : (
+                <div className="flex items-center justify-center my-11">
+                  <Image src={NoDataImage} alt="no data" quality={100} />
+                </div>
+              )}
             </div>
 
             <div className="mt-12 border-t border-black-border pt-6 flex items-center justify-end gap-3">
-              <Button variant="outlined" className="py-4 px-12" Icon={CopyIcon}>
+              <Button
+                onClick={copyText}
+                variant="outlined"
+                className="py-4 px-12"
+                Icon={CopyIcon}
+              >
                 Copy
               </Button>
-              <Button className="font-semibold px-12 py-4" Icon={DownloadIcon}>
+              <Button
+                onClick={downloadText}
+                className="font-semibold px-12 py-4"
+                Icon={DownloadIcon}
+              >
                 Download
               </Button>
             </div>
