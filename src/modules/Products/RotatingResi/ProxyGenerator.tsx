@@ -25,9 +25,16 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
 
   return (
     <Card className={cn("px-0 pt-4.5", className)}>
-      <div className="flex items-center gap-2">
-        <GeneratorIcon />
-        <p className="text-white text-lg font-bold">Proxy Generator</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <GeneratorIcon />
+          <p className="text-white text-lg font-bold">Proxy Generator</p>
+        </div>
+        <div className="pr-6">
+          <Button className="py-1 px-4" variant="black">
+            Change Password
+          </Button>
+        </div>
       </div>
 
       <div className="mt-12 grid grid-cols-2 gap-7 px-6">

@@ -1,5 +1,6 @@
 import Locations from "@/modules/Products/RotatingResi/Locations";
 import ProxyCard from "@/modules/Products/RotatingResi/ProxyCard";
+import ProxyGenerator from "@/modules/Products/RotatingResi/ProxyGenerator";
 import RotatingSidebar from "@/modules/Products/RotatingResi/RotatingSidebar";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
@@ -12,6 +13,7 @@ const RotatingResidential = () => {
         <Heading title="Rotating Residential" Icon={RotatingResiIcon} />
         <ProxyCard className="mt-6" />
         <Locations className="mt-5" />
+        <ProxyGenerator className="mt-6" />
       </div>
 
       <div className="col-span-8">
