@@ -1,11 +1,10 @@
-import Locations from "@/modules/Products/RotatingResi/Locations";
-import ProxyCard from "@/modules/Products/RotatingResi/ProxyCard";
-import ProxyGenerator from "@/modules/Products/RotatingResi/ProxyGenerator";
+import ProxyCard from "@/modules/shared/ProxyCard";
 import RotatingSidebar from "@/modules/Products/RotatingResi/RotatingSidebar";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
 import IspIcon from "public/icons/isp.svg";
 import DatabaseImage from "public/images/database_monitoring.png";
+import PricingPlan from "@/modules/shared/PricingPlan";
 
 const IspProxies = () => {
   return (
@@ -22,11 +21,44 @@ const IspProxies = () => {
             "31+ countries covered",
             "SOCKS5 support",
           ]}
+          collapsible={true}
+          children={
+            <PricingPlan
+              plans={[
+                {
+                  days: 1,
+                  quantity: 10,
+                  discount: 10,
+                  price: 12,
+                  pricePerMonth: 2,
+                },
+                {
+                  days: 30,
+                  quantity: 10,
+                  discount: 10,
+                  price: 12,
+                  pricePerMonth: 2,
+                },
+                {
+                  days: 60,
+                  quantity: 10,
+                  discount: 10,
+                  price: 12,
+                  pricePerMonth: 2,
+                },
+                {
+                  days: 120,
+                  quantity: 10,
+                  discount: 10,
+                  price: 12,
+                  pricePerMonth: 2,
+                },
+              ]}
+            />
+          }
           image={DatabaseImage}
           className="mt-6"
         />
-        <Locations className="mt-5" />
-        <ProxyGenerator className="mt-6" />
       </div>
 
       <div className="col-span-8">

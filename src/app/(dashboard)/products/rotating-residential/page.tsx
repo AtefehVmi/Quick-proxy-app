@@ -1,5 +1,5 @@
 import Locations from "@/modules/Products/RotatingResi/Locations";
-import ProxyCard from "@/modules/Products/RotatingResi/ProxyCard";
+import ProxyCard from "@/modules/shared/ProxyCard";
 import ProxyGenerator from "@/modules/Products/RotatingResi/ProxyGenerator";
 import RotatingSidebar from "@/modules/Products/RotatingResi/RotatingSidebar";
 import Heading from "@/modules/shared/Heading";
