@@ -12,6 +12,10 @@ import QuantityIcon from "public/icons/quantity.svg";
 import InputText from "@/components/InputText";
 import ChangePassModal from "@/modules/Modals/ChangePassModal";
 import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
+import { toast } from "react-toastify";
+import MagicwandIcon from "public/icons/magic-wand.svg";
+
+import Button from "@/components/Button";
 
 const portOptions = [{ label: "", value: "" }];
 const formatOptions = [{ label: "", value: "" }];
@@ -21,7 +25,17 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
   const [port, setPort] = useState(portOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
-  const [quantity, setQuantity] = useState<number>();
+  const [quantity, setQuantity] = useState<number>(0);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleGenerateProxyButtonClick = () => {
+    if (!port || !format || !rotation || !quantity) {
+      toast.error("Fill in the fields first");
+      return;
+    }
+
+    setOpenModal(true);
+  };
 
   return (
     <Card className={cn("px-0 pt-4.5", className)}>
@@ -80,8 +94,18 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         />
       </div>
 
+      <div className="flex items-center justify-end pr-6">
+        <GenerateProxyModal open={openModal} setOpen={setOpenModal} />
+      </div>
+
       <div className="flex items-center justify-end py-6 pr-6">
-        <GenerateProxyModal />
+        <Button
+          onClick={handleGenerateProxyButtonClick}
+          Icon={MagicwandIcon}
+          className="py-3 px-10 font-semibold"
+        >
+          Generate Proxy
+        </Button>
       </div>
     </Card>
   );

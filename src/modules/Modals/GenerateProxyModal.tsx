@@ -14,9 +14,17 @@ import { toast } from "react-toastify";
 import CopiedIcon from "public/icons/assept-document.svg";
 import DownloadedIcon from "public/icons/file-download-small.svg";
 
-const GenerateProxyModal = ({ className }: { className?: string }) => {
-  const [open, setOpen] = useState(false);
+interface GenerateProxyModalProps {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  className?: string;
+}
 
+const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
+  className,
+  open,
+  setOpen,
+}) => {
   const handleCloseButton = () => {
     setOpen(false);
   };
@@ -44,15 +52,7 @@ const GenerateProxyModal = ({ className }: { className?: string }) => {
   };
 
   return (
-    <div>
-      <Button
-        onClick={() => setOpen(true)}
-        Icon={MagicwandIcon}
-        className="py-3 px-10 font-semibold"
-      >
-        Generate proxy
-      </Button>
-
+    <>
       {open && (
         <Dialog
           open={open}
@@ -101,7 +101,8 @@ const GenerateProxyModal = ({ className }: { className?: string }) => {
           </DialogPanel>
         </Dialog>
       )}
-    </div>
+    </>
   );
 };
+
 export default GenerateProxyModal;

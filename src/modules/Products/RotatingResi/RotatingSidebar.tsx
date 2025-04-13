@@ -10,7 +10,7 @@ import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Bandwidth from "./Bandwidth";
 
 const RotatingSidebar = () => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(5);
   const [coupon, setCoupon] = useState<string>();
 
   const discount = "";
@@ -94,7 +94,7 @@ const RotatingSidebar = () => {
 
         <div className="flex items-center justify-between">
           <p className="text-base text-white leading-6">Total Price</p>
-          <p className="text-white font-bold text-32 leading-12">$ 16.98</p>
+          <p className="text-white font-bold text-32 leading-12">$ {amount}</p>
         </div>
 
         <div className="mt-6">
