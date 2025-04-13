@@ -7,6 +7,7 @@ import cn from "@/utils/cn";
 import { useState } from "react";
 import WalletIcon from "public/icons/wallet-small.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
+import Bandwidth from "./Bandwidth";
 
 const RotatingSidebar = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -18,12 +19,14 @@ const RotatingSidebar = () => {
   return (
     <div
       className={cn(
-        "bg-black-3 h-[calc(100vh_-_100px)] grow px-8",
+        "bg-black-3 h-full grow px-8",
         "flex flex-col justify-between"
       )}
     >
-      <div className="pt-6">
-        <p className="text-white font-bold text-xl leading-7.5 pb-6 border-b border-black-border">
+      <div className="">
+        <Bandwidth />
+
+        <p className="text-white font-bold text-xl leading-7.5 py-6 border-b border-black-border">
           Get Started
         </p>
 
