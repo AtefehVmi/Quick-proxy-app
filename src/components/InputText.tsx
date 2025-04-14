@@ -60,7 +60,7 @@ const InputText = (props: InputTextProps) => {
 
   const classes = {
     root: cn(
-      "w-[22.75rem] flex flex-col gap-2 placeholder:text-white",
+      "flex flex-col gap-2 placeholder:text-white",
       fullWidth && "w-full",
       className
     ),

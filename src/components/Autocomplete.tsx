@@ -94,11 +94,7 @@ const Autocomplete = <A extends string | number | null, B extends any>(
   const startAdornment = startAdornmentProp || selectedOption?.icon;
 
   const classes = {
-    root: cn(
-      "w-[22.75rem] flex flex-col gap-2",
-      fullWidth && "w-full",
-      className
-    ),
+    root: cn("flex flex-col gap-2", fullWidth && "w-full", className),
     label: cn(
       "absolute -top-2.5 left-3 px-1 text-sm pointer-events-none z-10",
       "bg-black-3",

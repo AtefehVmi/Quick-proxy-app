@@ -1,5 +1,5 @@
 import Navbar from "@/modules/Dashboard/Navbar/Navbar";
-import ToggleSidebar from "@/modules/Dashboard/Sidebar/ToggleSidebar";
+import ToggleSidebar from "@/components/Sidebar/ToggleSidebar";
 
 const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,

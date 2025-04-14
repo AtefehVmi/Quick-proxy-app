@@ -5,6 +5,7 @@ import cn from "@/utils/cn";
 import IspIcon from "public/icons/isp.svg";
 import DatabaseImage from "public/images/database_monitoring.png";
 import PricingPlan from "@/modules/shared/PricingPlan";
+import IspSidebar from "@/modules/Products/Isp/IspSidebar";
 
 const IspProxies = () => {
   return (
@@ -62,7 +63,7 @@ const IspProxies = () => {
       </div>
 
       <div className="col-span-8">
-        <RotatingSidebar />
+        <IspSidebar />
       </div>
     </div>
   );
