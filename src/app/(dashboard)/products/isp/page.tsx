@@ -1,5 +1,5 @@
 import ProxyCard from "@/modules/shared/ProxyCard";
-import RotatingSidebar from "@/modules/Products/RotatingResi/RotatingSidebar";
+
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
 import IspIcon from "public/icons/isp.svg";
