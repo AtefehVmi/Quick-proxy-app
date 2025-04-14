@@ -25,19 +25,22 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
         Pricing Plan
       </p>
 
-      <div className="border-t border-black-border">
+      <div className="border-t border-t-black-border border-b border-b-black">
         <div className="grid grid-cols-4 mx-7">
           {plans.map((plan, index) => (
-            <div>
-              <div key={`${plan.days}-${index}`}>
-                <div className="flex items-center justify-center gap-2.5 border-x border-b border-black-border py-10.5">
-                  <p className="text-white font-bold text-xl leading-7.5">
-                    {plan.days} Day
-                  </p>
-                </div>
+            <div key={`${plan.days}-${index}`}>
+              <div className="flex items-center justify-center gap-2.5 border-x border-b border-black-border py-10.5">
+                <p className="text-white font-bold text-xl leading-7.5">
+                  {plan.days} Day
+                </p>
               </div>
 
-              <div className="mt-9.5 flex flex-col items-center gap-5.5">
+              <div
+                className={cn(
+                  "my-9.5 flex flex-col items-center gap-5.5 border-black-border",
+                  index !== plans.length - 1 && "border-r"
+                )}
+              >
                 <div className="flex items-center gap-1">
                   <TextXs className="text-white">Quantity :</TextXs>
                   <TextBase className="text-white font-semibold">

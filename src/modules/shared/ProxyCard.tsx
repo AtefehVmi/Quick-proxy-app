@@ -1,10 +1,12 @@
+"use client";
+
 import Card from "@/components/Card/Card";
 import TextXs from "@/components/Typography/TextXs";
 import cn from "@/utils/cn";
 import Image, { StaticImageData } from "next/image";
 import CheckIcon from "public/icons/check.svg";
 import TextSm from "@/components/Typography/TextSm";
-import React from "react";
+import React, { useState } from "react";
 import AngleDownIcon from "public/icons/angle-double-small-down.svg";
 
 type Props = {
@@ -26,6 +28,11 @@ const ProxyCard: React.FC<Props> = ({
   collapsible = false,
   features,
 }) => {
+  const [isOpen, setIsOpen] = useState(false); // state to track open/close
+
+  const toggleDetails = () => {
+    setIsOpen(!isOpen); // toggle the open/close state
+  };
   return (
     <div className={cn(className)}>
       <Card className={cn("p-7.5")}>
@@ -64,12 +71,35 @@ const ProxyCard: React.FC<Props> = ({
         </div>
       </Card>
 
-      {children}
+      {collapsible ? (
+        <div className="bg-black-2 group transition-all">
+          {/* Initially visible AngleDownIcon */}
+          {!isOpen && (
+            <div
+              onClick={toggleDetails}
+              className="flex items-center justify-center cursor-pointer list-none mb-2"
+            >
+              <AngleDownIcon className="my-2 transition-transform duration-300" />
+            </div>
+          )}
 
-      {collapsible && (
-        <div className="bg-black-2 flex items-center justify-center">
-          <AngleDownIcon className="my-2" />
+          {/* Content that will be shown when opened */}
+          {isOpen && (
+            <div>
+              <div className="overflow-hidden">{children}</div>
+
+              {/* Bottom AngleDownIcon to collapse */}
+              <div
+                className="flex items-center justify-center cursor-pointer"
+                onClick={toggleDetails}
+              >
+                <AngleDownIcon className="transition-transform duration-300 rotate-180 my-2" />
+              </div>
+            </div>
+          )}
         </div>
+      ) : (
+        children
       )}
     </div>
   );
