@@ -1,7 +1,11 @@
+"use client";
+
+import Button from "@/components/Button";
 import TextBase from "@/components/Typography/TextBase";
 import TextXs from "@/components/Typography/TextXs";
 import cn from "@/utils/cn";
-import React from "react";
+import React, { useState } from "react";
+import CheckIcon from "public/icons/check-icon.svg";
 
 type Plans = {
   days: number;
@@ -14,6 +18,10 @@ type Plans = {
 type Props = { plans: Plans[] };
 
 const PricingPlan: React.FC<Props> = ({ plans }) => {
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(
+    null
+  );
+
   return (
     <div className="bg-black-2">
       <p
@@ -30,6 +38,17 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
           {plans.map((plan, index) => (
             <div key={`${plan.days}-${index}`}>
               <div className="flex items-center justify-center gap-2.5 border-x border-b border-black-border py-10.5">
+                <Button
+                  onClick={() =>
+                    setSelectedPlanIndex(
+                      index === selectedPlanIndex ? null : index
+                    )
+                  }
+                  className="p-1"
+                  variant={index === selectedPlanIndex ? "primary" : "checkbox"}
+                >
+                  <CheckIcon />
+                </Button>
                 <p className="text-white font-bold text-xl leading-7.5">
                   {plan.days} Day
                 </p>

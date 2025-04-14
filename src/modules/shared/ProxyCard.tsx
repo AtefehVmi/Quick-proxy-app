@@ -28,10 +28,10 @@ const ProxyCard: React.FC<Props> = ({
   collapsible = false,
   features,
 }) => {
-  const [isOpen, setIsOpen] = useState(false); // state to track open/close
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetails = () => {
-    setIsOpen(!isOpen); // toggle the open/close state
+    setIsOpen(!isOpen);
   };
   return (
     <div className={cn(className)}>
@@ -73,7 +73,6 @@ const ProxyCard: React.FC<Props> = ({
 
       {collapsible ? (
         <div className="bg-black-2 group transition-all">
-          {/* Initially visible AngleDownIcon */}
           {!isOpen && (
             <div
               onClick={toggleDetails}
@@ -83,12 +82,10 @@ const ProxyCard: React.FC<Props> = ({
             </div>
           )}
 
-          {/* Content that will be shown when opened */}
           {isOpen && (
             <div>
               <div className="overflow-hidden">{children}</div>
 
-              {/* Bottom AngleDownIcon to collapse */}
               <div
                 className="flex items-center justify-center cursor-pointer"
                 onClick={toggleDetails}
