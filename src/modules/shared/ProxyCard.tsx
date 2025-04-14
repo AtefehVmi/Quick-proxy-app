@@ -28,7 +28,7 @@ const ProxyCard: React.FC<Props> = ({
   collapsible = false,
   features,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleDetails = () => {
     setIsOpen(!isOpen);
