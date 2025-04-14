@@ -204,11 +204,106 @@ const data: IspRecent[] = [
     date: "2025-04-05T09:00:00Z",
     auto_renew: false,
   },
+  {
+    plan: "Plan 30 days",
+    location: "United States",
+    remain_time: "12 days",
+    quantity: 100,
+    status: "Active",
+    date: "2025-04-01T10:20:30Z",
+    auto_renew: true,
+  },
+  {
+    plan: "Plan 10 days",
+    location: "Germany",
+    remain_time: "5 days",
+    quantity: 50,
+    status: "Non active",
+    date: "2025-03-20T08:15:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 60 days",
+    location: "Canada",
+    remain_time: "28 days",
+    quantity: 200,
+    status: "Expiring soon",
+    date: "2025-04-10T13:45:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 90 days",
+    location: "United Kingdom",
+    remain_time: "1 day",
+    quantity: 25,
+    status: "Expiring soon",
+    date: "2025-03-30T11:00:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 120 days",
+    location: "Japan",
+    remain_time: "15 days",
+    quantity: 75,
+    status: "Active",
+    date: "2025-04-05T09:00:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 30 days",
+    location: "United States",
+    remain_time: "12 days",
+    quantity: 100,
+    status: "Active",
+    date: "2025-04-01T10:20:30Z",
+    auto_renew: true,
+  },
+  {
+    plan: "Plan 10 days",
+    location: "Germany",
+    remain_time: "5 days",
+    quantity: 50,
+    status: "Non active",
+    date: "2025-03-20T08:15:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 60 days",
+    location: "Canada",
+    remain_time: "28 days",
+    quantity: 200,
+    status: "Expiring soon",
+    date: "2025-04-10T13:45:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 90 days",
+    location: "United Kingdom",
+    remain_time: "1 day",
+    quantity: 25,
+    status: "Expiring soon",
+    date: "2025-03-30T11:00:00Z",
+    auto_renew: false,
+  },
+  {
+    plan: "Plan 120 days",
+    location: "Japan",
+    remain_time: "15 days",
+    quantity: 75,
+    status: "Active",
+    date: "2025-04-05T09:00:00Z",
+    auto_renew: false,
+  },
 ];
 
 const ActivityTable = ({ className }: { className?: string }) => {
   return (
-    <Card className={cn("p-0", className)}>
+    <Card
+      className={cn(
+        "p-0 max-h-[calc(100dvh_-_170px)] overflow-auto",
+        className
+      )}
+    >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 pt-4.5">
           <RecentActivityIcon />
