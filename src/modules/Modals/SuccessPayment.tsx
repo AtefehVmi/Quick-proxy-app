@@ -8,19 +8,64 @@ import NotifIcon from "public/icons/cowbell.svg";
 import SuccessImage from "public/images/success-payment.png";
 import Image from "next/image";
 import Button from "@/components/Button";
+import AddIcon from "public/icons/add.svg";
 
-const SuccessPayment = ({ className }: { className?: string }) => {
+type Props = {
+  className?: string;
+  title: string;
+  type: "bandwidth" | "plan" | "balance";
+};
+
+const SuccessPayment: React.FC<Props> = ({ className, title, type }) => {
   const [open, setOpen] = useState(false);
 
   const handleCloseButton = () => {
     setOpen(false);
   };
+
+  const renderButton = () => {
+    switch (type) {
+      case "bandwidth":
+        return (
+          <Button
+            onClick={() => setOpen(true)}
+            variant="black"
+            className="p-3.5"
+          >
+            <AddIcon />
+          </Button>
+        );
+      case "plan":
+        return (
+          <Button
+            onClick={() => setOpen(true)}
+            variant="black"
+            className="p-3.5"
+          >
+            <AddIcon />
+          </Button>
+        );
+      case "balance":
+        return (
+          <button onClick={() => setOpen(true)} className={cn(className)}>
+            <NotifIcon className="m-4 cursor-pointer" />
+          </button>
+        );
+      default:
+        return (
+          <Button
+            onClick={handleCloseButton}
+            className="font-semibold px-12 py-4"
+          >
+            Ok
+          </Button>
+        );
+    }
+  };
+
   return (
     <div>
-      <button onClick={() => setOpen(true)} className={cn(className)}>
-        <NotifIcon className="m-4 cursor-pointer" />
-      </button>
-
+      {renderButton()}
       {open && (
         <Dialog
           open={open}
@@ -30,9 +75,7 @@ const SuccessPayment = ({ className }: { className?: string }) => {
         >
           <DialogPanel as="form" className={cn("w-139", "bg-black-3 p-6")}>
             <div className="flex items-center justify-between pb-6 border-b border-black-border">
-              <p className="text-2xl leading-9 font-bold text-white">
-                Add Balance
-              </p>
+              <p className="text-2xl leading-9 font-bold text-white">{title}</p>
               <CrossIcon
                 className="cursor-pointer"
                 onClick={() => setOpen(false)}

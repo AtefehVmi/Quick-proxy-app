@@ -1,10 +1,7 @@
-import Button from "@/components/Button";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
 import BalanceModal from "@/modules/Modals/BalanceModal";
-import SuccessPayment from "@/modules/Modals/SuccessPayment";
 import cn from "@/utils/cn";
-import AddIcon from "public/icons/add.svg";
 
 const Wallet = ({ className }: { className?: string }) => {
   return (
