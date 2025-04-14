@@ -11,6 +11,8 @@ import Table from "@/components/Table";
 import CaretRightIcon from "public/icons/status.svg";
 import ToggleBox from "@/components/ToggleBox";
 import ArrowRightIcon from "public/icons/arrow-small-right.svg";
+import StatusIcon from "public/icons/bars-filter.svg";
+import FilterIcon from "public/icons/filter.svg";
 import Button from "@/components/Button";
 
 const columnHelper = createColumnHelper<IspRecent>();
@@ -207,9 +209,21 @@ const data: IspRecent[] = [
 const ActivityTable = ({ className }: { className?: string }) => {
   return (
     <Card className={cn("p-0", className)}>
-      <div className="flex items-center gap-2 pt-4.5">
-        <RecentActivityIcon />
-        <p className="text-white text-lg font-bold">Recent Activities</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 pt-4.5">
+          <RecentActivityIcon />
+          <p className="text-white text-lg font-bold">Recent Activities</p>
+        </div>
+
+        <div className="flex items-center gap-2 pr-4.5 pt-3.5">
+          <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
+            Status
+          </Button>
+
+          <Button variant="black" className="p-2">
+            <FilterIcon />
+          </Button>
+        </div>
       </div>
 
       <div className="mt-7.5">
