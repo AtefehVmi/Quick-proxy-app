@@ -7,18 +7,23 @@ import {
   useReactTable,
   ColumnDef,
 } from "@tanstack/react-table";
+import NoDataImage from "public/images/no-data.png";
+import Image from "next/image";
+import cn from "@/utils/cn";
 
 interface TableProps<T extends object> {
   data: T[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<T, any>[];
   isLoading?: boolean;
+  className?: string;
 }
 
 const Table = <T extends object>({
   data,
   columns,
   isLoading,
+  className,
 }: TableProps<T>) => {
   const table = useReactTable({
     data,
@@ -27,7 +32,7 @@ const Table = <T extends object>({
   });
 
   return (
-    <div className="mt-5 overflow-auto">
+    <div className={cn("mt-5 overflow-auto", className)}>
       <table className="w-full text-left">
         <thead className="bg-black-2 border-b border-black">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -82,11 +87,11 @@ const Table = <T extends object>({
             ))
           ) : (
             <tr>
-              <td
-                colSpan={table.getAllColumns().length}
-                className="py-4 px-4 text-center text-white font-medium"
-              >
-                No data to show
+              <td colSpan={table.getAllColumns().length}>
+                <div className="flex items-center justify-center">
+                  {" "}
+                  <Image src={NoDataImage} alt="no data" />
+                </div>
               </td>
             </tr>
           )}

@@ -161,69 +161,69 @@ const columns = [
 ];
 
 const data: IspRecent[] = [
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 30 days",
-    location: "United States",
-    remain_time: "12 days",
-    quantity: 100,
-    status: "Active",
-    date: "2025-04-01T10:20:30Z",
-    auto_renew: true,
-  },
-  {
-    plan: "Plan 10 days",
-    location: "Germany",
-    remain_time: "5 days",
-    quantity: 50,
-    status: "Non active",
-    date: "2025-03-20T08:15:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 60 days",
-    location: "Canada",
-    remain_time: "28 days",
-    quantity: 200,
-    status: "Expiring soon",
-    date: "2025-04-10T13:45:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
+  // {
+  //   plan: "Plan 90 days",
+  //   location: "United Kingdom",
+  //   remain_time: "1 day",
+  //   quantity: 25,
+  //   status: "Expiring soon",
+  //   date: "2025-03-30T11:00:00Z",
+  //   auto_renew: false,
+  // },
+  // {
+  //   plan: "Plan 120 days",
+  //   location: "Japan",
+  //   remain_time: "15 days",
+  //   quantity: 75,
+  //   status: "Active",
+  //   date: "2025-04-05T09:00:00Z",
+  //   auto_renew: false,
+  // },
+  // {
+  //   plan: "Plan 30 days",
+  //   location: "United States",
+  //   remain_time: "12 days",
+  //   quantity: 100,
+  //   status: "Active",
+  //   date: "2025-04-01T10:20:30Z",
+  //   auto_renew: true,
+  // },
+  // {
+  //   plan: "Plan 10 days",
+  //   location: "Germany",
+  //   remain_time: "5 days",
+  //   quantity: 50,
+  //   status: "Non active",
+  //   date: "2025-03-20T08:15:00Z",
+  //   auto_renew: false,
+  // },
+  // {
+  //   plan: "Plan 60 days",
+  //   location: "Canada",
+  //   remain_time: "28 days",
+  //   quantity: 200,
+  //   status: "Expiring soon",
+  //   date: "2025-04-10T13:45:00Z",
+  //   auto_renew: false,
+  // },
+  // {
+  //   plan: "Plan 90 days",
+  //   location: "United Kingdom",
+  //   remain_time: "1 day",
+  //   quantity: 25,
+  //   status: "Expiring soon",
+  //   date: "2025-03-30T11:00:00Z",
+  //   auto_renew: false,
+  // },
+  // {
+  //   plan: "Plan 120 days",
+  //   location: "Japan",
+  //   remain_time: "15 days",
+  //   quantity: 75,
+  //   status: "Active",
+  //   date: "2025-04-05T09:00:00Z",
+  //   auto_renew: false,
+  // },
 ];
 
 const ActivityTable = ({ className }: { className?: string }) => {
@@ -232,12 +232,7 @@ const ActivityTable = ({ className }: { className?: string }) => {
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
   return (
-    <Card
-      className={cn(
-        "p-0 max-h-[calc(100dvh_-_170px)] overflow-auto",
-        className
-      )}
-    >
+    <Card className={cn("p-0 max-h-[840px]", className)}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 pt-4.5">
           <RecentActivityIcon />
@@ -255,7 +250,7 @@ const ActivityTable = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="mt-7.5 mb-3">
+      <div className="mt-7.5 mb-3 h-full">
         <Table columns={columns} data={data} />
       </div>
       <div className="mx-4.5 border-t border-black-2">

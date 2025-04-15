@@ -1,5 +1,5 @@
+import ActivitySidebar from "@/modules/Products/Isp/ActivitySidebar";
 import ActivityTable from "@/modules/Products/Isp/ActivityTable";
-import IspSidebar from "@/modules/Products/Isp/IspSidebar";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
 import IspIcon from "public/icons/isp.svg";
@@ -13,7 +13,7 @@ const RecentActivity = () => {
       </div>
 
       <div className="col-span-8">
-        <IspSidebar />
+        <ActivitySidebar />
       </div>
     </div>
   );

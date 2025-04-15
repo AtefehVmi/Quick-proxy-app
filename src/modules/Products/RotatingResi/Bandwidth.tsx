@@ -1,5 +1,4 @@
 import BandwidthCard from "./BandwidthCard";
-import UserCard from "./UserCard";
 
 const Bandwidth = () => {
   return (
