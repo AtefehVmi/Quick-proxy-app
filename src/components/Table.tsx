@@ -90,7 +90,7 @@ const Table = <T extends object>({
               <td colSpan={table.getAllColumns().length}>
                 <div className="flex items-center justify-center">
                   {" "}
-                  <Image src={NoDataImage} alt="no data" />
+                  <Image src={NoDataImage} alt="no data" quality={100} />
                 </div>
               </td>
             </tr>

@@ -16,6 +16,8 @@ import FilterIcon from "public/icons/filter.svg";
 import Button from "@/components/Button";
 import Pagination from "@/components/Pagination/Pagination";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-toastify";
+import InterrogationIcon from "public/icons/interrogation.svg";
 
 const columnHelper = createColumnHelper<IspRecent>();
 
@@ -146,17 +148,28 @@ const columns = [
   columnHelper.display({
     id: "actions",
     header: () => null,
-    cell: ({ row }) => (
-      <button
-        onClick={() => {
-          const rowData = row.original;
+    cell: ({ row }) => {
+      const rowData = row.original;
+      const handleClick = () => {
+        if (rowData.status === "Non active") {
+          toast.error("This proxy is non active.", {
+            icon: <InterrogationIcon />,
+          });
+        } else {
           console.log("Action on row:", rowData);
-        }}
-        className="text-white cursor-pointer"
-      >
-        <ArrowRightIcon />
-      </button>
-    ),
+        }
+      };
+
+      return (
+        <button
+          onClick={handleClick}
+          className="text-white cursor-pointer"
+          aria-label="View details"
+        >
+          <ArrowRightIcon />
+        </button>
+      );
+    },
   }),
 ];
 
@@ -294,6 +307,7 @@ const ActivityTable = ({ className }: { className?: string }) => {
 
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
       <div className="flex items-center justify-between pt-4.5">
