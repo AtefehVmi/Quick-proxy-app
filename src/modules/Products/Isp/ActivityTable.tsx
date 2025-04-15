@@ -14,6 +14,8 @@ import ArrowRightIcon from "public/icons/arrow-small-right.svg";
 import StatusIcon from "public/icons/bars-filter.svg";
 import FilterIcon from "public/icons/filter.svg";
 import Button from "@/components/Button";
+import Pagination from "@/components/Pagination/Pagination";
+import { useSearchParams } from "next/navigation";
 
 const columnHelper = createColumnHelper<IspRecent>();
 
@@ -225,6 +227,10 @@ const data: IspRecent[] = [
 ];
 
 const ActivityTable = ({ className }: { className?: string }) => {
+  const params = useSearchParams();
+
+  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
+  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
   return (
     <Card
       className={cn(
@@ -249,8 +255,16 @@ const ActivityTable = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="mt-7.5">
+      <div className="mt-7.5 mb-3">
         <Table columns={columns} data={data} />
+      </div>
+      <div className="mx-4.5 border-t border-black-2">
+        <Pagination
+          limit={limit}
+          offset={offset}
+          isDataAvailable={data.length >= limit}
+          totalCount={data.length}
+        />
       </div>
     </Card>
   );
