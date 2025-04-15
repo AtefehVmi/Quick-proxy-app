@@ -21,158 +21,6 @@ import InterrogationIcon from "public/icons/interrogation.svg";
 
 const columnHelper = createColumnHelper<IspRecent>();
 
-const columns = [
-  columnHelper.accessor("plan", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Plan
-      </TextSm>
-    ),
-    cell: (info) => (
-      <div className="flex items-center gap-2">
-        <div className="bg-black-2">
-          <HomeIcon className="m-2.5" />
-        </div>
-        <div className="whitespace-nowrap">
-          <TextSm className="font-semibold text-grey-100">
-            {info.getValue()}
-          </TextSm>
-        </div>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("location", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Location
-      </TextSm>
-    ),
-    cell: (info) => (
-      <div className="whitespace-nowrap">
-        <TextSm className="font-semibold text-grey-100">
-          {info.getValue()}
-        </TextSm>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("remain_time", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        remaining Time
-      </TextSm>
-    ),
-    cell: (info) => (
-      <div className="whitespace-nowrap">
-        <TextSm className="font-semibold text-grey-100">
-          {info.getValue()}
-        </TextSm>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("quantity", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Quantity
-      </TextSm>
-    ),
-    cell: (info) => (
-      <div className="whitespace-nowrap">
-        <TextSm className="font-semibold text-grey-100">
-          {info.getValue()}
-        </TextSm>
-      </div>
-    ),
-  }),
-  columnHelper.accessor("status", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Status
-      </TextSm>
-    ),
-    cell: (info) => {
-      const value = info.getValue();
-      return (
-        <div
-          className={cn(
-            "flex items-center w-fit gap-1",
-            value === "Active"
-              ? "text-success"
-              : value === "Non active"
-              ? "text-danger"
-              : "text-warning"
-          )}
-        >
-          <CaretRightIcon />
-
-          <TextSm className="font-medium whitespace-nowrap">
-            {value || "null"}
-          </TextSm>
-        </div>
-      );
-    },
-  }),
-  columnHelper.accessor("date", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Date
-      </TextSm>
-    ),
-    cell: (info) => {
-      const formatDate = (timestamp: string): string => {
-        const date = new Date(timestamp);
-        const day = date.getDate();
-        const month = date.toLocaleString("en-GB", { month: "long" });
-        const year = date.getFullYear().toString().slice(2);
-        return `${day} ${month}, ${year}`;
-      };
-
-      return (
-        <div className="whitespace-nowrap">
-          <TextSm className="font-semibold text-grey-100">
-            {formatDate(info.getValue())}
-          </TextSm>
-        </div>
-      );
-    },
-  }),
-  columnHelper.accessor("auto_renew", {
-    header: () => (
-      <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-        Auto renew
-      </TextSm>
-    ),
-    cell: (info) => {
-      return <ToggleBox checked={info.getValue()} />;
-    },
-  }),
-  columnHelper.display({
-    id: "actions",
-    header: () => null,
-    cell: ({ row }) => {
-      const rowData = row.original;
-      const handleClick = () => {
-        if (rowData.status === "Non active") {
-          toast.error("This proxy is non active.", {
-            icon: <InterrogationIcon />,
-          });
-        } else {
-          console.log("Action on row:", rowData);
-        }
-      };
-
-      return (
-        <button
-          onClick={handleClick}
-          className="text-white cursor-pointer"
-          aria-label="View details"
-        >
-          <ArrowRightIcon />
-        </button>
-      );
-    },
-  }),
-];
-
 const data: IspRecent[] = [
   {
     plan: "Plan 90 days",
@@ -302,11 +150,168 @@ const data: IspRecent[] = [
   },
 ];
 
-const ActivityTable = ({ className }: { className?: string }) => {
+interface ActivityTableProps {
+  className?: string;
+  onRowClick?: (row: IspRecent) => void;
+}
+
+const ActivityTable = ({ className, onRowClick }: ActivityTableProps) => {
   const params = useSearchParams();
 
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+
+  const columns = [
+    columnHelper.accessor("plan", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Plan
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-2">
+          <div className="bg-black-2">
+            <HomeIcon className="m-2.5" />
+          </div>
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("location", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Location
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="whitespace-nowrap">
+          <TextSm className="font-semibold text-grey-100">
+            {info.getValue()}
+          </TextSm>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("remain_time", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          remaining Time
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="whitespace-nowrap">
+          <TextSm className="font-semibold text-grey-100">
+            {info.getValue()}
+          </TextSm>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("quantity", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Quantity
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="whitespace-nowrap">
+          <TextSm className="font-semibold text-grey-100">
+            {info.getValue()}
+          </TextSm>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("status", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Status
+        </TextSm>
+      ),
+      cell: (info) => {
+        const value = info.getValue();
+        return (
+          <div
+            className={cn(
+              "flex items-center w-fit gap-1",
+              value === "Active"
+                ? "text-success"
+                : value === "Non active"
+                ? "text-danger"
+                : "text-warning"
+            )}
+          >
+            <CaretRightIcon />
+
+            <TextSm className="font-medium whitespace-nowrap">
+              {value || "null"}
+            </TextSm>
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor("date", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Date
+        </TextSm>
+      ),
+      cell: (info) => {
+        const formatDate = (timestamp: string): string => {
+          const date = new Date(timestamp);
+          const day = date.getDate();
+          const month = date.toLocaleString("en-GB", { month: "long" });
+          const year = date.getFullYear().toString().slice(2);
+          return `${day} ${month}, ${year}`;
+        };
+
+        return (
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {formatDate(info.getValue())}
+            </TextSm>
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor("auto_renew", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Auto renew
+        </TextSm>
+      ),
+      cell: (info) => {
+        return <ToggleBox checked={info.getValue()} />;
+      },
+    }),
+    columnHelper.display({
+      id: "actions",
+      header: () => null,
+      cell: ({ row }) => {
+        const rowData = row.original;
+        const handleClick = () => {
+          if (rowData.status === "Non active") {
+            toast.error("This proxy is non active.", {
+              icon: <InterrogationIcon />,
+            });
+          } else {
+            onRowClick?.(rowData);
+          }
+        };
+
+        return (
+          <button
+            onClick={handleClick}
+            className="text-white cursor-pointer"
+            aria-label="View details"
+          >
+            <ArrowRightIcon />
+          </button>
+        );
+      },
+    }),
+  ];
 
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>

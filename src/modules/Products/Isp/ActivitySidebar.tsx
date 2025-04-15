@@ -3,10 +3,13 @@
 import cn from "@/utils/cn";
 import ActivePlansCard from "./ActivePlansCard";
 import GeneratedProxy from "./GeneratedProxy";
+import { IspRecent } from "@/constants/types";
 
-const ActivitySidebar = () => {
-  const data = ``;
+interface ActivitySidebarProps {
+  data: IspRecent | null;
+}
 
+const ActivitySidebar = ({ data }: ActivitySidebarProps) => {
   return (
     <div
       className={cn("bg-black-3 h-screen grow px-8", "flex flex-col gap-12")}

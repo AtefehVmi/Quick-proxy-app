@@ -7,21 +7,25 @@ import DownloadIcon from "public/icons/file-download.svg";
 import CopiedIcon from "public/icons/assept-document.svg";
 import Image from "next/image";
 import NoDataImage from "public/images/no-data.png";
+import { IspRecent } from "@/constants/types";
 
-const GeneratedProxy = ({ data }: { data: string }) => {
+const GeneratedProxy = ({ data }: { data: IspRecent | null }) => {
+  const text = data ? JSON.stringify(data, null, 2) : "";
+
   const copyText = () => {
-    navigator.clipboard.writeText(data);
+    if (!data) return;
+    navigator.clipboard.writeText(text);
     toast.success("Copied to your clipboard.", {
       icon: <CopiedIcon />,
     });
   };
 
   const downloadText = () => {
-    const blob = new Blob([data], { type: "text/plain" });
-
+    if (!data) return;
+    const blob = new Blob([text], { type: "text/plain" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "data.txt";
+    link.download = "proxy-data.txt";
     link.click();
 
     toast.success("Downloaded successfully.", {
@@ -35,9 +39,10 @@ const GeneratedProxy = ({ data }: { data: string }) => {
         <p className="text-white font-bold text-xl leading-7.5 pt-6">
           Generated Proxies
         </p>
-        {data.length > 0 ? (
+
+        {data ? (
           <TextSm className="mt-6 text-white whitespace-pre-line max-h-[522px] h-full overflow-auto scrollbar-hide">
-            {data}
+            {text}
           </TextSm>
         ) : (
           <div className="flex items-center justify-center h-full">
@@ -67,4 +72,5 @@ const GeneratedProxy = ({ data }: { data: string }) => {
     </div>
   );
 };
+
 export default GeneratedProxy;
