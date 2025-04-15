@@ -7,7 +7,6 @@ import CrossIcon from "public/icons/cross-small.svg";
 import CopyIcon from "public/icons/copy.svg";
 import DownloadIcon from "public/icons/file-download.svg";
 import Button from "@/components/Button";
-import MagicwandIcon from "public/icons/magic-wand.svg";
 import NoDataImage from "public/images/no-data.png";
 import Image from "next/image";
 import { toast } from "react-toastify";
