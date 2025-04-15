@@ -41,7 +41,7 @@ const GeneratedProxy = ({ data }: { data: string }) => {
           </TextSm>
         ) : (
           <div className="flex items-center justify-center h-full">
-            <Image src={NoDataImage} alt="no data" />
+            <Image quality={100} src={NoDataImage} alt="no data" />
           </div>
         )}
       </div>
