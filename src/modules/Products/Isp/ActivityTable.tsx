@@ -3,316 +3,28 @@
 import Card from "@/components/Card/Card";
 import cn from "@/utils/cn";
 import RecentActivityIcon from "public/icons/recent-activity.svg";
-import HomeIcon from "public/icons/map-marker-home.svg";
-import { IspRecent } from "@/constants/types";
-import TextSm from "@/components/Typography/TextSm";
-import { createColumnHelper } from "@tanstack/react-table";
 import Table from "@/components/Table";
-import CaretRightIcon from "public/icons/status.svg";
-import ToggleBox from "@/components/ToggleBox";
-import ArrowRightIcon from "public/icons/arrow-small-right.svg";
-import StatusIcon from "public/icons/bars-filter.svg";
-import FilterIcon from "public/icons/filter.svg";
-import Button from "@/components/Button";
 import Pagination from "@/components/Pagination/Pagination";
-import { useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
-import InterrogationIcon from "public/icons/interrogation.svg";
+import { ReactNode } from "react";
+import { ColumnDef } from "@tanstack/react-table";
 
-const columnHelper = createColumnHelper<IspRecent>();
-
-const data: IspRecent[] = [
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 30 days",
-    location: "United States",
-    remain_time: "12 days",
-    quantity: 100,
-    status: "Active",
-    date: "2025-04-01T10:20:30Z",
-    auto_renew: true,
-  },
-  {
-    plan: "Plan 10 days",
-    location: "Germany",
-    remain_time: "5 days",
-    quantity: 50,
-    status: "Non active",
-    date: "2025-03-20T08:15:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 60 days",
-    location: "Canada",
-    remain_time: "28 days",
-    quantity: 200,
-    status: "Expiring soon",
-    date: "2025-04-10T13:45:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 30 days",
-    location: "United States",
-    remain_time: "12 days",
-    quantity: 100,
-    status: "Active",
-    date: "2025-04-01T10:20:30Z",
-    auto_renew: true,
-  },
-  {
-    plan: "Plan 10 days",
-    location: "Germany",
-    remain_time: "5 days",
-    quantity: 50,
-    status: "Non active",
-    date: "2025-03-20T08:15:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 60 days",
-    location: "Canada",
-    remain_time: "28 days",
-    quantity: 200,
-    status: "Expiring soon",
-    date: "2025-04-10T13:45:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 90 days",
-    location: "United Kingdom",
-    remain_time: "1 day",
-    quantity: 25,
-    status: "Expiring soon",
-    date: "2025-03-30T11:00:00Z",
-    auto_renew: false,
-  },
-  {
-    plan: "Plan 120 days",
-    location: "Japan",
-    remain_time: "15 days",
-    quantity: 75,
-    status: "Active",
-    date: "2025-04-05T09:00:00Z",
-    auto_renew: false,
-  },
-];
-
-interface ActivityTableProps {
+interface ActivityTableProps<T extends object> {
+  filterActions?: ReactNode;
+  data: T[];
+  columns: ColumnDef<T, any>[];
+  limit: number;
+  offset: number;
   className?: string;
-  onRowClick?: (row: IspRecent) => void;
 }
 
-const ActivityTable = ({ className, onRowClick }: ActivityTableProps) => {
-  const params = useSearchParams();
-
-  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
-  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
-
-  const columns = [
-    columnHelper.accessor("plan", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Plan
-        </TextSm>
-      ),
-      cell: (info) => (
-        <div className="flex items-center gap-2">
-          <div className="bg-black-2">
-            <HomeIcon className="m-2.5" />
-          </div>
-          <div className="whitespace-nowrap">
-            <TextSm className="font-semibold text-grey-100">
-              {info.getValue()}
-            </TextSm>
-          </div>
-        </div>
-      ),
-    }),
-    columnHelper.accessor("location", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Location
-        </TextSm>
-      ),
-      cell: (info) => (
-        <div className="whitespace-nowrap">
-          <TextSm className="font-semibold text-grey-100">
-            {info.getValue()}
-          </TextSm>
-        </div>
-      ),
-    }),
-    columnHelper.accessor("remain_time", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          remaining Time
-        </TextSm>
-      ),
-      cell: (info) => (
-        <div className="whitespace-nowrap">
-          <TextSm className="font-semibold text-grey-100">
-            {info.getValue()}
-          </TextSm>
-        </div>
-      ),
-    }),
-    columnHelper.accessor("quantity", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Quantity
-        </TextSm>
-      ),
-      cell: (info) => (
-        <div className="whitespace-nowrap">
-          <TextSm className="font-semibold text-grey-100">
-            {info.getValue()}
-          </TextSm>
-        </div>
-      ),
-    }),
-    columnHelper.accessor("status", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Status
-        </TextSm>
-      ),
-      cell: (info) => {
-        const value = info.getValue();
-        return (
-          <div
-            className={cn(
-              "flex items-center w-fit gap-1",
-              value === "Active"
-                ? "text-success"
-                : value === "Non active"
-                ? "text-danger"
-                : "text-warning"
-            )}
-          >
-            <CaretRightIcon />
-
-            <TextSm className="font-medium whitespace-nowrap">
-              {value || "null"}
-            </TextSm>
-          </div>
-        );
-      },
-    }),
-    columnHelper.accessor("date", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Date
-        </TextSm>
-      ),
-      cell: (info) => {
-        const formatDate = (timestamp: string): string => {
-          const date = new Date(timestamp);
-          const day = date.getDate();
-          const month = date.toLocaleString("en-GB", { month: "long" });
-          const year = date.getFullYear().toString().slice(2);
-          return `${day} ${month}, ${year}`;
-        };
-
-        return (
-          <div className="whitespace-nowrap">
-            <TextSm className="font-semibold text-grey-100">
-              {formatDate(info.getValue())}
-            </TextSm>
-          </div>
-        );
-      },
-    }),
-    columnHelper.accessor("auto_renew", {
-      header: () => (
-        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Auto renew
-        </TextSm>
-      ),
-      cell: (info) => {
-        return <ToggleBox checked={info.getValue()} />;
-      },
-    }),
-    columnHelper.display({
-      id: "actions",
-      header: () => null,
-      cell: ({ row }) => {
-        const rowData = row.original;
-        const handleClick = () => {
-          if (rowData.status === "Non active") {
-            toast.error("This proxy is non active.", {
-              icon: <InterrogationIcon />,
-            });
-          } else {
-            onRowClick?.(rowData);
-          }
-        };
-
-        return (
-          <button
-            onClick={handleClick}
-            className="text-white cursor-pointer"
-            aria-label="View details"
-          >
-            <ArrowRightIcon />
-          </button>
-        );
-      },
-    }),
-  ];
-
+const ActivityTable = <T extends object>({
+  className,
+  filterActions,
+  limit,
+  offset,
+  data,
+  columns,
+}: ActivityTableProps<T>) => {
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
       <div className="flex items-center justify-between pt-4.5">
@@ -321,12 +33,7 @@ const ActivityTable = ({ className, onRowClick }: ActivityTableProps) => {
           <p className="text-white text-lg font-bold">Recent Activities</p>
         </div>
         <div className="flex items-center gap-2 pt-1 pr-4.5">
-          <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
-            Status
-          </Button>
-          <Button variant="black" className="p-2">
-            <FilterIcon />
-          </Button>
+          {filterActions && <>{filterActions}</>}
         </div>
       </div>
 
@@ -345,4 +52,5 @@ const ActivityTable = ({ className, onRowClick }: ActivityTableProps) => {
     </Card>
   );
 };
+
 export default ActivityTable;
