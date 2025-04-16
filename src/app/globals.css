@@ -118,3 +118,23 @@ body {
 .Toastify__toast {
   width: 688px;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 18px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #000;
+  border: 1px solid #2b2b2b;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #2b2b2b;
+  border-radius: 100px;
+
+  width: 6px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 6px solid transparent;
+  background-clip: padding-box;
+}

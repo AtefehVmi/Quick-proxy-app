@@ -37,7 +37,7 @@ const ActivityTable = <T extends object>({
         </div>
       </div>
 
-      <div className="flex-1 mt-7.5 mb-3 overflow-auto scrollbar-hide px-4.5">
+      <div className="flex-1 mt-7.5 mb-3 overflow-auto custom-scrollbar pl-4.5">
         <Table columns={columns} data={data} />
       </div>
 
