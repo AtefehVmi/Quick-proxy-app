@@ -73,7 +73,7 @@ const LteProxy = () => {
       </div>
 
       <div className="col-span-8">
-        <LteSidebar selectedRow={selectedRow} />
+        <LteSidebar />
       </div>
     </div>
   );

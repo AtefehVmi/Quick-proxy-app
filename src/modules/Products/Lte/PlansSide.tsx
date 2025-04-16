@@ -7,11 +7,7 @@ import ChevronIcon from "public/icons/chevron-down.svg";
 import { useState } from "react";
 import cn from "@/utils/cn";
 
-interface Props {
-  data: LteRecent | null;
-}
-
-const PlansSide = ({ data }: Props) => {
+const PlansSide = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,8 +25,6 @@ const PlansSide = ({ data }: Props) => {
         </div>
         {isOpen && <ActivePlansCard />}
       </div>
-
-      {isOpen && <GeneratedProxy data={data} />}
     </>
   );
 };
