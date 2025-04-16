@@ -68,8 +68,11 @@ const data: LteRecent[] = [
 
 const columnHelper = createColumnHelper<LteRecent>();
 
-const ActivityControl = () => {
-  const [selectedRow, setSelectedRow] = useState<LteRecent | null>(null);
+const ActivityControl = ({
+  setSelectedRow,
+}: {
+  setSelectedRow: (row: LteRecent | null) => void;
+}) => {
   const params = useSearchParams();
 
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;

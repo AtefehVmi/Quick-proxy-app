@@ -7,9 +7,9 @@ import DownloadIcon from "public/icons/file-download.svg";
 import CopiedIcon from "public/icons/assept-document.svg";
 import Image from "next/image";
 import NoDataImage from "public/images/no-data.png";
-import { IspRecent } from "@/constants/types";
+import { IspRecent, LteRecent } from "@/constants/types";
 
-const GeneratedProxy = ({ data }: { data: IspRecent | null }) => {
+const GeneratedProxy = ({ data }: { data: IspRecent | null | LteRecent }) => {
   const text = data ? JSON.stringify(data, null, 2) : "";
 
   const copyText = () => {
