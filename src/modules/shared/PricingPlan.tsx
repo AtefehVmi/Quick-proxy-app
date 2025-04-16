@@ -18,9 +18,7 @@ type Plans = {
 type Props = { plans: Plans[] };
 
 const PricingPlan: React.FC<Props> = ({ plans }) => {
-  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(
-    null
-  );
+  const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
 
   return (
     <div className="bg-black-2">
@@ -37,13 +35,18 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
         <div className="grid grid-cols-4 mx-7">
           {plans.map((plan, index) => (
             <div key={`${plan.days}-${index}`}>
-              <div className="flex items-center justify-center gap-2.5 border-x border-b border-black-border py-10.5">
+              <div
+                onClick={() =>
+                  setSelectedPlanIndex(
+                    index === selectedPlanIndex ? null : index
+                  )
+                }
+                className={cn(
+                  "flex items-center justify-center gap-2.5 cursor-pointer",
+                  "border-x border-b border-black-border py-10.5"
+                )}
+              >
                 <Button
-                  onClick={() =>
-                    setSelectedPlanIndex(
-                      index === selectedPlanIndex ? null : index
-                    )
-                  }
                   className="p-1"
                   variant={index === selectedPlanIndex ? "primary" : "checkbox"}
                 >
@@ -56,7 +59,7 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
 
               <div
                 className={cn(
-                  "my-9.5 flex flex-col items-center gap-5.5 border-black-border",
+                  "py-9.5 flex flex-col items-center gap-5.5 border-black-border border-t",
                   index !== plans.length - 1 && "border-r"
                 )}
               >

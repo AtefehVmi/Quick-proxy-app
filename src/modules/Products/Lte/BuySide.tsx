@@ -16,7 +16,7 @@ const portOptions = [{ label: "", value: "" }];
 const lteOptions = [{ label: "", value: "" }];
 
 const BuySide = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [amount, setAmount] = useState<number>(0);
   const [coupon, setCoupon] = useState<string>();
   const [country, setCountry] = useState<string>("");
