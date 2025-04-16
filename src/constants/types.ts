@@ -13,3 +13,10 @@ export type IspRecent = {
   date: string;
   auto_renew: boolean;
 };
+
+export type LteRecent = {
+  country: string;
+  city: string;
+  status: "Active" | "Non active" | "Expiring soon";
+  date: string;
+};

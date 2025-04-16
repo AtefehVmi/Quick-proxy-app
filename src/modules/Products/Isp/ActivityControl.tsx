@@ -2,7 +2,6 @@
 
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
-import ActivityTable from "./ActivityTable";
 import ActivitySidebar from "./ActivitySidebar";
 import IspIcon from "public/icons/isp.svg";
 import { useState } from "react";
@@ -19,6 +18,7 @@ import ToggleBox from "@/components/ToggleBox";
 import { toast } from "react-toastify";
 import InterrogationIcon from "public/icons/interrogation.svg";
 import ArrowRightIcon from "public/icons/arrow-small-right.svg";
+import ActivityTable from "@/modules/shared/ActivityTable";
 
 const data: IspRecent[] = [
   {
@@ -303,7 +303,7 @@ const ActivityControl = () => {
             className="text-white cursor-pointer"
             aria-label="View details"
           >
-            <ArrowRightIcon />
+            <ArrowRightIcon className="hover:text-primary-400" />
           </button>
         );
       },

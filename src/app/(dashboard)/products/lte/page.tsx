@@ -1,4 +1,5 @@
 import IspSidebar from "@/modules/Products/Isp/IspSidebar";
+import ActivityControl from "@/modules/Products/Lte/ActivityControl";
 import Heading from "@/modules/shared/Heading";
 import PricingPlan from "@/modules/shared/PricingPlan";
 import ProxyCard from "@/modules/shared/ProxyCard";
@@ -59,6 +60,7 @@ const LteProxyPage = () => {
           image={DatabaseImage}
           className="mt-6"
         />
+        <ActivityControl />
       </div>
 
       <div className="col-span-8">
