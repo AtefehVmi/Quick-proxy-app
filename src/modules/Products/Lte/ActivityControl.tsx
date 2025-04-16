@@ -16,56 +16,7 @@ import InterrogationIcon from "public/icons/interrogation.svg";
 import ArrowRightIcon from "public/icons/arrow-small-right.svg";
 import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 
-const data: LteRecent[] = [
-  {
-    country: "Germany",
-    city: "Berlin",
-    status: "Active",
-    date: "2024-12-01T10:15:00Z",
-  },
-  {
-    country: "France",
-    city: "Paris",
-    status: "Non active",
-    date: "2024-11-15T14:30:00Z",
-  },
-  {
-    country: "Italy",
-    city: "Rome",
-    status: "Expiring soon",
-    date: "2024-11-10T09:45:00Z",
-  },
-  {
-    country: "USA",
-    city: "New York",
-    status: "Active",
-    date: "2024-10-05T11:00:00Z",
-  },
-  {
-    country: "Japan",
-    city: "Tokyo",
-    status: "Active",
-    date: "2024-09-20T08:20:00Z",
-  },
-  {
-    country: "Canada",
-    city: "Toronto",
-    status: "Non active",
-    date: "2024-08-18T16:45:00Z",
-  },
-  {
-    country: "Spain",
-    city: "Madrid",
-    status: "Expiring soon",
-    date: "2024-07-25T13:10:00Z",
-  },
-  {
-    country: "UK",
-    city: "London",
-    status: "Active",
-    date: "2024-06-30T12:00:00Z",
-  },
-];
+const data: LteRecent[] = [];
 
 const columnHelper = createColumnHelper<LteRecent>();
 
