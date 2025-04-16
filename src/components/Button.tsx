@@ -40,7 +40,7 @@ const Button = ({
   ...props
 }: PropsType) => {
   const baseStyle =
-    "flex items-center justify-center gap-2.5 cursor-pointer text-center text-sm leading-4 font-medium disabled:cursor-default";
+    "flex items-center justify-center gap-2.5 cursor-pointer text-center text-sm leading-4 font-semibold disabled:cursor-default";
 
   const variantStyle = cn(
     variant === "primary" &&

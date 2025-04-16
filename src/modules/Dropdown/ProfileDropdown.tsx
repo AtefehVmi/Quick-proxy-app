@@ -37,7 +37,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
   return (
     <div ref={dropdownRef}>
       <button onClick={() => setIsOpen(!isOpen)} className={cn(className)}>
-        <UserIcon />
+        <UserIcon className="text-white" />
       </button>
 
       {isOpen && (

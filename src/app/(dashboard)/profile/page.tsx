@@ -1,5 +1,6 @@
 "use client";
 
+import ProfileSide from "@/modules/Profile/ProfileSide";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
 import ProfileIcon from "public/icons/user.svg";
@@ -11,7 +12,9 @@ const ProfilePage = () => {
         <Heading title="Profile & Billing" Icon={ProfileIcon} />
       </div>
 
-      <div className="col-span-8">{/* <LteSidebar /> */}</div>
+      <div className="col-span-8">
+        <ProfileSide />
+      </div>
     </div>
   );
 };

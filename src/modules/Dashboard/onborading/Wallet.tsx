@@ -3,10 +3,16 @@ import TextXs from "@/components/Typography/TextXs";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
 
-const Wallet = ({ className }: { className?: string }) => {
+const Wallet = ({
+  className,
+  title,
+}: {
+  className?: string;
+  title: string;
+}) => {
   return (
     <div className={cn(className)}>
-      <p className="text-2xl leading-9 text-white font-bold">Wallet</p>
+      <p className="text-2xl leading-9 text-white font-bold">{title}</p>
 
       <div className="mt-6 pb-6 bg-wallet flex items-end justify-between">
         <div>
