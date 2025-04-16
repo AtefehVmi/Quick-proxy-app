@@ -66,7 +66,10 @@ const LteProxy = () => {
           image={DatabaseImage}
           className="mt-6"
         />
-        <ActivityControl setSelectedRow={setSelectedRow} />
+        <ActivityControl
+          selectedRow={selectedRow}
+          setSelectedRow={setSelectedRow}
+        />
       </div>
 
       <div className="col-span-8">

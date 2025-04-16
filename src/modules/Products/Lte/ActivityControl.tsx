@@ -14,6 +14,7 @@ import CaretRightIcon from "public/icons/status.svg";
 import { toast } from "react-toastify";
 import InterrogationIcon from "public/icons/interrogation.svg";
 import ArrowRightIcon from "public/icons/arrow-small-right.svg";
+import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 
 const data: LteRecent[] = [
   {
@@ -70,10 +71,13 @@ const columnHelper = createColumnHelper<LteRecent>();
 
 const ActivityControl = ({
   setSelectedRow,
+  selectedRow,
 }: {
   setSelectedRow: (row: LteRecent | null) => void;
+  selectedRow: LteRecent | null;
 }) => {
   const params = useSearchParams();
+  const [openModal, setOpenModal] = useState(false);
 
   const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
   const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
@@ -172,6 +176,7 @@ const ActivityControl = ({
               icon: <InterrogationIcon />,
             });
           } else {
+            setOpenModal(true);
             setSelectedRow(rowData);
           }
         };
@@ -190,23 +195,33 @@ const ActivityControl = ({
   ];
 
   return (
-    <ActivityTable
-      className="mt-5"
-      data={data}
-      columns={columns}
-      limit={limit}
-      offset={offset}
-      filterActions={
-        <>
-          <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
-            Status
-          </Button>
-          <Button variant="black" className="p-2">
-            <FilterIcon />
-          </Button>
-        </>
-      }
-    />
+    <>
+      <ActivityTable
+        className="mt-5"
+        data={data}
+        columns={columns}
+        limit={limit}
+        offset={offset}
+        filterActions={
+          <>
+            <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
+              Status
+            </Button>
+            <Button variant="black" className="p-2">
+              <FilterIcon />
+            </Button>
+          </>
+        }
+      />
+
+      {selectedRow && (
+        <GenerateProxyModal
+          open={openModal}
+          setOpen={setOpenModal}
+          data={selectedRow}
+        />
+      )}
+    </>
   );
 };
 export default ActivityControl;

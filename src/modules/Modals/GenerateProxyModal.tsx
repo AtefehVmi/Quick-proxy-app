@@ -12,33 +12,40 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import CopiedIcon from "public/icons/assept-document.svg";
 import DownloadedIcon from "public/icons/file-download-small.svg";
+import { LteRecent } from "@/constants/types";
 
 interface GenerateProxyModalProps {
   open: boolean;
   setOpen: (value: boolean) => void;
   className?: string;
+  data: string | LteRecent;
 }
 
 const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
   className,
   open,
   setOpen,
+  data,
 }) => {
   const handleCloseButton = () => {
     setOpen(false);
   };
 
-  const data = ``;
+  const getTextData = () => {
+    return typeof data === "string" ? data : JSON.stringify(data, null, 2);
+  };
 
   const copyText = () => {
-    navigator.clipboard.writeText(data);
+    const text = getTextData();
+    navigator.clipboard.writeText(text);
     toast.success("Copied to your clipboard.", {
       icon: <CopiedIcon />,
     });
   };
 
   const downloadText = () => {
-    const blob = new Blob([data], { type: "text/plain" });
+    const text = getTextData();
+    const blob = new Blob([text], { type: "text/plain" });
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -72,7 +79,11 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
 
             <div className="bg-black-2 p-5 mt-13.5 whitespace-pre-line h-78 overflow-y-auto">
               {data ? (
-                data
+                typeof data === "string" ? (
+                  data
+                ) : (
+                  JSON.stringify(data, null, 2)
+                )
               ) : (
                 <div className="flex items-center justify-center my-11">
                   <Image src={NoDataImage} alt="no data" quality={100} />

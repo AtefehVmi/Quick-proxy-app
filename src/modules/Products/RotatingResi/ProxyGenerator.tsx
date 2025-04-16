@@ -98,7 +98,7 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex items-center justify-end pr-6">
-        <GenerateProxyModal open={openModal} setOpen={setOpenModal} />
+        <GenerateProxyModal data={""} open={openModal} setOpen={setOpenModal} />
       </div>
 
       <div className="flex items-center justify-end py-6 pr-6">
