@@ -1,5 +1,5 @@
-import IspSidebar from "@/modules/Products/Isp/IspSidebar";
 import ActivityControl from "@/modules/Products/Lte/ActivityControl";
+import LteSidebar from "@/modules/Products/Lte/LteSidebar";
 import Heading from "@/modules/shared/Heading";
 import PricingPlan from "@/modules/shared/PricingPlan";
 import ProxyCard from "@/modules/shared/ProxyCard";
@@ -64,7 +64,7 @@ const LteProxyPage = () => {
       </div>
 
       <div className="col-span-8">
-        <IspSidebar />
+        <LteSidebar />
       </div>
     </div>
   );
