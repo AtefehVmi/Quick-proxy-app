@@ -20,3 +20,11 @@ export type LteRecent = {
   status: "Active" | "Non active" | "Expiring soon";
   date: string;
 };
+
+export type Billing = {
+  type: string;
+  price: number;
+  status: string;
+  date: string;
+  description: number;
+};
