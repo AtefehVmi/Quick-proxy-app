@@ -6,11 +6,12 @@ import Image from "next/image";
 import Loader from "@/components/Loader";
 import Logo from "public/images/logo-big.png";
 import TextSm from "@/components/Typography/TextSm";
+import NoDataImage from "public/images/no-data.png";
 
 type Data = { name: string; value: number; color: string };
 
 interface PieChartProps {
-  data?: Data[];
+  data: Data[];
   isLoading?: boolean;
 }
 
@@ -61,13 +62,13 @@ const CustomPieChart: React.FC<PieChartProps> = ({ isLoading, data }) => {
     );
   }
 
-  //   if (data.length === 0) {
-  //     return (
-  //       <div className="flex items-center justify-center w-full h-2/3">
-  //         <Image src={NoDataImage} alt="" quality={100} />
-  //       </div>
-  //     );
-  //   }
+  if (data.length === 0) {
+    return (
+      <div className="flex items-center justify-center w-full h-[200px]">
+        <Image src={NoDataImage} alt="" quality={100} />
+      </div>
+    );
+  }
 
   return (
     <div>
