@@ -5,6 +5,7 @@ import NotifModal from "@/modules/Modals/NotifModal";
 import Logo from "public/logo-small.png";
 import BurgerMenuIcon from "public/icons/burger-menu.svg";
 import Image from "next/image";
+import ToggleMenu from "./ToggleMenu";
 
 const Navbar = () => {
   return (
@@ -28,9 +29,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3 md:hidden">
-        <div className="w-14 h-14 flex items-center justify-center bg-black-3">
-          <BurgerMenuIcon />
-        </div>
+        <ToggleMenu />
         <Image src={Logo} alt="logo" />
       </div>
 
