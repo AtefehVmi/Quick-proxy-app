@@ -16,7 +16,7 @@ const MainDashboard = () => {
     <div className="w-full px-8 pt-6 pb-8">
       <Heading title="Dashboard" Icon={DashboardIcon} />
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5 mt-6">
         <StatsCard
           title="All Time Spending"
           data={234}
@@ -34,9 +34,9 @@ const MainDashboard = () => {
         <Balance />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-24 gap-5 mt-6">
-        <div className="col-span-1 md:col-span-16 2xl:col-span-18 gap-5 w-full">
-          <div className="flex gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-24 gap-5 mt-6">
+        <div className="col-span-1 lg:col-span-16 2xl:col-span-18 gap-5 w-full">
+          <div className="flex flex-col lg:flex-row gap-5">
             <div className="w-full 2xl:w-1/2">
               <ProductOverview />
             </div>
@@ -47,7 +47,7 @@ const MainDashboard = () => {
           <Locations className="mt-5" heading={false} />
         </div>
 
-        <div className="col-span-1 md:col-span-8 2xl:col-span-6 w-full">
+        <div className="col-span-1 lg:col-span-16 xl:col-span-8 2xl:col-span-6 w-full">
           <ProductCard className="w-full" />
           <ProxyUsage className="w-full mt-5" />
         </div>

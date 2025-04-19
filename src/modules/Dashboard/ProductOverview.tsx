@@ -5,10 +5,12 @@ import Filter from "@/components/Filter";
 
 const ProductOverview = () => {
   return (
-    <Card className="px-0 pt-4.5">
+    <Card className="px-0 pt-4.5 w-full">
       <div className="flex items-center gap-2">
         <ProductIcon />
-        <p className="text-white text-lg font-bold">Product Overview</p>
+        <p className="text-white text-base lg:text-lg font-bold">
+          Product Overview
+        </p>
       </div>
 
       <LineCharts

@@ -24,13 +24,15 @@ const Heading: React.FC<HeadingProps> = ({ Icon, title }) => {
         </div>
 
         <div>
-          <p className="text-white font-bold text-2xl">{title}</p>
-          <p className="text-base text-grey-600">Welcome Back to Fastproxy</p>
+          <p className="text-white font-bold text-lg lg:text-2xl">{title}</p>
+          <p className="text-xs lg:text-base text-grey-600">
+            Welcome Back to Fastproxy
+          </p>
         </div>
       </div>
-      <div className="bg-black-2 py-4 px-8 flex items-center gap-1">
+      <div className="bg-black-2 py-2 lg:py-4 px-3.5 lg:px-8 flex items-center gap-1">
         <CalendarIcon />
-        <TextSm className="text-white font-semibold">
+        <TextSm className="text-white font-semibold whitespace-nowrap">
           {getFormattedDate()}
         </TextSm>
       </div>
