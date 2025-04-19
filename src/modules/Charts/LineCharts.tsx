@@ -14,6 +14,7 @@ import {
 import Loader from "@/components/Loader";
 import React from "react";
 import Image from "next/image";
+import NoDataImage from "public/images/no-data.png";
 
 interface LineChartProps {
   data: any[];
@@ -37,13 +38,13 @@ const LineCharts: React.FC<LineChartProps> = ({
       </div>
     );
   }
-  // if (data.length === 0) {
-  //   return (
-  //     <div className="flex items-center justify-center w-full h-2/3">
-  //       <Image src={NoDataImage} alt="" quality={100} />
-  //     </div>
-  //   );
-  // }
+  if (data.length === 0) {
+    return (
+      <div className="flex items-center justify-center w-full h-[338px]">
+        <Image src={NoDataImage} alt="" quality={100} />
+      </div>
+    );
+  }
   return (
     <div className={cn("h-[321px] pl-3", className)}>
       <ResponsiveContainer width="95%" height="100%">
