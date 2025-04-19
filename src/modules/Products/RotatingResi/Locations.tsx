@@ -31,10 +31,10 @@ const Locations = ({
   return (
     <Card className={cn("p-0", heading && "pt-4.5 pb-6", className)}>
       {heading && (
-        <div className="flex items-center justify-between">
+        <div className="flex gap-3 items-center justify-between">
           <div className="flex items-center gap-2">
             <ProductIcon />
-            <p className="text-white text-lg font-bold">
+            <p className="text-white text-base md:text-lg font-bold whitespace-nowrap">
               Most Popular Location
             </p>
           </div>

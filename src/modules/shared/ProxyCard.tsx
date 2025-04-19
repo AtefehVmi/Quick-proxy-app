@@ -36,9 +36,11 @@ const ProxyCard: React.FC<Props> = ({
   return (
     <div className={cn(className)}>
       <Card className={cn("p-7.5")}>
-        <div className="flex">
+        <div className="flex items-center flex-col-reverse xl:flex-row gap-5 xl:gap-0">
           <div className="flex-1">
-            <p className="text-2xl font-bold text-white leading-9">{title}</p>
+            <p className="text-xl lg:text-2xl font-bold text-white leading-9">
+              {title}
+            </p>
 
             <p className="text-base text-white leading-6 mt-4">{desc}</p>
 

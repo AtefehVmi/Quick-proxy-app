@@ -45,7 +45,9 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <GeneratorIcon />
-          <p className="text-white text-lg font-bold">Proxy Generator</p>
+          <p className="text-white text-base md:text-lg font-bold whitespace-nowrap">
+            Proxy Generator
+          </p>
         </div>
         <div className="pr-6">
           <ChangePassModal />

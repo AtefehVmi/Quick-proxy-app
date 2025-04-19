@@ -19,7 +19,7 @@ const ChangePassModal = ({ className }: { className?: string }) => {
     <div>
       <Button
         onClick={() => setOpen(true)}
-        className="py-1 px-4"
+        className="py-1 px-4 whitespace-nowrap"
         variant="black"
       >
         Change Password

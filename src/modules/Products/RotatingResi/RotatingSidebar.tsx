@@ -66,7 +66,7 @@ const RotatingSidebar = () => {
         )}
       </div>
 
-      <div className="bg-black-2 p-4.5 mb-8">
+      <div className="bg-black-2 p-4.5 mb-8 mt-8 xl:mt-0">
         <p
           className={cn(
             "text-base leading-7 text-grey-100 font-semibold",
