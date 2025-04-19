@@ -65,7 +65,7 @@ export default function Sidebar({
 
       <div className="flex flex-col scrollbar-hide justify-between px-0 2xl:px-8 pb-6 pt-8 overflow-y-auto h-[calc(100vh_-_100px)]">
         <div>
-          <BalanceCard className="mx-4" />
+          <BalanceCard className="mx-4 2xl:mx-0" />
 
           <ul className="mt-8 flex flex-col gap-3 text-xs">
             {sidebarItems.map((item, index) => {
@@ -76,7 +76,7 @@ export default function Sidebar({
                   <div className="flex flex-col text-base leading-6 text-grey-600">
                     <button
                       onClick={() => toggleSection(index)}
-                      className="cursor-pointer py-1 px-4 w-full flex items-center justify-between text-grey-600"
+                      className="cursor-pointer py-1 px-4 2xl:px-0 w-full flex items-center justify-between text-grey-600"
                     >
                       {item.name}
                       <ChevronDownIcon
