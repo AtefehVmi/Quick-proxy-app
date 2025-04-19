@@ -17,6 +17,7 @@ interface TableProps<T extends object> {
   columns: ColumnDef<T, any>[];
   isLoading?: boolean;
   className?: string;
+  noDataClassName?: string;
 }
 
 const Table = <T extends object>({
@@ -24,6 +25,7 @@ const Table = <T extends object>({
   columns,
   isLoading,
   className,
+  noDataClassName,
 }: TableProps<T>) => {
   const table = useReactTable({
     data,
@@ -88,8 +90,12 @@ const Table = <T extends object>({
           ) : (
             <tr>
               <td colSpan={table.getAllColumns().length}>
-                <div className="flex items-center justify-center">
-                  {" "}
+                <div
+                  className={cn(
+                    "flex items-center justify-center",
+                    noDataClassName
+                  )}
+                >
                   <Image src={NoDataImage} alt="no data" quality={100} />
                 </div>
               </td>

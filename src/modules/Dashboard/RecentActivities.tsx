@@ -88,8 +88,8 @@ const RecentActivities = () => {
         <p className="text-white text-lg font-bold">Recent Activities</p>
       </div>
 
-      <div className="mt-7.5 max-h-[355px] overflow-auto scrollbar-hide">
-        <Table columns={columns} data={data} />
+      <div className="mt-7.5 max-h-[300px] overflow-auto scrollbar-hide">
+        <Table columns={columns} data={data} noDataClassName="h-[300px]" />
       </div>
 
       {data.length > 0 && (
