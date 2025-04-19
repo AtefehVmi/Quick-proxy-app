@@ -19,7 +19,7 @@ const ProxyCardContent: React.FC<Props> = ({ title, features }) => {
   }
   return (
     <div className="">
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3">
         <div className="pl-4 pb-4 pr-7.5 col-span-2">
           <div className="w-full mt-6">
             <div className="w-full h-auto">
@@ -86,7 +86,9 @@ const ProxyCardContent: React.FC<Props> = ({ title, features }) => {
             {features.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
                 <CaretIcon />
-                <p className="text-base text-white leading-6">{item}</p>
+                <p className="text-sm lg:text-base text-white leading-6">
+                  {item}
+                </p>
               </div>
             ))}
           </div>
@@ -109,7 +111,11 @@ const ProxyCardContent: React.FC<Props> = ({ title, features }) => {
                 <p className="text-lg text-black leading-8 font-bold">$5.85</p>
               </div>
             </div>
-            <Button variant="black" RightIcon={CaretBigIcon} className="py-3">
+            <Button
+              variant="black"
+              RightIcon={CaretBigIcon}
+              className="py-3 mt-12"
+            >
               Buy Now
             </Button>
           </div>

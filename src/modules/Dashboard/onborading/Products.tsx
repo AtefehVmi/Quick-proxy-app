@@ -32,7 +32,7 @@ const Products = ({ className }: { className?: string }) => {
   return (
     <div className={cn(className)}>
       <div className="flex items-center justify-between">
-        <p className="text-2xl font-bold text-white">Products</p>
+        <p className="text-xl lg:text-2xl font-bold text-white">Products</p>
         <div className={cn("flex items-center gap-1")}>
           <Button
             onClick={() => scroll("left")}

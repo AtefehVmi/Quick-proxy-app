@@ -12,7 +12,9 @@ const Wallet = ({
 }) => {
   return (
     <div className={cn(className)}>
-      <p className="text-2xl leading-9 text-white font-bold">{title}</p>
+      <p className="text-xl lg:text-2xl leading-9 text-white font-bold">
+        {title}
+      </p>
 
       <div className="mt-6 pb-6 bg-wallet flex items-end justify-between">
         <div>

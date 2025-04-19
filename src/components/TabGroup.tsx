@@ -18,7 +18,7 @@ const TabGroup: React.FC<TabGroupProps> = ({ tabs, className }) => {
 
   return (
     <div className={`flex flex-col bg-black-3 ${className}`}>
-      <div className="flex w-full overflow-auto scrollbar-hide whitespace-nowrap px-4 pt-4">
+      <div className="flex w-full flex-wrap gap-1.75 lg:gap-0 lg:flex-nowrap lg:overflow-auto lg:scrollbar-hide whitespace-nowrap px-4 pt-4">
         {tabs.map((tab, index) => (
           <div
             key={index}
