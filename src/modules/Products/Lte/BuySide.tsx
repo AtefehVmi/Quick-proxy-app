@@ -28,12 +28,12 @@ const BuySide = () => {
   const balance = 0;
 
   return (
-    <>
+    <div className="flex flex-col justify-between h-full gap-6">
       <div className="">
         <div
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            "flex items-center justify-between cursor-pointer",
+            "flex items-center justify-between grow cursor-pointer",
             "pb-6 border-b border-black-border"
           )}
         >
@@ -162,7 +162,7 @@ const BuySide = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default BuySide;

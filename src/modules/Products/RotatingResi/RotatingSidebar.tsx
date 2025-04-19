@@ -19,7 +19,7 @@ const RotatingSidebar = () => {
   return (
     <div
       className={cn(
-        "bg-black-3 h-screen grow px-8",
+        "bg-black-3 h-full grow px-8",
         "flex flex-col justify-between"
       )}
     >

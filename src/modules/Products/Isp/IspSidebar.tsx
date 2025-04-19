@@ -24,8 +24,8 @@ const IspSidebar = () => {
   return (
     <div
       className={cn(
-        "bg-black-3 h-screen grow px-8",
-        "flex flex-col justify-between"
+        "bg-black-3 h-full px-8",
+        "flex flex-col justify-between gap-6"
       )}
     >
       <div className="">

@@ -14,7 +14,7 @@ const ProfilePage = () => {
         <BillingTable className="mt-6" />
       </div>
 
-      <div className="col-span-8">
+      <div className="col-span-8 h-full">
         <ProfileSide />
       </div>
     </div>
