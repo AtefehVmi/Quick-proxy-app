@@ -9,6 +9,7 @@ import DashboardIcon from "public/icons/dashboard-icon.svg";
 import BgClockImage from "public/images/alarm-clock.png";
 import BgCartImage from "public/images/cart-shopping.png";
 import BgCubeImage from "public/images/cube.png";
+import Locations from "../Products/RotatingResi/Locations";
 
 const MainDashboard = () => {
   return (
@@ -34,13 +35,16 @@ const MainDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-24 gap-5 mt-6">
-        <div className="col-span-1 md:col-span-16 2xl:col-span-18 flex flex-col 2xl:flex-row gap-5 w-full">
-          <div className="w-full 2xl:w-1/2">
-            <ProductOverview />
+        <div className="col-span-1 md:col-span-16 2xl:col-span-18 gap-5 w-full">
+          <div className="flex gap-5">
+            <div className="w-full 2xl:w-1/2">
+              <ProductOverview />
+            </div>
+            <div className="w-full 2xl:w-1/2">
+              <RecentActivities />
+            </div>
           </div>
-          <div className="w-full 2xl:w-1/2">
-            <RecentActivities />
-          </div>
+          <Locations className="mt-5" heading={false} />
         </div>
 
         <div className="col-span-1 md:col-span-8 2xl:col-span-6 w-full">

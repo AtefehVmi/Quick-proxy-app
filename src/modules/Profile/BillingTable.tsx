@@ -5,7 +5,7 @@ import cn from "@/utils/cn";
 import RecentActivityIcon from "public/icons/recent-activity.svg";
 import Table from "@/components/Table";
 import Pagination from "@/components/Pagination/Pagination";
-import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
 import StatusIcon from "public/icons/bars-filter.svg";
