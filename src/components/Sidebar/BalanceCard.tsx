@@ -1,12 +1,11 @@
-import Button from "@/components/Button";
 import Card from "@/components/Card/Card";
 import WalletIcon from "public/icons/wallet.svg";
-import AddIcon from "public/icons/add.svg";
 import BalanceModal from "@/modules/Modals/BalanceModal";
+import cn from "@/utils/cn";
 
-const BalanceCard = () => {
+const BalanceCard = ({ className }: { className?: string }) => {
   return (
-    <Card className="flex items-end justify-between">
+    <Card className={cn("flex items-end justify-between", className)}>
       <div>
         <div className="flex gap-2 items-center">
           <WalletIcon />
