@@ -17,7 +17,7 @@ const Heading: React.FC<HeadingProps> = ({ Icon, title }) => {
   };
 
   return (
-    <div className="flex items-center justify-between w-full">
+    <div className="flex flex-wrap gap-3 items-center justify-between w-full">
       <div className="flex items-center gap-3">
         <div className="bg-primary-400">
           <Icon className="m-3" />
