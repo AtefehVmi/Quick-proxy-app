@@ -15,11 +15,14 @@ import BackIcon from "public/icons/arrow-small-left.svg";
 import PasswordInput from "@/components/PasswordInput";
 import { supabase } from "@/services/supabaseClient";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const SignInPage = () => {
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const handleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -33,6 +36,7 @@ const SignInPage = () => {
       toast.success("Logged in!");
       const accessToken = data.session.access_token;
       localStorage.setItem("accessToken", accessToken);
+      router.replace("/");
     }
   };
 

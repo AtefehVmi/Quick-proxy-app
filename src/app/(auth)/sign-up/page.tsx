@@ -13,9 +13,40 @@ import cn from "@/utils/cn";
 import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import PasswordInput from "@/components/PasswordInput";
+import { toast } from "react-toastify";
+import { supabase } from "@/services/supabaseClient";
+import { useRouter } from "next/navigation";
 
 const SignUpPage = () => {
   const [checked, setChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const router = useRouter();
+
+  const handleSignup = async () => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          username: username,
+        },
+      },
+    });
+
+    if (error) {
+      toast.error(`Signup error: ${error.message}`);
+      return;
+    }
+    if (data.session) {
+      toast.success("Signed up and logged in!");
+      const accessToken = data.session.access_token;
+      localStorage.setItem("accessToken", accessToken);
+      router.replace("/");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
@@ -26,8 +57,9 @@ const SignUpPage = () => {
             Let’s sign up quickly to get started.
           </TextBase>
 
-          <form className="mt-14">
+          <div className="mt-14">
             <InputText
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               labelBg="bg-black"
               startAdornment={<EmailIcon />}
@@ -35,6 +67,7 @@ const SignUpPage = () => {
               placeholder="Enter your email"
             />
             <InputText
+              onChange={(e) => setUsername(e.target.value)}
               type="text"
               labelBg="bg-black"
               startAdornment={<UserIcon />}
@@ -43,6 +76,7 @@ const SignUpPage = () => {
               placeholder="Enter your username"
             />
             <PasswordInput
+              onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}
               className="mt-8"
@@ -67,10 +101,15 @@ const SignUpPage = () => {
               </label>
             </div>
 
-            <Button Icon={EnterIcon} className="py-3 w-full mt-12">
+            <Button
+              disabled={!checked}
+              onClick={handleSignup}
+              Icon={EnterIcon}
+              className="py-3 w-full mt-12"
+            >
               Sign Up
             </Button>
-          </form>
+          </div>
 
           <div
             className={cn("mt-24 border-t border-white/15 pt-8 text-center")}
