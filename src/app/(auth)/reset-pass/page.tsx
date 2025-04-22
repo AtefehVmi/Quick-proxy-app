@@ -36,9 +36,7 @@ const SignInPage = () => {
             </Button>
           </form>
 
-          <div
-            className={cn("mt-24 border-t border-white/15 pt-8 text-center")}
-          >
+          <div className={cn("mt-14 text-center")}>
             <TextBase>
               Already have an account ?{" "}
               <Link href={"/sign-in"} className="text-primary-400 underline">
