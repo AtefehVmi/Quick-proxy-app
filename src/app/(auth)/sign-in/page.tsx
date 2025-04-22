@@ -13,9 +13,28 @@ import cn from "@/utils/cn";
 import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import PasswordInput from "@/components/PasswordInput";
+import { supabase } from "@/services/supabaseClient";
+import { toast } from "react-toastify";
 
 const SignInPage = () => {
   const [checked, setChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      toast.error(`Login error: ${error.message}`);
+    } else {
+      toast.success("Logged in!");
+      const accessToken = data.session.access_token;
+      localStorage.setItem("accessToken", accessToken);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
@@ -26,8 +45,9 @@ const SignInPage = () => {
             See your growth and get consulting support!
           </TextBase>
 
-          <form className="mt-14">
+          <div className="mt-14">
             <InputText
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               labelBg="bg-black"
               startAdornment={<EmailIcon />}
@@ -36,6 +56,7 @@ const SignInPage = () => {
             />
 
             <PasswordInput
+              onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}
               className="mt-8"
@@ -64,10 +85,14 @@ const SignInPage = () => {
               </Link>
             </div>
 
-            <Button Icon={EnterIcon} className="py-3 w-full mt-12">
+            <Button
+              onClick={handleLogin}
+              Icon={EnterIcon}
+              className="py-3 w-full mt-12"
+            >
               Sign in
             </Button>
-          </form>
+          </div>
 
           <div
             className={cn("mt-24 border-t border-white/15 pt-8 text-center")}
