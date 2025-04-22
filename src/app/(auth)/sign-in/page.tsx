@@ -83,11 +83,11 @@ const SignInPage = () => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <Button variant="ghost" className="py-3.5" Icon={BackIcon}>
+        <Button variant="text" className="py-3.5" Icon={BackIcon}>
           Back
         </Button>
 
-        <Button variant="ghost">Home page</Button>
+        <Button variant="text">Home page</Button>
       </div>
     </div>
   );

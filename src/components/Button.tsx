@@ -7,7 +7,7 @@ import cn from "@/utils/cn";
 type Url = string | UrlObject;
 
 type CustomProps = {
-  variant?: "primary" | "outlined" | "black" | "ghost" | "checkbox";
+  variant?: "primary" | "outlined" | "black" | "ghost" | "checkbox" | "text";
   className?: string;
   loading?: boolean;
   disabled?: boolean;
@@ -51,7 +51,8 @@ const Button = ({
       "bg-black-2 text-white hover:bg-black-3 hover:text-primary-400",
     variant === "ghost" &&
       "bg-transparent text-white hover:text-primary-400 hover:bg-black-3",
-    variant === "checkbox" && "bg-black-border text-grey-700 hover:bg-black"
+    variant === "checkbox" && "bg-black-border text-grey-700 hover:bg-black",
+    variant === "text" && "bg-transparent text-white hover:text-primary-400"
   );
 
   const isDisabled = loading || disabled;
