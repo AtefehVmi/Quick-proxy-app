@@ -14,7 +14,7 @@ import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import PasswordInput from "@/components/PasswordInput";
 
-const SignUpPage = () => {
+const SignInPage = () => {
   const [checked, setChecked] = useState(false);
 
   return (
@@ -93,4 +93,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default SignInPage;
