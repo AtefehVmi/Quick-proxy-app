@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import LogoImage from "public/logo.png";
+import LogoImage from "public/logo.svg";
 import sidebarItems from "./SidebarItems";
 import cn from "@/utils/cn";
 import ChevronDownIcon from "public/icons/angle-down.svg";
@@ -48,11 +48,7 @@ export default function Sidebar({
     >
       <div className="ml-8 pb-8.75 2xl:pb-6.75 border-b border-black-border pt-6 relative">
         <Link href="/">
-          <Image
-            src={LogoImage}
-            alt="logo"
-            className="w-46 h-10 2xl:w-53 2xl:h-12"
-          />
+          <LogoImage />
         </Link>
         <Button
           onClick={onCollapse}

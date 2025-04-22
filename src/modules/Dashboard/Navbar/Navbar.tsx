@@ -2,8 +2,7 @@ import cn from "@/utils/cn";
 import SearchIcon from "public/icons/search.svg";
 import ProfileDropdown from "@/modules/Dropdown/ProfileDropdown";
 import NotifModal from "@/modules/Modals/NotifModal";
-import Logo from "public/logo-small.png";
-import BurgerMenuIcon from "public/icons/burger-menu.svg";
+import Logo from "public/logo-small.svg";
 import Image from "next/image";
 import ToggleMenu from "./ToggleMenu";
 
@@ -30,7 +29,7 @@ const Navbar = () => {
 
       <div className="flex items-center gap-3 md:hidden">
         <ToggleMenu />
-        <Image src={Logo} alt="logo" />
+        <Logo />
       </div>
 
       <div className="flex items-center gap-3 py-5.5">

@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import cn from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "public/logo-small.png";
+import Logo from "public/logo-small.svg";
 import UserImage from "public/images/user.png";
 import DashboardIcon from "public/icons/dashboard.svg";
 import ProductIcon from "public/icons/product.svg";
@@ -41,7 +41,7 @@ const SmallSidebar = ({
     >
       <div className="ml-8 border-b border-black-border pt-6 pb-8.75 relative">
         <Link href={"/"}>
-          <Image src={Logo} alt="logo" quality={100} />
+          <Logo />
         </Link>
 
         <Button
