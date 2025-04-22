@@ -15,6 +15,7 @@ type CustomProps = {
   description?: string | React.ReactNode;
   allocateSpaceForDescription?: boolean;
   paddingY?: string;
+  labelBg?: string;
 };
 
 export type InputTextProps = CustomProps &
@@ -23,6 +24,7 @@ export type InputTextProps = CustomProps &
 const InputText = (props: InputTextProps) => {
   const {
     className,
+    labelBg,
     disabled,
     fullWidth,
     error,
@@ -69,7 +71,7 @@ const InputText = (props: InputTextProps) => {
       focus ? "text-primary-400" : "text-grey",
       error && "text-danger",
       success && "text-success",
-      "bg-black-3",
+      labelBg ? labelBg : "bg-black-3",
       disabled && "bg-transparent"
     ),
     description: cn(
