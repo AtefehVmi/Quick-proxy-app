@@ -1,32 +1,43 @@
+"use client";
+
 import Button from "@/components/Button";
 import H1 from "@/components/Typography/H1";
 import TextBase from "@/components/Typography/TextBase";
+import PassIcon from "public/icons/pass-icon.svg";
 import cn from "@/utils/cn";
 import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
+import PasswordInput from "@/components/PasswordInput";
 import ArrowLeftICon from "public/icons/arrow-small-left.svg";
-import OtpInput from "@/components/OtpInput";
 
-const SignInPage = () => {
+const NewPassPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
         <div className="max-w-[488px] w-full">
-          <H1>Password reset</H1>
+          <H1>Set New Password</H1>
           <TextBase className="text-grey-600 mt-3">
-            We send a code to{" "}
-            <span className="text-primary-400">youremail@gmail.com</span>
+            Must be at least 8 characters.
           </TextBase>
 
-          <form className="mt-12">
-            <OtpInput />
+          <form className="mt-14">
+            <PasswordInput
+              labelBg="bg-black"
+              startAdornment={<PassIcon />}
+              className="mt-8"
+              label="New Password"
+              placeholder="Enter your password"
+            />
 
-            <TextBase className="text-grey-600 mt-12 text-center">
-              You recieved the email? if not{" "}
-              <span className="text-primary-400">Click to resend</span>
-            </TextBase>
+            <PasswordInput
+              labelBg="bg-black"
+              startAdornment={<PassIcon />}
+              className="mt-8"
+              label="Confirm Password"
+              placeholder="Enter your password"
+            />
 
-            <Button className="py-3 w-full mt-12">Continue</Button>
+            <Button className="py-3 w-full mt-12">Set New Password</Button>
             <Button
               Icon={ArrowLeftICon}
               variant="outlined"
@@ -36,9 +47,7 @@ const SignInPage = () => {
             </Button>
           </form>
 
-          <div
-            className={cn("mt-24 border-t border-white/15 pt-8 text-center")}
-          >
+          <div className={cn("mt-14 text-center")}>
             <TextBase>
               Already have an account ?{" "}
               <Link href={"/sign-in"} className="text-primary-400 underline">
@@ -60,4 +69,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default NewPassPage;

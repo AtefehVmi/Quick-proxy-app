@@ -4,7 +4,7 @@ import React, { Ref, useState, useEffect, useRef } from "react";
 import { Field, Input, Description, Label } from "@headlessui/react";
 import EyeIcon from "public/icons/eye-icon.svg";
 import cn from "@/utils/cn";
-import useDisclosure from "@/hooks/useDisclosure";
+import ClosedEyeIcon from "public/icons/closed-eye.svg";
 
 type CustomProps = {
   ref?: Ref<HTMLInputElement>;
@@ -119,7 +119,11 @@ const PasswordInput = (props: InputTextProps) => {
           />
           <span className={classes.endAdornment}>
             <span className="select-none">
-              <EyeIcon className="cursor-pointer" onClick={onToggle} />
+              {isOpen ? (
+                <EyeIcon className="cursor-pointer" onClick={onToggle} />
+              ) : (
+                <ClosedEyeIcon className="cursor-pointer" onClick={onToggle} />
+              )}
             </span>
             {endAdornment && endAdornment}
           </span>
