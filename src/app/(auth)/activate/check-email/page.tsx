@@ -26,7 +26,9 @@ const CheckEmailPage = () => {
           </TextBase>
 
           <div
-            className={cn("mt-14 border-t border-white/15 pt-8 text-center")}
+            className={cn(
+              "mt-14 border-t border-white/15 pt-8 text-center w-full"
+            )}
           >
             <TextBase>
               Already have an account?{" "}
