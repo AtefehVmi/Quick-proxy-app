@@ -12,6 +12,7 @@ import EnterIcon from "public/icons/enter.svg";
 import cn from "@/utils/cn";
 import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
+import PasswordInput from "@/components/PasswordInput";
 
 const SignUpPage = () => {
   const [checked, setChecked] = useState(false);
@@ -27,19 +28,21 @@ const SignUpPage = () => {
 
           <form className="mt-14">
             <InputText
+              type="text"
               labelBg="bg-black"
               startAdornment={<EmailIcon />}
               label="Email"
               placeholder="Enter your email"
             />
             <InputText
+              type="text"
               labelBg="bg-black"
               startAdornment={<UserIcon />}
               className="mt-8"
               label="Username"
               placeholder="Enter your username"
             />
-            <InputText
+            <PasswordInput
               labelBg="bg-black"
               startAdornment={<PassIcon />}
               className="mt-8"
