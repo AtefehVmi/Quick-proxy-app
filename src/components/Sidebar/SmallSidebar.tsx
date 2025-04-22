@@ -19,7 +19,7 @@ const sidebarItems = [
   { Icon: DashboardIcon, href: "/" },
   { Icon: ProductIcon, href: "/products" },
   { Icon: SettingIcon, href: "/settings" },
-  { Icon: UserIcon, href: "/users" },
+  { Icon: UserIcon, href: "/profile" },
   { Icon: BellIcon, href: "/notifications" },
 ];
 
@@ -61,7 +61,10 @@ const SmallSidebar = ({
 
           <div className="mt-10 px-3 flex flex-col gap-1">
             {sidebarItems.map((item, index) => {
-              const isActive = pathname === item.href;
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.includes(item.href);
 
               return (
                 <Link
