@@ -10,12 +10,20 @@ import Link from "next/link";
 import cn from "@/utils/cn";
 
 const products = [
-  { product: "Rotating Residential Proxies", icon: RotatingResiIcon, href: "" },
+  {
+    product: "Rotating Residential Proxies",
+    icon: RotatingResiIcon,
+    href: "products/rotating-residential",
+  },
   { product: "Rotating Datacenter Proxies", icon: RotatingDataIcon, href: "" },
-  { product: "Static Residential Proxies", icon: StaticResiIcon, href: "" },
+  {
+    product: "Static Residential Proxies",
+    icon: StaticResiIcon,
+    href: "products/isp",
+  },
   { product: "Static Datacenter Proxies", icon: StaticDataIcon, href: "" },
   { product: "Rotating Mobile Proxies", icon: MobileIcon, href: "" },
-  { product: "Static Mobile Proxies", icon: MobileIcon, href: "" },
+  { product: "Static Mobile Proxies", icon: MobileIcon, href: "products/lte" },
 ];
 
 const ProductCard = ({ className }: { className?: string }) => {
@@ -28,17 +36,20 @@ const ProductCard = ({ className }: { className?: string }) => {
 
       <div className="mt-6 flex flex-col gap-3 mx-6">
         {products.map((product, index) => (
-          <div key={index} className="flex justify-between items-center py-1">
-            <div className="flex gap-3 items-center text-grey-600">
+          <Link
+            href={product.href}
+            key={index}
+            className={cn(
+              "flex justify-between items-center py-1 cursor-pointer",
+              "hover:text-primary-400 text-white"
+            )}
+          >
+            <div className="flex gap-3 items-center">
               <product.icon />
-              <p className="text-white text-base leading-6">
-                {product.product}
-              </p>
+              <p className="text-base leading-6">{product.product}</p>
             </div>
-            <Link href={product.href}>
-              <ArrowIcon className="cursor-pointer text-white" />
-            </Link>
-          </div>
+            <ArrowIcon />
+          </Link>
         ))}
       </div>
     </Card>
