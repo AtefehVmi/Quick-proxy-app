@@ -21,9 +21,9 @@ const SignUpPage = () => {
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
         <div className="max-w-[488px] w-full">
-          <H1>Sign up</H1>
+          <H1>Welcome Back</H1>
           <TextBase className="text-grey-600 mt-3">
-            Let’s sign up quickly to get started.
+            See your growth and get consulting support!
           </TextBase>
 
           <form className="mt-14">
@@ -34,14 +34,7 @@ const SignUpPage = () => {
               label="Email"
               placeholder="Enter your email"
             />
-            <InputText
-              type="text"
-              labelBg="bg-black"
-              startAdornment={<UserIcon />}
-              className="mt-8"
-              label="Username"
-              placeholder="Enter your username"
-            />
+
             <PasswordInput
               labelBg="bg-black"
               startAdornment={<PassIcon />}
@@ -50,25 +43,29 @@ const SignUpPage = () => {
               placeholder="Enter your password"
             />
 
-            <div className="flex items-center mt-12 gap-2">
-              {/* TODO: Customize checkbox to match design */}
-              <input
-                id="agree"
-                type="checkbox"
-                checked={checked}
-                onChange={() => setChecked((checked) => !checked)}
-              />
-              <label
-                htmlFor="agree"
-                className="text-sm cursor-pointer leading-6"
-              >
-                I agree to the{" "}
-                <span className="text-primary-400">terms & conditions</span>
-              </label>
+            <div className="mt-12 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {/* TODO: Customize checkbox to match design */}
+                <input
+                  id="agree"
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => setChecked((checked) => !checked)}
+                />
+                <label
+                  htmlFor="agree"
+                  className="text-sm cursor-pointer leading-6"
+                >
+                  Remember me
+                </label>
+              </div>
+              <Link href={""} className="text-primary-400 text-sm leading-6">
+                Forgot Password?
+              </Link>
             </div>
 
             <Button Icon={EnterIcon} className="py-3 w-full mt-12">
-              Sign Up
+              Sign in
             </Button>
           </form>
 
@@ -76,9 +73,9 @@ const SignUpPage = () => {
             className={cn("mt-24 border-t border-white/15 pt-8 text-center")}
           >
             <TextBase>
-              Already have an account ?{" "}
-              <Link href={"/sign-in"} className="text-primary-400 underline">
-                Sign in
+              Not registered yet ?{" "}
+              <Link href={"/sign-up"} className="text-primary-400 underline">
+                Create an account
               </Link>
             </TextBase>
           </div>
