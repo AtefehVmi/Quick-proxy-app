@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import H1 from "@/components/Typography/H1";
 import TextBase from "@/components/Typography/TextBase";
@@ -7,8 +9,23 @@ import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import EmailSentImage from "public/images/email-sent.png";
 import CaretRightIcon from "public/icons/arrow-right.svg";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { supabase } from "@/services/supabaseClient";
 
-const CheckEmailPage = () => {
+const EmailVerifiedPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (!data.session) {
+        router.replace("/activate/check-email");
+      }
+    };
+    checkSession();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
@@ -19,7 +36,10 @@ const CheckEmailPage = () => {
             Your email has been successfully verified.
           </H1>
 
-          <Button className="py-3 w-full mt-14">
+          <Button
+            onClick={() => router.replace("/")}
+            className="py-3 w-full mt-14"
+          >
             Go to dashboard
             <CaretRightIcon />
           </Button>
@@ -50,4 +70,4 @@ const CheckEmailPage = () => {
   );
 };
 
-export default CheckEmailPage;
+export default EmailVerifiedPage;

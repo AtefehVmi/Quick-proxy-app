@@ -40,12 +40,9 @@ const SignUpPage = () => {
       toast.error(`Signup error: ${error.message}`);
       return;
     }
-    if (data.session) {
-      toast.success("Signed up and logged in!");
-      const accessToken = data.session.access_token;
-      localStorage.setItem("accessToken", accessToken);
-      router.replace("/");
-    }
+
+    toast.success("Confirmation email sent. Please check your inbox!");
+    router.replace("/activate/check-email");
   };
 
   return (
