@@ -6,6 +6,9 @@ import TextXs from "@/components/Typography/TextXs";
 import cn from "@/utils/cn";
 import React, { useState } from "react";
 import CheckIcon from "public/icons/check-icon.svg";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import { getPriceList } from "@/services/customApi";
 
 type Plans = {
   days: number;
@@ -15,10 +18,35 @@ type Plans = {
   pricePerMonth: number;
 };
 
-type Props = { plans: Plans[] };
+type Props = {
+  plan: "residential" | "lte";
+  type: "Static" | "Rotating" | "LTE Proxy";
+};
 
-const PricingPlan: React.FC<Props> = ({ plans }) => {
+const PricingPlan: React.FC<Props> = ({ plan, type }) => {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
+
+  const {
+    data: plans,
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: [...QUERY_KEYS.PRICING, plan, type],
+    queryFn: () => getPriceList(),
+    select: (data) => {
+      const products = data?.data?.products || [];
+
+      if (!products) return [];
+
+      const matchingProduct = products.find((product) => product.id === plan);
+      const matchingType = matchingProduct?.types.find(
+        (planType) => planType.name === type
+      );
+      return matchingType?.plans || [];
+    },
+  });
+
+  console.log(plans);
 
   return (
     <div className="bg-black-2">
@@ -33,8 +61,8 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
 
       <div className="border-t border-t-black-border border-b border-b-black">
         <div className="grid grid-cols-4 mx-7">
-          {plans.map((plan, index) => (
-            <div key={`${plan.days}-${index}`}>
+          {plans?.map((plan, index) => (
+            <div key={index}>
               <div
                 onClick={() =>
                   setSelectedPlanIndex(
@@ -53,7 +81,7 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
                   <CheckIcon />
                 </Button>
                 <p className="text-white font-bold text-xl leading-7.5">
-                  {plan.days} Day
+                  {plan.name}
                 </p>
               </div>
 
@@ -65,16 +93,12 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
               >
                 <div className="flex items-center gap-1">
                   <TextXs className="text-white">Quantity :</TextXs>
-                  <TextBase className="text-white font-semibold">
-                    {plan.quantity}
-                  </TextBase>
+                  <TextBase className="text-white font-semibold">10</TextBase>
                 </div>
 
                 <div className="flex items-center gap-1">
                   <TextXs className="text-white">Discount :</TextXs>
-                  <TextBase className="text-white font-semibold">
-                    {plan.discount}%
-                  </TextBase>
+                  <TextBase className="text-white font-semibold">10%</TextBase>
                 </div>
 
                 <div className="flex items-center gap-1">
@@ -86,9 +110,7 @@ const PricingPlan: React.FC<Props> = ({ plans }) => {
 
                 <div className="flex items-center gap-1">
                   <TextXs className="text-white">Price / per month :</TextXs>
-                  <TextBase className="text-white font-semibold">
-                    ${plan.pricePerMonth}
-                  </TextBase>
+                  <TextBase className="text-white font-semibold">$2</TextBase>
                 </div>
               </div>
             </div>

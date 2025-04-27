@@ -29,40 +29,7 @@ const LteProxy = () => {
             "SOCKS5 support",
           ]}
           collapsible={true}
-          children={
-            <PricingPlan
-              plans={[
-                {
-                  days: 1,
-                  quantity: 10,
-                  discount: 10,
-                  price: 12,
-                  pricePerMonth: 2,
-                },
-                {
-                  days: 30,
-                  quantity: 10,
-                  discount: 10,
-                  price: 12,
-                  pricePerMonth: 2,
-                },
-                {
-                  days: 60,
-                  quantity: 10,
-                  discount: 10,
-                  price: 12,
-                  pricePerMonth: 2,
-                },
-                {
-                  days: 120,
-                  quantity: 10,
-                  discount: 10,
-                  price: 12,
-                  pricePerMonth: 2,
-                },
-              ]}
-            />
-          }
+          children={<PricingPlan plan="lte" type="Rotating" />}
           image={DatabaseImage}
           className="mt-6"
         />
