@@ -62,3 +62,16 @@ export async function getResiCountries(): Promise<any> {
 export async function getLteRegions(): Promise<any> {
   return await customInstance.get(`products/lte/regions`);
 }
+
+export async function getLteUsRegions(): Promise<any> {
+  return await customInstance.get("products/lte/regions/us");
+}
+
+export async function GenerateRotatingResi(payload: {
+  quantity: number;
+  rotation: string;
+  port: string;
+  format: string;
+}): Promise<any> {
+  return await customInstance.post("residential/generate", payload);
+}

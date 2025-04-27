@@ -17,10 +17,36 @@ import MagicwandIcon from "public/icons/magic-wand.svg";
 import ErrorIcon from "public/icons/document.svg";
 
 import Button from "@/components/Button";
+import useFetch from "@/hooks/useFetch";
+import { GenerateRotatingResi } from "@/services/customApi";
 
-const portOptions = [{ label: "", value: "" }];
-const formatOptions = [{ label: "", value: "" }];
-const rotationOptions = [{ label: "", value: "" }];
+const portOptions = [
+  { label: "http|https", value: "http|https" },
+  { label: "socks5", value: "socks5" },
+];
+const formatOptions = [
+  {
+    label: `{hostname}:{port}:{username}:{password}`,
+    value: `{hostname}:{port}:{username}:{password}`,
+  },
+  {
+    label: `{hostname}:{port}@{username}:{password}`,
+    value: `{hostname}:{port}@{username}:{password}`,
+  },
+  {
+    label: `{username}:{password}:{hostname}:{port}`,
+    value: `{username}:{password}:{hostname}:{port}`,
+  },
+  {
+    label: `{username}:{password}@{hostname}:{port}`,
+    value: `{username}:{password}@{hostname}:{port}`,
+  },
+];
+
+const rotationOptions = [
+  { label: "random", value: "random" },
+  { label: "sticky", value: "sticky" },
+];
 
 const ProxyGenerator = ({ className }: { className?: string }) => {
   const [port, setPort] = useState(portOptions[0].value);
@@ -29,7 +55,13 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
   const [quantity, setQuantity] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
 
-  const handleGenerateProxyButtonClick = () => {
+  const { fetch: generateFetch, loading } = useFetch(
+    GenerateRotatingResi,
+    false,
+    { toastOnError: true }
+  );
+
+  const handleGenerateProxyButtonClick = async () => {
     if (!port || !format || !rotation || !quantity) {
       toast.error("Fill in the fields first", {
         icon: <ErrorIcon />,
@@ -37,7 +69,22 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
       return;
     }
 
-    setOpenModal(true);
+    try {
+      const payload = {
+        quantity: quantity,
+        rotation: rotation,
+        country: "",
+        subuser: 1,
+        port: port,
+        format: format,
+      };
+
+      const res = await generateFetch(payload);
+      toast.success("Generated Successfully!");
+      setOpenModal(true);
+    } catch (error) {
+      console.log("failed", error);
+    }
   };
 
   return (
