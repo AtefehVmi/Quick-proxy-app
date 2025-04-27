@@ -22,7 +22,7 @@ const IspSidebar = () => {
 
   const { data: locations } = useQuery({
     queryKey: QUERY_KEYS.RESI_LOCATION,
-    queryFn: () => getResiCountries(4),
+    queryFn: () => getResiCountries(),
   });
 
   const discount = 0;
@@ -31,9 +31,9 @@ const IspSidebar = () => {
 
   if (locations?.data) {
     locationOptions = locations.data.map(
-      (location: { id: number; name: string }) => ({
+      (location: { code: string; name: string }) => ({
         label: location.name,
-        value: location.id.toString(),
+        value: location.code,
       })
     );
   }

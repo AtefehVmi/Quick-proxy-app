@@ -9,8 +9,10 @@ import TextBase from "@/components/Typography/TextBase";
 import { useState } from "react";
 import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/chevron-down.svg";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import { getLteRegions } from "@/services/customApi";
 
-const countryOptions = [{ label: "", value: "" }];
 const cityOptions = [{ label: "", value: "" }];
 const portOptions = [{ label: "", value: "" }];
 const lteOptions = [{ label: "", value: "" }];
@@ -23,6 +25,22 @@ const BuySide = () => {
   const [city, setCity] = useState<string>("");
   const [port, setPort] = useState<string>("");
   const [lte, setLte] = useState<string>("");
+
+  const { data: countries } = useQuery({
+    queryKey: QUERY_KEYS.LTE_REGION,
+    queryFn: () => getLteRegions(),
+  });
+
+  let countryOptions = [{ label: "", value: "" }];
+
+  if (countries?.data) {
+    countryOptions = countries.data.map(
+      (location: { country_code: number; country: string }) => ({
+        label: location.country,
+        value: location.country_code.toString(),
+      })
+    );
+  }
 
   const discount = 0;
   const balance = 0;

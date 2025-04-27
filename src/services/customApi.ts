@@ -2,11 +2,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
-import {
-  CountriesResponse,
-  PriceListApiResponse,
-  PriceListResponse,
-} from "./models";
+import { PriceListApiResponse } from "./models";
 
 export const customInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
@@ -59,6 +55,10 @@ export async function getPriceList(): Promise<PriceListApiResponse> {
   return await customInstance.get("pricing");
 }
 
-export async function getResiCountries(id: number): Promise<CountriesResponse> {
-  return await customInstance.get(`products/countries/${id}`);
+export async function getResiCountries(): Promise<any> {
+  return await customInstance.get(`residential/countries`);
+}
+
+export async function getLteRegions(): Promise<any> {
+  return await customInstance.get(`products/lte/regions`);
 }
