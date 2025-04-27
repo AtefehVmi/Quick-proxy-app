@@ -8,9 +8,11 @@ import { useState } from "react";
 import WalletIcon from "public/icons/wallet-small.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Autocomplete from "@/components/Autocomplete";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import { getResiCountries } from "@/services/customApi";
 
 const planOptions = [{ label: "", value: "" }];
-const locationOptions = [{ label: "", value: "" }];
 
 const IspSidebar = () => {
   const [amount, setAmount] = useState<number>(0);
@@ -18,8 +20,23 @@ const IspSidebar = () => {
   const [plan, setPlan] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
+  const { data: locations } = useQuery({
+    queryKey: QUERY_KEYS.RESI_LOCATION,
+    queryFn: () => getResiCountries(4),
+  });
+
   const discount = 0;
   const balance = 0;
+  let locationOptions = [{ label: "", value: "" }];
+
+  if (locations?.data) {
+    locationOptions = locations.data.map(
+      (location: { id: number; name: string }) => ({
+        label: location.name,
+        value: location.id.toString(),
+      })
+    );
+  }
 
   return (
     <div

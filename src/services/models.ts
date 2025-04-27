@@ -23,3 +23,12 @@ export type ApiResponse<T> = {
 };
 
 export type PriceListApiResponse = ApiResponse<PriceListResponse>;
+
+// countries
+type Country = {
+  id: number;
+  name: string;
+  out_of_stock: boolean;
+};
+
+export type CountriesResponse = { data: Country[] };
