@@ -72,6 +72,26 @@ export async function GenerateRotatingResi(payload: {
   rotation: string;
   port: string;
   format: string;
+  country?: string;
+  subuser?: number;
 }): Promise<any> {
   return await customInstance.post("residential/generate", payload);
+}
+
+export async function getSubuser(id: number): Promise<any> {
+  return await customInstance.get(`subusers/${id}`);
+}
+
+export async function CreateOrder(payload: {
+  type: string;
+  product?: number;
+  plan?: number;
+  location?: number;
+  quantity?: number;
+  port?: string;
+  amount?: number;
+  provider?: string;
+  coupon?: string;
+}): Promise<any> {
+  return await customInstance.post("orders", payload);
 }
