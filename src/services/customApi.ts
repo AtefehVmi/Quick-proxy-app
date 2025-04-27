@@ -3,18 +3,14 @@ import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const baseURL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const apiKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const instance = axios.create({
-  baseURL: `${baseURL}/rest/v1`,
+export const customInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASEURL,
   headers: {
     "Content-Type": "application/json",
-    apikey: apiKey,
   },
 });
 
-instance.interceptors.request.use(
+customInstance.interceptors.request.use(
   async (config) => {
     if (isServer()) {
       const cookies = await import("next/headers");
@@ -34,7 +30,7 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-instance.interceptors.response.use(
+customInstance.interceptors.response.use(
   function (response) {
     return response.data;
   },
@@ -53,3 +49,7 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export async function getPriceList(): Promise<any> {
+  return await customInstance.get("pricing");
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { Suspense } from "react";
+import { ReactQueryClientProvider } from "@/providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +22,9 @@ export default function RootLayout({
           autoClose={5000}
           toastClassName="custom-toast"
         />
-        <Suspense>{children}</Suspense>
+        <Suspense>
+          <ReactQueryClientProvider>{children}</ReactQueryClientProvider>
+        </Suspense>
       </body>
     </html>
   );
