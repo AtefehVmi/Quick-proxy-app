@@ -3,18 +3,26 @@ import SearchIcon from "public/icons/search.svg";
 import ProfileDropdown from "@/modules/Dropdown/ProfileDropdown";
 import NotifModal from "@/modules/Modals/NotifModal";
 import Logo from "public/logo-small.svg";
-import Image from "next/image";
 import ToggleMenu from "./ToggleMenu";
 
-const Navbar = () => {
+const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
   return (
     <div
       className={cn(
-        "h-25 border-b border-black-border ml-5 mr-5 md:ml-0 md:mr-8",
-        "flex items-center justify-between"
+        "h-25 border-b border-black-border ml-5 pr-5 md:ml-0 md:pr-8",
+        "flex items-center justify-between z-0 relative overflow-hidden"
       )}
     >
-      <div className="relative text-white ml-7 hidden md:block">
+      {rightBg && (
+        <div
+          className={cn(
+            "bg-black-3 w-[32.1%] 2xl:w-[32.7%] h-24.75 top-0 right-0 -z-50 absolute",
+            "hidden xl:block"
+          )}
+        ></div>
+      )}
+
+      <div className="relative text-white ml-7 hidden md:block z-20">
         <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2" />
         <input
           type="text"
@@ -27,12 +35,12 @@ const Navbar = () => {
         />
       </div>
 
-      <div className="flex items-center gap-3 md:hidden">
+      <div className="flex items-center gap-3 md:hidden z-20">
         <ToggleMenu />
         <Logo />
       </div>
 
-      <div className="flex items-center gap-3 py-5.5">
+      <div className="flex items-center gap-3 py-5.5 z-20">
         <ProfileDropdown className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
         <div className="">

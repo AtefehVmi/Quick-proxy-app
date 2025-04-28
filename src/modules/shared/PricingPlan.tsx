@@ -60,7 +60,7 @@ const PricingPlan: React.FC<Props> = ({ plan, type }) => {
       </p>
 
       <div className="border-t border-t-black-border border-b border-b-black">
-        <div className="grid grid-cols-4 mx-7">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 lg:gap-0 mx-7">
           {plans?.map((plan, index) => (
             <div key={index}>
               <div
@@ -74,7 +74,7 @@ const PricingPlan: React.FC<Props> = ({ plan, type }) => {
                   "border-x border-b border-t border-black-border py-10.5",
                   index === selectedPlanIndex
                     ? "border-primary-400 border-t bg-black-border"
-                    : "border-t-transparent"
+                    : "lg:border-t-transparent"
                 )}
               >
                 <Button
@@ -90,8 +90,9 @@ const PricingPlan: React.FC<Props> = ({ plan, type }) => {
 
               <div
                 className={cn(
-                  "py-9.5 flex flex-col items-center gap-5.5 border-black-border border-t",
-                  index !== plans.length - 1 && "border-r"
+                  "py-9.5 flex flex-col items-center gap-5.5 border-black-border border-t border-b lg:border-b-0",
+                  "border-r border-l lg:border-l-0",
+                  index === plans.length - 1 && "lg:border-r-transparent"
                 )}
               >
                 <div className="flex items-center gap-1">
