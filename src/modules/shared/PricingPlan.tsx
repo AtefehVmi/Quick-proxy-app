@@ -71,7 +71,10 @@ const PricingPlan: React.FC<Props> = ({ plan, type }) => {
                 }
                 className={cn(
                   "flex items-center justify-center gap-2.5 cursor-pointer",
-                  "border-x border-b border-black-border py-10.5"
+                  "border-x border-b border-t border-black-border py-10.5",
+                  index === selectedPlanIndex
+                    ? "border-primary-400 border-t bg-black-border"
+                    : "border-t-transparent"
                 )}
               >
                 <Button

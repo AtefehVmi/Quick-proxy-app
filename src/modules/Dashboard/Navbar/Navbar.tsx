@@ -22,7 +22,7 @@ const Navbar = () => {
           className={cn(
             "bg-transparent text-white w-81 border border-black-border",
             "placeholder:text-white placeholder:text-xs placeholder:leading-4.5",
-            "py-4 pl-12 pr-4"
+            "py-4 pl-12 pr-4 focus:border-primary-400  focus:outline-none"
           )}
         />
       </div>

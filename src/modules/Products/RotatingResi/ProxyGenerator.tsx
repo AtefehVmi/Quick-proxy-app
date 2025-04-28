@@ -103,7 +103,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
 
       <div className="mt-12 grid grid-cols-2 gap-7 px-6">
         <Autocomplete
-          className="max-w-[472px] w-full"
           startAdornment={<PortIcon />}
           options={portOptions}
           placeholder="Select Port"
@@ -114,7 +113,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         />
 
         <Autocomplete
-          className="max-w-[472px] w-full"
           startAdornment={<RotationIcon />}
           options={rotationOptions}
           placeholder="Select Rotation"
@@ -125,7 +123,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         />
 
         <Autocomplete
-          className="max-w-[472px] w-full"
           startAdornment={<FormatIcon />}
           options={formatOptions}
           placeholder="Select Format"
@@ -136,7 +133,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         />
 
         <InputText
-          className="max-w-[472px] w-full"
           type="number"
           label="Quantity"
           placeholder="Enter"

@@ -7,7 +7,7 @@ import StatsCard from "@/modules/Dashboard/StatsCard";
 import Heading from "@/modules/shared/Heading";
 import DashboardIcon from "public/icons/dashboard-icon.svg";
 import BgClockImage from "public/images/alarm-clock.png";
-import BgCartImage from "public/images/cart-shopping.png";
+import BgCartImage from "public/images/cart-shopping-fast.png";
 import BgCubeImage from "public/images/cube.png";
 import Locations from "../Products/RotatingResi/Locations";
 
@@ -36,7 +36,7 @@ const MainDashboard = () => {
 
       <div className="grid grid-cols-1 xl:grid-cols-24 gap-5 mt-6">
         <div className="col-span-1 lg:col-span-16 2xl:col-span-18 gap-5 w-full">
-          <div className="flex flex-col lg:flex-row gap-5">
+          <div className="flex flex-col 2xl:flex-row gap-5">
             <div className="w-full 2xl:w-1/2">
               <ProductOverview />
             </div>
