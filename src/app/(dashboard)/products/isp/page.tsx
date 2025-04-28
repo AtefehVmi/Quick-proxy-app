@@ -9,8 +9,8 @@ import IspSidebar from "@/modules/Products/Isp/IspSidebar";
 
 const IspProxies = () => {
   return (
-    <div className={cn("w-full", "grid grid-cols-24 gap-5")}>
-      <div className="col-span-16 px-8 pt-6 pb-8">
+    <div className={cn("w-full", "grid grid-cols-1 xl:grid-cols-24 gap-5")}>
+      <div className="xl:col-span-16 px-8 pt-6 pb-8">
         <Heading title="ISP Proxies (Static residential)" Icon={IspIcon} />
         <ProxyCard
           title="ISP (Static Residential) Proxy"
@@ -29,7 +29,7 @@ const IspProxies = () => {
         />
       </div>
 
-      <div className="col-span-8">
+      <div className="xl:col-span-8">
         <IspSidebar />
       </div>
     </div>

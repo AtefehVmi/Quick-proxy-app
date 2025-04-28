@@ -49,7 +49,7 @@ const PassChangeSide = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="flex justify-end mt-8 pb-10">
+      <div className="flex justify-end mt-8 pb-0 xl:pb-10">
         <Button className="py-4 px-12" RightIcon={ArrowRightIcon}>
           Save change
         </Button>
