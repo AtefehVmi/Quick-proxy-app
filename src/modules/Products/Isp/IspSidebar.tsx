@@ -10,13 +10,17 @@ import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Autocomplete from "@/components/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import { getResiCountries } from "@/services/customApi";
-
-const planOptions = [{ label: "", value: "" }];
+import {
+  CreateOrder,
+  getPriceList,
+  getResiCountries,
+} from "@/services/customApi";
+import useFetch from "@/hooks/useFetch";
+import { toast } from "react-toastify";
 
 const IspSidebar = () => {
-  const [amount, setAmount] = useState<number>(0);
-  const [coupon, setCoupon] = useState<string>();
+  const [amount, setAmount] = useState<number>(1);
+  const [coupon, setCoupon] = useState<string>("");
   const [plan, setPlan] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
@@ -24,6 +28,43 @@ const IspSidebar = () => {
     queryKey: QUERY_KEYS.RESI_LOCATION,
     queryFn: () => getResiCountries(),
   });
+
+  const { data: plans } = useQuery({
+    queryKey: QUERY_KEYS.PRICING,
+    queryFn: () => getPriceList(),
+    select: (data) => {
+      const products = data?.data?.products || [];
+
+      if (!products) return [];
+
+      const matchingProduct = products.find(
+        (product) => product.id === "residential"
+      );
+      const matchingType = matchingProduct?.types.find(
+        (planType) => planType.name === "Static"
+      );
+      return matchingType?.plans || [];
+    },
+  });
+
+  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+    toastOnError: true,
+  });
+
+  let planOptions = [{ label: "", value: "" }];
+  let selectedPlanPrice = 0;
+
+  if (plans) {
+    planOptions = plans.map((plan: { id: string; name: string }) => ({
+      label: plan.name,
+      value: plan.id.toString(),
+    }));
+
+    if (plan) {
+      const selectedPlan = plans.find((p) => p.id.toString() === plan);
+      selectedPlanPrice = selectedPlan?.price ?? 0;
+    }
+  }
 
   const discount = 0;
   const balance = 0;
@@ -37,6 +78,24 @@ const IspSidebar = () => {
       })
     );
   }
+
+  const onSubmit = async () => {
+    try {
+      const payload = {
+        type: "lte",
+        product: "lte",
+        plan: 13,
+        quantity: amount,
+        location: location,
+        coupon: coupon,
+      };
+
+      const res = await createOrderFetch(payload);
+      toast.success("Successfully created!");
+    } catch (error) {
+      console.log("failed", error);
+    }
+  };
 
   return (
     <div
@@ -64,6 +123,7 @@ const IspSidebar = () => {
             onChange={(e) => setAmount(Number(e.target.value))}
             label="Quantity"
             placeholder="Enter"
+            type="number"
           />
           <Autocomplete
             variant="primary"
@@ -113,7 +173,7 @@ const IspSidebar = () => {
         <div className="mt-8 flex items-center justify-between">
           <p className="text-white text-base leading-6">Price</p>
           <TextBase className="font-semibold text-white">
-            $ {amount ?? 0}
+            $ {selectedPlanPrice * amount}
           </TextBase>
         </div>
 
@@ -138,7 +198,7 @@ const IspSidebar = () => {
             Proxy Price per month
           </p>
           <TextBase className="font-semibold text-white">
-            {amount ?? 0}
+            ${selectedPlanPrice}
           </TextBase>
         </div>
 
@@ -147,12 +207,18 @@ const IspSidebar = () => {
         <div className="flex items-center justify-between">
           <p className="text-base text-white leading-6">Total Price</p>
           <p className="text-white font-bold text-32 leading-12">
-            $ {amount - (discount ?? 0 * amount) / 100}
+            ${" "}
+            {selectedPlanPrice * amount -
+              (discount ?? 0 * (selectedPlanPrice * amount)) / 100}
           </p>
         </div>
 
         <div className="mt-6">
-          <Button className="font-semibold w-full py-4" RightIcon={ArrowIcon}>
+          <Button
+            onClick={() => onSubmit()}
+            className="font-semibold w-full py-4"
+            RightIcon={ArrowIcon}
+          >
             Purchase
           </Button>
         </div>

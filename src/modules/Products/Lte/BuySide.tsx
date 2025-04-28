@@ -6,12 +6,12 @@ import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import TextBase from "@/components/Typography/TextBase";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/chevron-down.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import { getLteRegions } from "@/services/customApi";
+import { getLteRegions, getLteUsRegions } from "@/services/customApi";
 
 const cityOptions = [{ label: "", value: "" }];
 const portOptions = [{ label: "", value: "" }];
@@ -31,16 +31,36 @@ const BuySide = () => {
     queryFn: () => getLteRegions(),
   });
 
-  let countryOptions = [{ label: "", value: "" }];
+  const { data: usCities } = useQuery({
+    queryKey: QUERY_KEYS.LTE_US,
+    queryFn: () => getLteUsRegions(),
+  });
 
-  if (countries?.data) {
-    countryOptions = countries.data.map(
-      (location: { country_code: number; country: string }) => ({
-        label: location.country,
-        value: location.country_code.toString(),
-      })
-    );
-  }
+  const countryOptions = [
+    { label: "United States", value: "US" },
+    ...(countries?.data
+      ? countries.data.map(
+          (location: { country_code: number; country: string }) => ({
+            label: location.country,
+            value: location.country_code.toString(),
+          })
+        )
+      : []),
+  ];
+
+  const cityOptions = useMemo(() => {
+    if (country === "US") {
+      return (
+        usCities?.data?.map(
+          (region: { region: string; region_code: string }) => ({
+            label: region.region,
+            value: region.region_code,
+          })
+        ) || []
+      );
+    }
+    return [];
+  }, [country, usCities]);
 
   const discount = 0;
   const balance = 0;
