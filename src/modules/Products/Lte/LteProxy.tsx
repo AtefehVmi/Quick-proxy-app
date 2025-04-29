@@ -13,6 +13,7 @@ import { LteRecent } from "@/constants/types";
 
 const LteProxy = () => {
   const [selectedRow, setSelectedRow] = useState<LteRecent | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
   return (
     <div className={cn("w-full", "grid grid-cols-1 xl:grid-cols-24 gap-5")}>
@@ -29,7 +30,13 @@ const LteProxy = () => {
             "SOCKS5 support",
           ]}
           collapsible={true}
-          children={<PricingPlan plan="lte" type="Rotating" />}
+          children={
+            <PricingPlan
+              setSelectedPlan={setSelectedPlan}
+              plan="lte"
+              type="Rotating"
+            />
+          }
           image={DatabaseImage}
           className="mt-6"
         />
@@ -40,7 +47,7 @@ const LteProxy = () => {
       </div>
 
       <div className="xl:col-span-8">
-        <LteSidebar />
+        <LteSidebar selectedPlan={selectedPlan} />
       </div>
     </div>
   );

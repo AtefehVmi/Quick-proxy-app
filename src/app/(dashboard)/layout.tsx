@@ -1,4 +1,3 @@
-import Navbar from "@/modules/Dashboard/Navbar/Navbar";
 import ToggleSidebar from "@/components/Sidebar/ToggleSidebar";
 import NavbarWrapper from "@/modules/Dashboard/Navbar/NavbarWrapper";
 

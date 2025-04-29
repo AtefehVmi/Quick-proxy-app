@@ -11,13 +11,17 @@ import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/chevron-down.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import { getLteRegions, getLteUsRegions } from "@/services/customApi";
+import {
+  getLteRegions,
+  getLteUsRegions,
+  getPriceList,
+} from "@/services/customApi";
 
 const cityOptions = [{ label: "", value: "" }];
 const portOptions = [{ label: "", value: "" }];
 const lteOptions = [{ label: "", value: "" }];
 
-const BuySide = () => {
+const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [amount, setAmount] = useState<number>(0);
   const [coupon, setCoupon] = useState<string>();
@@ -31,14 +35,33 @@ const BuySide = () => {
     queryFn: () => getLteRegions(),
   });
 
-  console.log(countries);
-
   const { data: usCities } = useQuery({
     queryKey: QUERY_KEYS.LTE_US,
     queryFn: () => getLteUsRegions(),
   });
 
-  console.log(usCities);
+  const { data: plans } = useQuery({
+    queryKey: QUERY_KEYS.PRICING,
+    queryFn: () => getPriceList(),
+    select: (data) => {
+      const products = data?.data?.products || [];
+
+      if (!products) return [];
+
+      const matchingProduct = products.find((product) => product.id === "lte");
+      const matchingType = matchingProduct?.types.find(
+        (planType) => planType.name === "Rotating"
+      ) as { id: number; name: string; plans: any[] } | undefined;
+      return (
+        matchingType?.plans.map((plan: any) => ({
+          ...plan,
+          typeId: matchingType.id,
+        })) || []
+      );
+    },
+  });
+
+  console.log(plans);
 
   const countryOptions = [
     { label: "United States", value: "US" },
@@ -184,7 +207,7 @@ const BuySide = () => {
               Proxy Price per month
             </p>
             <TextBase className="font-semibold text-white">
-              {amount ?? 0}
+              {selectedPlan.price ?? 0}
             </TextBase>
           </div>
 

@@ -10,7 +10,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
     <div
       className={cn(
         "h-25 border-b border-black-border ml-5 pr-5 md:ml-0 md:pr-8",
-        "flex items-center justify-between z-0 relative overflow-hidden"
+        "flex items-center justify-between z-0 relative"
       )}
     >
       {rightBg && (
@@ -40,7 +40,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
         <Logo />
       </div>
 
-      <div className="flex items-center gap-3 py-5.5 z-20">
+      <div className="flex items-center gap-3 py-5.5 z-50">
         <ProfileDropdown className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
         <div className="">

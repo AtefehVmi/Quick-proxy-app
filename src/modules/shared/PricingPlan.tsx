@@ -21,9 +21,10 @@ type Plans = {
 type Props = {
   plan: "residential" | "lte";
   type: "Static" | "Rotating" | "LTE Proxy";
+  setSelectedPlan?: (plan: any) => void;
 };
 
-const PricingPlan: React.FC<Props> = ({ plan, type }) => {
+const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
 
   const {
@@ -64,11 +65,11 @@ const PricingPlan: React.FC<Props> = ({ plan, type }) => {
           {plans?.map((plan, index) => (
             <div key={index}>
               <div
-                onClick={() =>
-                  setSelectedPlanIndex(
-                    index === selectedPlanIndex ? null : index
-                  )
-                }
+                onClick={() => {
+                  const newIndex = index === selectedPlanIndex ? null : index;
+                  setSelectedPlanIndex(newIndex);
+                  setSelectedPlan?.(newIndex !== null ? plan : null);
+                }}
                 className={cn(
                   "flex whitespace-nowrap items-center justify-center gap-2.5 cursor-pointer",
                   "border-x border-b border-t border-black-border py-10.5",
