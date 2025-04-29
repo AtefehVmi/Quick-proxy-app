@@ -4,4 +4,5 @@ export const QUERY_KEYS = {
   RESI_LOCATION: ["resi-location"],
   LTE_REGION: ["lte-region"],
   LTE_US: ["lte-us"],
+  ISP_LOCATION: ["isp-location"],
 };

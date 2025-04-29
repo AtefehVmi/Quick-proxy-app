@@ -12,8 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import {
   CreateOrder,
+  getIspCountries,
   getPriceList,
-  getResiCountries,
 } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
@@ -25,8 +25,8 @@ const IspSidebar = () => {
   const [location, setLocation] = useState<string>("");
 
   const { data: locations } = useQuery({
-    queryKey: QUERY_KEYS.RESI_LOCATION,
-    queryFn: () => getResiCountries(),
+    queryKey: QUERY_KEYS.ISP_LOCATION,
+    queryFn: () => getIspCountries(4),
   });
 
   const { data: plans } = useQuery({
@@ -42,8 +42,13 @@ const IspSidebar = () => {
       );
       const matchingType = matchingProduct?.types.find(
         (planType) => planType.name === "Static"
+      ) as { id: number; name: string; plans: any[] } | undefined;
+      return (
+        matchingType?.plans.map((plan: any) => ({
+          ...plan,
+          typeId: matchingType.id,
+        })) || []
       );
-      return matchingType?.plans || [];
     },
   });
 
@@ -72,19 +77,21 @@ const IspSidebar = () => {
 
   if (locations?.data) {
     locationOptions = locations.data.map(
-      (location: { code: string; name: string }) => ({
+      (location: { id: number; name: string }) => ({
         label: location.name,
-        value: location.code,
+        value: location.id,
       })
     );
   }
 
   const onSubmit = async () => {
+    const selectedPlan = plans?.find((p) => p.id.toString() === plan);
+    console.log(selectedPlan.id);
     try {
       const payload = {
-        type: "lte",
-        product: "lte",
-        plan: 13,
+        type: "standard",
+        product: selectedPlan?.typeId,
+        plan: selectedPlan.id,
         quantity: amount,
         location: location,
         coupon: coupon,

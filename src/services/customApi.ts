@@ -59,6 +59,10 @@ export async function getResiCountries(): Promise<any> {
   return await customInstance.get(`residential/countries`);
 }
 
+export async function getIspCountries(id: number): Promise<any> {
+  return await customInstance.get(`products/countries/${id}`);
+}
+
 export async function getLteRegions(): Promise<any> {
   return await customInstance.get(`products/lte/regions`);
 }

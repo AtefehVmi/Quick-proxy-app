@@ -31,10 +31,14 @@ const BuySide = () => {
     queryFn: () => getLteRegions(),
   });
 
+  console.log(countries);
+
   const { data: usCities } = useQuery({
     queryKey: QUERY_KEYS.LTE_US,
     queryFn: () => getLteUsRegions(),
   });
+
+  console.log(usCities);
 
   const countryOptions = [
     { label: "United States", value: "US" },
