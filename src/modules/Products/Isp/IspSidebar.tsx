@@ -17,10 +17,12 @@ import {
 } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
+import { getCoupon } from "@/services/api";
 
 const IspSidebar = () => {
   const [amount, setAmount] = useState<number>(1);
   const [coupon, setCoupon] = useState<string>("");
+  const [discount, setDiscount] = useState<number>(0);
   const [plan, setPlan] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
@@ -34,15 +36,19 @@ const IspSidebar = () => {
     queryFn: () => getPriceList(),
     select: (data) => {
       const products = data?.data?.products || [];
-
-      if (!products) return [];
-
       const matchingProduct = products.find(
         (product) => product.id === "residential"
       );
       const matchingType = matchingProduct?.types.find(
         (planType) => planType.name === "Static"
-      ) as { id: number; name: string; plans: any[] } | undefined;
+      ) as
+        | {
+            id: number;
+            name: string;
+            plans: any[];
+          }
+        | undefined;
+
       return (
         matchingType?.plans.map((plan: any) => ({
           ...plan,
@@ -53,6 +59,10 @@ const IspSidebar = () => {
   });
 
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+    toastOnError: true,
+  });
+
+  const { fetch: getCouponDetails } = useFetch(getCoupon, false, {
     toastOnError: true,
   });
 
@@ -71,7 +81,6 @@ const IspSidebar = () => {
     }
   }
 
-  const discount = 0;
   const balance = 0;
   let locationOptions = [{ label: "", value: "" }];
 
@@ -84,23 +93,46 @@ const IspSidebar = () => {
     );
   }
 
+  const total = selectedPlanPrice * amount;
+  const discountedTotal = discount ? total - (discount * total) / 100 : total;
+
   const onSubmit = async () => {
     const selectedPlan = plans?.find((p) => p.id.toString() === plan);
-    console.log(selectedPlan.id);
+    if (!selectedPlan) return toast.error("Please select a plan");
+
     try {
       const payload = {
         type: "standard",
-        product: selectedPlan?.typeId,
+        product: selectedPlan.typeId,
         plan: selectedPlan.id,
         quantity: amount,
-        location: location,
-        coupon: coupon,
+        location,
+        coupon,
       };
 
-      const res = await createOrderFetch(payload);
+      await createOrderFetch(payload);
       toast.success("Successfully created!");
     } catch (error) {
       console.log("failed", error);
+    }
+  };
+
+  const handleCouponBlur = async () => {
+    if (!coupon) return;
+
+    try {
+      const res = await getCouponDetails({ coupon_code: coupon });
+
+      if (res && res.discount) {
+        setDiscount(res.discount);
+        toast.success(`Coupon applied: ${res.discount}% off`);
+      } else {
+        setDiscount(0);
+        toast.error("Invalid coupon code");
+      }
+    } catch {
+      setDiscount(0);
+      toast.error("Failed to apply coupon");
     }
   };
 
@@ -111,7 +143,7 @@ const IspSidebar = () => {
         "flex flex-col justify-between gap-6"
       )}
     >
-      <div className="">
+      <div>
         <p className="text-white font-bold text-xl leading-7.5 py-6 border-b border-black-border">
           Buy Plan
         </p>
@@ -143,6 +175,7 @@ const IspSidebar = () => {
           <InputText
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
+            onBlur={handleCouponBlur}
             label="Coupon"
             placeholder="Enter"
           />
@@ -161,7 +194,6 @@ const IspSidebar = () => {
                 Balance is not enough!
               </TextBase>
             </div>
-
             <Button variant="black">Add charge</Button>
           </div>
         )}
@@ -179,26 +211,22 @@ const IspSidebar = () => {
 
         <div className="mt-8 flex items-center justify-between">
           <p className="text-white text-base leading-6">Price</p>
-          <TextBase className="font-semibold text-white">
-            $ {selectedPlanPrice * amount}
-          </TextBase>
+          <TextBase className="font-semibold text-white">${total}</TextBase>
         </div>
 
         <div className="mt-3 flex items-center justify-between">
           <p className="text-white text-base leading-6">Number of Proxy</p>
-          <TextBase className="font-semibold text-white">
-            {amount ?? 0}
-          </TextBase>
+          <TextBase className="font-semibold text-white">{amount}</TextBase>
         </div>
 
-        {discount ? (
+        {discount > 0 && (
           <div className="mt-3 flex items-center justify-between">
             <p className="text-primary-200 text-base leading-6">Discount</p>
             <TextBase className="font-semibold text-primary-200">
               {discount}%
             </TextBase>
           </div>
-        ) : null}
+        )}
 
         <div className="mt-3 flex items-center justify-between">
           <p className="text-white text-base leading-6">
@@ -209,20 +237,18 @@ const IspSidebar = () => {
           </TextBase>
         </div>
 
-        <div className="bg-black-border h-px w-full my-6"></div>
+        <div className="bg-black-border h-px w-full my-6" />
 
         <div className="flex items-center justify-between">
           <p className="text-base text-white leading-6">Total Price</p>
           <p className="text-white font-bold text-32 leading-12">
-            ${" "}
-            {selectedPlanPrice * amount -
-              (discount ?? 0 * (selectedPlanPrice * amount)) / 100}
+            ${discountedTotal}
           </p>
         </div>
 
         <div className="mt-6">
           <Button
-            onClick={() => onSubmit()}
+            onClick={onSubmit}
             className="font-semibold w-full py-4"
             RightIcon={ArrowIcon}
           >
@@ -233,4 +259,5 @@ const IspSidebar = () => {
     </div>
   );
 };
+
 export default IspSidebar;

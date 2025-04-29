@@ -53,3 +53,9 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export async function getCoupon(payload: {
+  coupon_code: string;
+}): Promise<any> {
+  return await instance.post("rest/v1/rpc/get_coupon_details_by_id", payload);
+}

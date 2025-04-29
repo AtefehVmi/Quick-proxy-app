@@ -207,7 +207,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
               Proxy Price per month
             </p>
             <TextBase className="font-semibold text-white">
-              {selectedPlan.price ?? 0}
+              {selectedPlan?.price ?? 0}
             </TextBase>
           </div>
 
