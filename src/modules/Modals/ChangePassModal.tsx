@@ -49,15 +49,12 @@ const ChangePassModal = ({ className }: { className?: string }) => {
                 label="Username"
                 value={"Ali1234@#"}
                 readOnly
-                disabled
-                className="max-w-[508px] w-full"
               />
 
               <InputText
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
                 label="Password"
-                className="max-w-[508px] w-full"
               />
             </div>
 

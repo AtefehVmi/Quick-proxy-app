@@ -18,6 +18,7 @@ import {
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { getCoupon } from "@/services/api";
+import BalanceModal from "@/modules/Modals/BalanceModal";
 
 const IspSidebar = () => {
   const [amount, setAmount] = useState<number>(1);
@@ -99,10 +100,11 @@ const IspSidebar = () => {
   const onSubmit = async () => {
     const selectedPlan = plans?.find((p) => p.id.toString() === plan);
     if (!selectedPlan) return toast.error("Please select a plan");
+    if (balance < discountedTotal) return toast.error("Balance is not enough!");
 
     try {
       const payload = {
-        type: "standard",
+        type: "proxy",
         product: selectedPlan.typeId,
         plan: selectedPlan.id,
         quantity: amount,
@@ -194,7 +196,7 @@ const IspSidebar = () => {
                 Balance is not enough!
               </TextBase>
             </div>
-            <Button variant="black">Add charge</Button>
+            <BalanceModal variant="text" />
           </div>
         )}
       </div>
@@ -248,6 +250,7 @@ const IspSidebar = () => {
 
         <div className="mt-6">
           <Button
+            disabled={balance < discountedTotal}
             onClick={onSubmit}
             className="font-semibold w-full py-4"
             RightIcon={ArrowIcon}

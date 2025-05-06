@@ -19,7 +19,7 @@ const BalanceModal = ({
   variant,
 }: {
   className?: string;
-  variant: "primary" | "outlined" | "black";
+  variant: "primary" | "outlined" | "black" | "text";
 }) => {
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState("");
@@ -29,13 +29,19 @@ const BalanceModal = ({
   };
   return (
     <div>
-      <Button
-        variant={variant}
-        onClick={() => setOpen(true)}
-        className={cn("p-3.5 h-fit w-fit", className)}
-      >
-        <AddIcon />
-      </Button>
+      {variant === "text" ? (
+        <Button onClick={() => setOpen(true)} variant="black">
+          Add charge
+        </Button>
+      ) : (
+        <Button
+          variant={variant}
+          onClick={() => setOpen(true)}
+          className={cn("p-3.5 h-fit w-fit", className)}
+        >
+          <AddIcon />
+        </Button>
+      )}
 
       {open && (
         <Dialog
@@ -57,6 +63,7 @@ const BalanceModal = ({
 
             <div className="mt-13.5 flex flex-col gap-8">
               <InputText
+                type="number"
                 placeholder="Enter"
                 label="Amount"
                 className="max-w-[508px] w-full"

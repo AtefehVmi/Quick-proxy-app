@@ -21,7 +21,7 @@ const Filter: React.FC<FilterProps> = ({ filterItems }) => {
           onClick={() => handleFilterClick(item)}
           key={index}
           className={cn(
-            "py-2 px-8 whitespace-nowrap text-sm font-semibold",
+            "py-2 px-8 whitespace-nowrap text-sm font-semibold cursor-pointer",
             item === activeFilter
               ? "bg-black text-primary-400"
               : "bg-black-2 text-white"
