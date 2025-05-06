@@ -8,6 +8,9 @@ import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import AddIcon from "public/icons/add.svg";
 import Autocomplete from "@/components/Autocomplete";
+import useFetch from "@/hooks/useFetch";
+import { CreateOrder } from "@/services/customApi";
+import { toast } from "react-toastify";
 
 const paymentOptions = [
   { label: "Credit Cart", value: "1" },
@@ -23,10 +26,26 @@ const BalanceModal = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState("");
+  const [amount, setAmount] = useState(0);
+  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+    toastOnError: true,
+  });
 
   const handleCloseButton = () => {
     setOpen(false);
   };
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const payload = { type: "balance", amount: amount, provider: "lemon" };
+      await createOrderFetch(payload);
+      toast.success("Balance successfully updated!");
+    } catch (error) {
+      console.log("failed", error);
+    }
+  };
+
   return (
     <div>
       {variant === "text" ? (
@@ -63,7 +82,8 @@ const BalanceModal = ({
 
             <div className="mt-13.5 flex flex-col gap-8">
               <InputText
-                type="number"
+                value={amount}
+                onChange={(e) => setAmount(Number(e.target.value))}
                 placeholder="Enter"
                 label="Amount"
                 className="max-w-[508px] w-full"
@@ -89,7 +109,9 @@ const BalanceModal = ({
               <Button onClick={handleCloseButton} variant="outlined">
                 Cancel
               </Button>
-              <Button>Top Up</Button>
+              <Button onClick={onSubmit} type="submit">
+                Top Up
+              </Button>
             </div>
           </DialogPanel>
         </Dialog>
