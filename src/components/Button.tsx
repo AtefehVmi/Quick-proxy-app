@@ -44,7 +44,7 @@ const Button = ({
 
   const variantStyle = cn(
     variant === "primary" &&
-      "bg-primary-400 text-black hover:bg-primary-500 disabled:bg-black-3",
+      "bg-primary-400 text-black hover:bg-primary-500 disabled:bg-black-3 disabled:text-grey-700 disabled:cursor-not-allowed",
     variant === "outlined" &&
       "border border-primary-400 text-primary-500 bg-transparent hover:bg-black-3",
     variant === "black" &&

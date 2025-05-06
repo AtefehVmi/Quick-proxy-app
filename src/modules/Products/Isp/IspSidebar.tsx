@@ -63,10 +63,6 @@ const IspSidebar = () => {
     toastOnError: true,
   });
 
-  const { fetch: getCouponDetails } = useFetch(getCoupon, false, {
-    toastOnError: true,
-  });
-
   let planOptions = [{ label: "", value: "" }];
   let selectedPlanPrice = 0;
 
@@ -119,25 +115,6 @@ const IspSidebar = () => {
     }
   };
 
-  const handleCouponBlur = async () => {
-    if (!coupon) return;
-
-    try {
-      const res = await getCouponDetails({ coupon_code: coupon });
-
-      if (res && res.discount) {
-        setDiscount(res.discount);
-        toast.success(`Coupon applied: ${res.discount}% off`);
-      } else {
-        setDiscount(0);
-        toast.error("Invalid coupon code");
-      }
-    } catch {
-      setDiscount(0);
-      toast.error("Failed to apply coupon");
-    }
-  };
-
   return (
     <div
       className={cn(
@@ -177,7 +154,6 @@ const IspSidebar = () => {
           <InputText
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
-            onBlur={handleCouponBlur}
             label="Coupon"
             placeholder="Enter"
           />

@@ -12,18 +12,21 @@ import ChevronIcon from "public/icons/chevron-down.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import {
+  CreateOrder,
   getLteRegions,
   getLteUsRegions,
   getPriceList,
 } from "@/services/customApi";
+import useFetch from "@/hooks/useFetch";
+import { toast } from "react-toastify";
+import BalanceModal from "@/modules/Modals/BalanceModal";
 
-const cityOptions = [{ label: "", value: "" }];
 const portOptions = [{ label: "", value: "" }];
 const lteOptions = [{ label: "", value: "" }];
 
 const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(2);
   const [coupon, setCoupon] = useState<string>();
   const [country, setCountry] = useState<string>("");
   const [city, setCity] = useState<string>("");
@@ -63,6 +66,10 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
 
   console.log(plans);
 
+  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+    toastOnError: true,
+  });
+
   const countryOptions = [
     { label: "United States", value: "US" },
     ...(countries?.data
@@ -91,6 +98,29 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
 
   const discount = 0;
   const balance = 0;
+
+  const total = selectedPlan.price * amount;
+  const discountedTotal = discount ? total - (discount * total) / 100 : total;
+
+  const onSubmit = async () => {
+    if (!selectedPlan) return toast.error("Please select a plan");
+    if (balance < discountedTotal) return toast.error("Balance is not enough!");
+
+    try {
+      const payload = {
+        type: "proxy",
+        product: 5,
+        plan: selectedPlan.id,
+        location: country,
+        coupon: coupon,
+      };
+
+      await createOrderFetch(payload);
+      toast.success("Successfully created!");
+    } catch (error) {
+      console.log("failed", error);
+    }
+  };
 
   return (
     <div className="flex flex-col justify-between h-full gap-6">
@@ -163,7 +193,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
               </TextBase>
             </div>
 
-            <Button variant="black">Add charge</Button>
+            <BalanceModal variant="text" />
           </div>
         )}
       </div>
@@ -182,7 +212,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
           <div className="mt-8 flex items-center justify-between">
             <p className="text-white text-base leading-6">Price</p>
             <TextBase className="font-semibold text-white">
-              $ {amount ?? 0}
+              $ {total ?? 0}
             </TextBase>
           </div>
 
@@ -207,7 +237,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
               Proxy Price per month
             </p>
             <TextBase className="font-semibold text-white">
-              {selectedPlan?.price ?? 0}
+              ${selectedPlan?.price ?? 0}
             </TextBase>
           </div>
 
@@ -216,12 +246,17 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
           <div className="flex items-center justify-between">
             <p className="text-base text-white leading-6">Total Price</p>
             <p className="text-white font-bold text-32 leading-12">
-              $ {amount - (discount ?? 0 * amount) / 100}
+              $ {discountedTotal}
             </p>
           </div>
 
           <div className="mt-6">
-            <Button className="font-semibold w-full py-4" RightIcon={ArrowIcon}>
+            <Button
+              disabled={balance < discountedTotal}
+              onClick={onSubmit}
+              className="font-semibold w-full py-4"
+              RightIcon={ArrowIcon}
+            >
               Purchase
             </Button>
           </div>

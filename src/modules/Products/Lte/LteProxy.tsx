@@ -13,7 +13,7 @@ import { LteRecent } from "@/constants/types";
 
 const LteProxy = () => {
   const [selectedRow, setSelectedRow] = useState<LteRecent | null>(null);
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [selectedPlan, setSelectedPlan] = useState<any>(0);
 
   return (
     <div className={cn("w-full", "grid grid-cols-1 xl:grid-cols-24 gap-5")}>

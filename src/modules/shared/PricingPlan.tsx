@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 import TextBase from "@/components/Typography/TextBase";
 import TextXs from "@/components/Typography/TextXs";
 import cn from "@/utils/cn";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckIcon from "public/icons/check-icon.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
@@ -49,6 +49,11 @@ const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
 
   console.log(plans);
 
+  useEffect(() => {
+    if (plans && plans.length > 0) {
+      setSelectedPlan?.(plans[0]);
+    }
+  }, [plans]);
   return (
     <div className="bg-black-2">
       <p
