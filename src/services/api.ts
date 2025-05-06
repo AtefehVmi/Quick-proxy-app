@@ -2,6 +2,7 @@ import { createAppErrorMessage } from "@/utils/createAppErrorMessage";
 import { isServer } from "@/utils/isServer";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { supabase } from "./supabaseClient";
 
 const baseURL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const apiKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -16,15 +17,13 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    if (isServer()) {
-      const cookies = await import("next/headers");
-      const headers = await cookies.headers();
-      const cookie = headers.get("cookie");
-      if (cookie) {
-        config.headers["Cookie"] = cookie;
-      }
-    } else {
-      const token = localStorage.getItem("accessToken");
+    if (!isServer()) {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      const token = session?.access_token;
+
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
