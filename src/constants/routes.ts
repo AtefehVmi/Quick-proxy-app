@@ -11,6 +11,8 @@ const ROUTES = {
   ISP: "/products/isp",
   ROTATING_LTE: "/products/rotating-lte",
   STATIC_LTE: "/products/lte",
+  STATIC_DATACENTER: "/products/static-datacenter",
+  ROTATING_DATACENTER: "/products/rotating-datacenter",
 };
 
 export default ROUTES;
