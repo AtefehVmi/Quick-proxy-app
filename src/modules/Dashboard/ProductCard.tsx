@@ -11,19 +11,19 @@ import cn from "@/utils/cn";
 
 const products = [
   {
-    product: "Rotating Residential Proxies",
+    product: "Rotating Residential",
     icon: RotatingResiIcon,
     href: "products/rotating-residential",
   },
-  { product: "Rotating Datacenter Proxies", icon: RotatingDataIcon, href: "" },
+  { product: "Rotating Datacenter", icon: RotatingDataIcon, href: "" },
   {
-    product: "Static Residential Proxies",
+    product: "Static Residential",
     icon: StaticResiIcon,
     href: "products/isp",
   },
-  { product: "Static Datacenter Proxies", icon: StaticDataIcon, href: "" },
-  { product: "Rotating Mobile Proxies", icon: MobileIcon, href: "" },
-  { product: "Static Mobile Proxies", icon: MobileIcon, href: "products/lte" },
+  { product: "Static Datacenter", icon: StaticDataIcon, href: "" },
+  { product: "Rotating Mobile", icon: MobileIcon, href: "" },
+  { product: "Static Mobile", icon: MobileIcon, href: "products/lte" },
 ];
 
 const ProductCard = ({ className }: { className?: string }) => {
@@ -31,7 +31,7 @@ const ProductCard = ({ className }: { className?: string }) => {
     <Card className={cn("px-0", className)}>
       <div className="flex items-center gap-2">
         <ProductImage />
-        <p className="text-white text-lg font-bold">Product</p>
+        <p className="text-white text-lg font-bold">Products</p>
       </div>
 
       <div className="mt-6 flex flex-col gap-3 mx-6">

@@ -54,7 +54,7 @@ export default function Sidebar({
         <Button
           onClick={onCollapse}
           variant="black"
-          className="absolute -right-3 top-1/3"
+          className="absolute -right-3 top-[37%]"
         >
           <DoubleArrowRight className="m-1.5" />
         </Button>
