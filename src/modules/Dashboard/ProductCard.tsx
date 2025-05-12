@@ -30,7 +30,11 @@ const products = [
   //   icon: StaticDataIcon,
   //   href: "products/static-datacenter",
   // },
-  { product: "Rotating Mobile", icon: MobileIcon, href: "" },
+  {
+    product: "Rotating Mobile",
+    icon: MobileIcon,
+    href: "products/rotating-mobile",
+  },
   { product: "Static Mobile", icon: MobileIcon, href: "products/lte" },
 ];
 

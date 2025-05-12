@@ -48,7 +48,7 @@ const sidebarItems = [
     children: [
       {
         name: "Rotating Mobile",
-        href: ROUTES.ROTATING_LTE,
+        href: ROUTES.ROTATING_MOBILE,
         icon: RotatingMobileIcon,
       },
       { name: "Mobile / LTE", href: ROUTES.STATIC_LTE, icon: MobileIcon },
