@@ -31,13 +31,22 @@ const SignInPage = () => {
     });
 
     if (error) {
-      toast.error(`Login error: ${error.message}`);
-    } else {
-      toast.success("Logged in!");
-      const accessToken = data.session.access_token;
-      localStorage.setItem("accessToken", accessToken);
-      router.replace("/");
+      if (error.message.toLowerCase().includes("email not confirmed")) {
+        toast.info("Please verify your email before signing in.");
+        router.replace("/activate/check-email");
+      } else {
+        toast.error(`Login error: ${error.message}`);
+      }
+      return;
     }
+
+    const user = data.user;
+    toast.success("Logged in!");
+    const accessToken = data.session?.access_token;
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+    }
+    router.replace("/");
   };
 
   return (

@@ -19,15 +19,20 @@ const CheckEmailPage = () => {
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) {
-        console.log(error);
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
+      if (sessionError) {
+        console.log(sessionError);
         return;
       }
 
-      const user = data?.user;
-      console.log(user);
-      if (user && user.email_confirmed_at) {
+      const sessionUser = sessionData?.session?.user;
+
+      const isEmailVerified = !!(
+        sessionUser?.email_confirmed_at || sessionUser?.confirmed_at
+      );
+
+      if (isEmailVerified) {
         router.replace("/activate/email-verified");
       }
     }, 3000);
