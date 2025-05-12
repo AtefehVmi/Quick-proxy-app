@@ -21,14 +21,17 @@ const SignInPage = () => {
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleLogin = async () => {
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
+    setLoading(false);
 
     if (error) {
       if (error.message.toLowerCase().includes("email not confirmed")) {
@@ -107,7 +110,7 @@ const SignInPage = () => {
               Icon={EnterIcon}
               className="py-3 w-full mt-12"
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
 
