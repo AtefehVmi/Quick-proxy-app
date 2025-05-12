@@ -65,6 +65,7 @@ const SignInPage = () => {
               startAdornment={<PassIcon />}
               className="mt-8"
               label="Password"
+              value={password}
               placeholder="Enter your password"
             />
 

@@ -9,8 +9,11 @@ import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import PasswordInput from "@/components/PasswordInput";
 import ArrowLeftICon from "public/icons/arrow-small-left.svg";
+import { useState } from "react";
 
 const NewPassPage = () => {
+  const [password, setPassword] = useState("");
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
@@ -22,6 +25,8 @@ const NewPassPage = () => {
 
           <form className="mt-14">
             <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}
               className="mt-8"
@@ -30,6 +35,8 @@ const NewPassPage = () => {
             />
 
             <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}
               className="mt-8"
