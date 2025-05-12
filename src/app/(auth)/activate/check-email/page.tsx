@@ -101,11 +101,18 @@ const CheckEmailPage = () => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <Button variant="text" className="py-3.5" Icon={BackIcon}>
+        <Button
+          onClick={() => router.back()}
+          variant="text"
+          className="py-3.5"
+          Icon={BackIcon}
+        >
           Back
         </Button>
 
-        <Button variant="text">Home page</Button>
+        <Button variant="text" href={"/"}>
+          Home page
+        </Button>
       </div>
     </div>
   );

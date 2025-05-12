@@ -85,7 +85,10 @@ const SignInPage = () => {
                   Remember me
                 </label>
               </div>
-              <Link href={""} className="text-primary-400 text-sm leading-6">
+              <Link
+                href={"/forgot-pass"}
+                className="text-primary-400 text-sm leading-6"
+              >
                 Forgot Password?
               </Link>
             </div>
@@ -113,11 +116,18 @@ const SignInPage = () => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <Button variant="text" className="py-3.5" Icon={BackIcon}>
+        <Button
+          onClick={() => router.back()}
+          variant="text"
+          className="py-3.5"
+          Icon={BackIcon}
+        >
           Back
         </Button>
 
-        <Button variant="text">Home page</Button>
+        <Button variant="text" href={"/"}>
+          Home page
+        </Button>
       </div>
     </div>
   );

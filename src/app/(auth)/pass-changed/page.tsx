@@ -1,12 +1,17 @@
+"use client";
+
 import Button from "@/components/Button";
 import H1 from "@/components/Typography/H1";
 import TextBase from "@/components/Typography/TextBase";
 import cn from "@/utils/cn";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import ArrowLeftICon from "public/icons/arrow-small-left.svg";
 
 const PassChangedPage = () => {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
@@ -17,7 +22,9 @@ const PassChangedPage = () => {
           </TextBase>
 
           <form className="mt-12">
-            <Button className="py-3 w-full mt-12">Go to login</Button>
+            <Button className="py-3 w-full mt-12" href={"/sign-in"}>
+              Go to login
+            </Button>
             <Button
               Icon={ArrowLeftICon}
               variant="outlined"
@@ -39,11 +46,18 @@ const PassChangedPage = () => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <Button variant="text" className="py-3.5" Icon={BackIcon}>
+        <Button
+          onClick={() => router.back()}
+          variant="text"
+          className="py-3.5"
+          Icon={BackIcon}
+        >
           Back
         </Button>
 
-        <Button variant="text">Home page</Button>
+        <Button variant="text" href={"/"}>
+          Home page
+        </Button>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import H1 from "@/components/Typography/H1";
@@ -7,8 +9,31 @@ import cn from "@/utils/cn";
 import Link from "next/link";
 import BackIcon from "public/icons/arrow-small-left.svg";
 import ArrowLeftICon from "public/icons/arrow-small-left.svg";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { supabase } from "@/services/supabaseClient";
+import { toast } from "react-toastify";
 
 const SignInPage = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/new-pass`,
+    });
+
+    if (error) {
+      console.log(error);
+      toast.error("Failed to send reset email");
+      return;
+    }
+
+    router.push(`/reset-pass?email=${encodeURIComponent(email)}`);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-14.5 py-9.5">
       <div className={cn("grow", "flex items-center justify-center w-full")}>
@@ -20,6 +45,8 @@ const SignInPage = () => {
 
           <form className="mt-14">
             <InputText
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               labelBg="bg-black"
               startAdornment={<EmailIcon />}
@@ -27,8 +54,11 @@ const SignInPage = () => {
               placeholder="Enter your email"
             />
 
-            <Button className="py-3 w-full mt-12">Reset password</Button>
+            <Button className="py-3 w-full mt-12" onClick={handleResetPassword}>
+              Reset password
+            </Button>
             <Button
+              href={"/sign-in"}
               Icon={ArrowLeftICon}
               variant="outlined"
               className="py-3 w-full mt-4"
@@ -49,11 +79,18 @@ const SignInPage = () => {
       </div>
 
       <div className="flex items-center justify-between w-full">
-        <Button variant="text" className="py-3.5" Icon={BackIcon}>
+        <Button
+          onClick={() => router.back()}
+          variant="text"
+          className="py-3.5"
+          Icon={BackIcon}
+        >
           Back
         </Button>
 
-        <Button variant="text">Home page</Button>
+        <Button variant="text" href={"/"}>
+          Home page
+        </Button>
       </div>
     </div>
   );

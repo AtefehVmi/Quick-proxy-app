@@ -1,8 +1,12 @@
-"use client";
-
 import { useRef } from "react";
 
-export default function OtpInput() {
+export default function OtpInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   const handleChange = (
@@ -10,7 +14,7 @@ export default function OtpInput() {
     index: number
   ) => {
     const value = e.target.value;
-    if (!/^\d*$/.test(value)) return; // Allow only numbers
+    if (!/^\d*$/.test(value)) return;
 
     if (value && index < 4) {
       inputRefs.current[index + 1]?.focus();
@@ -19,6 +23,8 @@ export default function OtpInput() {
     if (value.length > 1) {
       e.target.value = value.charAt(value.length - 1);
     }
+
+    onChange(value);
   };
 
   const handleKeyDown = (
@@ -40,6 +46,7 @@ export default function OtpInput() {
           ref={(el) => {
             if (el) inputRefs.current[index] = el;
           }}
+          value={value[index] || ""}
           onChange={(e) => handleChange(e, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           className="w-17 h-17 border border-border-grey/15 bg-transparent text-white text-center text-xl focus:outline-none focus:border-primary-400"
