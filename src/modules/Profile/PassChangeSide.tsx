@@ -77,8 +77,6 @@ const PassChangeSide = ({ className }: { className?: string }) => {
           <p className="text-white text-xl leading-7.5 font-bold">
             Change your password
           </p>
-
-          <ChangePassModal />
         </div>
 
         <div className="mt-10">

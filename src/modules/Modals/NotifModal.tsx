@@ -37,7 +37,7 @@ const NotifModal = ({ className }: { className?: string }) => {
   }, [isOpen, setIsOpen]);
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className="z-50">
       <button onClick={() => setIsOpen(!isOpen)} className={cn(className)}>
         <NotifIcon className="m-4 cursor-pointer" />
         <div className="bg-primary-400 py-0.5 px-2.5 hidden md:block">
@@ -46,7 +46,7 @@ const NotifModal = ({ className }: { className?: string }) => {
       </button>
 
       {isOpen && (
-        <div className="bg-black-3 absolute top-25 right-0 lg:right-20 w-[556px] z-50 p-6">
+        <div className="bg-black-3 absolute top-25 right-0 lg:right-20 w-[556px] p-6 z-50">
           <div className="flex items-center justify-between pb-6 border-b border-black-border">
             <p className="text-2xl leading-9 font-bold text-white">
               Notification
