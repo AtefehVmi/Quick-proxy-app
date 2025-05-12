@@ -35,16 +35,16 @@ const BalanceModal = ({
     setOpen(false);
   };
 
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      const payload = { type: "balance", amount: amount, provider: "lemon" };
-      await createOrderFetch(payload);
-      toast.success("Balance successfully updated!");
-    } catch (error) {
-      console.log("failed", error);
-    }
-  };
+  // const onSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     const payload = { type: "balance", amount: amount, provider: "lemon" };
+  //     await createOrderFetch(payload);
+  //     toast.success("Balance successfully updated!");
+  //   } catch (error) {
+  //     console.log("failed", error);
+  //   }
+  // };
 
   return (
     <div>
@@ -109,9 +109,7 @@ const BalanceModal = ({
               <Button onClick={handleCloseButton} variant="outlined">
                 Cancel
               </Button>
-              <Button onClick={onSubmit} type="submit">
-                Top Up
-              </Button>
+              <Button type="submit">Top Up</Button>
             </div>
           </DialogPanel>
         </Dialog>
