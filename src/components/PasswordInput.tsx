@@ -41,6 +41,7 @@ type CustomProps = {
   labelBg?: string;
   success?: boolean;
   value?: string;
+  showPassWeakness?: boolean;
 };
 
 export type InputTextProps = CustomProps &
@@ -63,6 +64,7 @@ const PasswordInput = (props: InputTextProps) => {
     onBlur,
     paddingY = "py-7",
     searchBar = false,
+    showPassWeakness = true,
     labelBg,
     value = "",
     ...rest
@@ -110,9 +112,9 @@ const PasswordInput = (props: InputTextProps) => {
     ),
     inputWrapper: cn(
       `relative flex justify-center items-center border border-solid p-3
-       border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`,
-      error && "focus-within:border-danger",
-      success && "focus-within:border-success",
+       focus-within:border-primary-400 ${paddingY}`,
+      error ? "focus-within:border-danger" : "border-[#EAEAEA]/15 ",
+      success ? "focus-within:border-success" : "border-[#EAEAEA]/15 ",
       disabled && "bg-[#FEFEFE]/5"
     ),
     input: cn(
@@ -162,7 +164,7 @@ const PasswordInput = (props: InputTextProps) => {
         </Description>
       )}
 
-      {value.length > 0 && (
+      {showPassWeakness && value.length > 0 && (
         <div className="mt-6">
           <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, index) => (

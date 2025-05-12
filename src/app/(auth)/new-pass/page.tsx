@@ -68,7 +68,7 @@ const NewPassPage = () => {
               placeholder="Enter your password"
               error={passwordError}
               description={
-                passwordError ? "Password must be ast least 8 characters." : ""
+                passwordError ? "Password must be at least 8 characters." : ""
               }
             />
 
