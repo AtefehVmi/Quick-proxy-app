@@ -73,6 +73,7 @@ const SignUpPage = () => {
               placeholder="Enter your username"
             />
             <PasswordInput
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}

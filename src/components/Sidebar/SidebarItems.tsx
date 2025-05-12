@@ -28,21 +28,21 @@ const sidebarItems = [
       },
     ],
   },
-  {
-    name: "Datacenter",
-    children: [
-      {
-        name: "Rotating Datacenter",
-        href: ROUTES.ROTATING_DATACENTER,
-        icon: RotatingResiIcon,
-      },
-      {
-        name: "Static Datacenter",
-        href: ROUTES.STATIC_DATACENTER,
-        icon: IspIcon,
-      },
-    ],
-  },
+  // {
+  //   name: "Datacenter",
+  //   children: [
+  //     {
+  //       name: "Rotating Datacenter",
+  //       href: ROUTES.ROTATING_DATACENTER,
+  //       icon: RotatingResiIcon,
+  //     },
+  //     {
+  //       name: "Static Datacenter",
+  //       href: ROUTES.STATIC_DATACENTER,
+  //       icon: IspIcon,
+  //     },
+  //   ],
+  // },
   {
     name: "Mobile",
     children: [
