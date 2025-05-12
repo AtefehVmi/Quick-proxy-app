@@ -37,7 +37,7 @@ const EmailVerifiedPage = () => {
           </H1>
 
           <Button
-            onClick={() => router.replace("/")}
+            onClick={() => router.replace("/onboarding")}
             className="py-3 w-full mt-14"
           >
             Go to dashboard

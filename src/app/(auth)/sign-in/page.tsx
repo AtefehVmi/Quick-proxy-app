@@ -36,7 +36,7 @@ const SignInPage = () => {
       toast.success("Logged in!");
       const accessToken = data.session.access_token;
       localStorage.setItem("accessToken", accessToken);
-      router.replace("/onboarding");
+      router.replace("/");
     }
   };
 
