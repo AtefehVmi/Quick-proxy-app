@@ -58,3 +58,7 @@ export async function getCoupon(payload: {
 }): Promise<any> {
   return await instance.post("rest/v1/rpc/get_coupon_details_by_id", payload);
 }
+
+export async function getAccount(id: string): Promise<any> {
+  return await instance.get(`/accounts?user_id=eq.${id}`);
+}

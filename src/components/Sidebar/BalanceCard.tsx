@@ -6,43 +6,36 @@ import WalletIcon from "public/icons/wallet.svg";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
 import { supabase } from "@/services/supabaseClient";
+import { QUERY_KEYS } from "@/constants/keys";
+import { getAccount } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../Loader";
 
 const BalanceCard = ({ className }: { className?: string }) => {
-  const [balance, setBalance] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      setLoading(true);
-
+    const getSession = async () => {
       const {
         data: { session },
-        error: sessionError,
       } = await supabase.auth.getSession();
-
-      if (sessionError || !session?.user) {
-        console.error("No session or user", sessionError);
-        setLoading(false);
-        return;
+      if (session?.user) {
+        setUserId(session.user.id);
       }
-
-      const { data, error } = await supabase
-        .from("users")
-        .select("balance")
-        .eq("id", session.user.id)
-        .single();
-
-      if (error) {
-        console.error("Error fetching balance:", error);
-      } else {
-        setBalance(data.balance);
-      }
-
-      setLoading(false);
     };
-
-    fetchBalance();
+    getSession();
   }, []);
+
+  const { data: accountData, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
+    queryFn: () => getAccount(userId!),
+    enabled: !!userId,
+  });
+
+  const balance =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].balance
+      : null;
 
   return (
     <Card className={cn("flex items-end justify-between", className)}>
@@ -53,7 +46,7 @@ const BalanceCard = ({ className }: { className?: string }) => {
         </div>
 
         <p className="mt-2 font-bold text-lg leading-6 text-grey-100">
-          {loading ? "Loading..." : `$${balance?.toFixed(2) ?? "0.00"}`}
+          {isLoading ? <Loader /> : `$${balance?.toFixed(2) ?? "0.00"}`}
         </p>
       </div>
 
