@@ -20,7 +20,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ title, bgImage, data }) => {
         <Image
           src={bgImage}
           alt=""
-          className="absolute -top-7.5 -right-7.5 -z-30 transition-all duration-300 group-hover:-top-2.5 group-hover:-right-2.5"
+          className="absolute -top-7.5 -right-7.5 -z-50 transition-all duration-300 group-hover:-top-2.5 group-hover:-right-2.5"
           quality={100}
         />
       </div>
