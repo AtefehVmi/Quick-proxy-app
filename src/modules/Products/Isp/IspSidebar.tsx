@@ -32,6 +32,7 @@ const IspSidebar = ({
   const [coupon, setCoupon] = useState<string>("");
   const [discount, setDiscount] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
+  const [couponChecked, setCouponChecked] = useState(false);
 
   const { data: locations } = useQuery({
     queryKey: QUERY_KEYS.ISP_LOCATION,
@@ -68,6 +69,10 @@ const IspSidebar = ({
   const { balance } = useBalance();
 
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+    toastOnError: true,
+  });
+
+  const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
   });
 
@@ -118,6 +123,28 @@ const IspSidebar = ({
     await createOrderFetch(payload);
   };
 
+  const applyCoupon = async () => {
+    if (!coupon) return;
+
+    setCouponChecked(false);
+    const response = await couponFetch({ coupon_code: coupon });
+    setCouponChecked(true);
+
+    const couponData = response?.[0];
+
+    if (!couponData || !couponData.valid) {
+      setDiscount(0);
+      return;
+    }
+
+    if (couponData.discount_type === "percentage") {
+      setDiscount(couponData.discount);
+      toast.success(`Coupon applied: ${couponData.discount}% off`);
+    } else {
+      toast.info("Only percentage discounts are supported.");
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -162,9 +189,25 @@ const IspSidebar = ({
           />
           <InputText
             value={coupon}
-            onChange={(e) => setCoupon(e.target.value)}
+            onChange={(e) => {
+              setCoupon(e.target.value);
+              setDiscount(0);
+              setCouponChecked(false);
+            }}
+            onBlur={applyCoupon}
             label="Coupon"
             placeholder="Enter Coupon"
+            error={!!coupon && couponChecked && discount === 0}
+            success={!coupon && couponChecked && discount > 0}
+            description={
+              loading || !coupon
+                ? ""
+                : discount > 0
+                ? "valid"
+                : couponChecked
+                ? "invalid"
+                : ""
+            }
           />
         </div>
 

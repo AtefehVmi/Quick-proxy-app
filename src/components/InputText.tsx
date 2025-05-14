@@ -79,7 +79,7 @@ const InputText = (props: InputTextProps) => {
     inputWrapper: cn(
       `relative flex justify-center items-center border border-solid p-3
        border-[#EAEAEA]/15 focus-within:border-primary-400 ${paddingY}`,
-      error && "focus-within:border-danger",
+      error && "focus-within:border-danger border-danger",
       success && "focus-within:border-success",
       disabled && "bg-[#FEFEFE]/5"
     ),

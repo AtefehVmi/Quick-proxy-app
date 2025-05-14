@@ -21,6 +21,7 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useBalance } from "@/hooks/useBalance";
+import { getCoupon } from "@/services/api";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -40,6 +41,8 @@ const BuySide = ({
   const [country, setCountry] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [port, setPort] = useState<string>("");
+  const [couponChecked, setCouponChecked] = useState(false);
+  const [discount, setDiscount] = useState<number>(0);
 
   const { data: countries } = useQuery({
     queryKey: QUERY_KEYS.LTE_REGION,
@@ -73,6 +76,10 @@ const BuySide = ({
   });
 
   const { balance } = useBalance();
+
+  const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
+    toastOnError: true,
+  });
 
   let lteOptions = [{ label: "", value: "" }];
   let selectedPlanPrice = selectedPlan?.price ?? 0;
@@ -113,8 +120,6 @@ const BuySide = ({
     return [];
   }, [country, usCities]);
 
-  const discount = 0;
-
   const total = selectedPlanPrice * amount;
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
 
@@ -135,6 +140,28 @@ const BuySide = ({
       toast.success("Successfully created!");
     } catch (error) {
       console.log("failed", error);
+    }
+  };
+
+  const applyCoupon = async () => {
+    if (!coupon) return;
+
+    setCouponChecked(false);
+    const response = await couponFetch({ coupon_code: coupon });
+    setCouponChecked(true);
+
+    const couponData = response?.[0];
+
+    if (!couponData || !couponData.valid) {
+      setDiscount(0);
+      return;
+    }
+
+    if (couponData.discount_type === "percentage") {
+      setDiscount(couponData.discount);
+      toast.success(`Coupon applied: ${couponData.discount}% off`);
+    } else {
+      toast.info("Only percentage discounts are supported.");
     }
   };
 
@@ -191,9 +218,25 @@ const BuySide = ({
             />
             <InputText
               value={coupon}
-              onChange={(e) => setCoupon(e.target.value)}
+              onChange={(e) => {
+                setCoupon(e.target.value);
+                setDiscount(0);
+                setCouponChecked(false);
+              }}
+              onBlur={applyCoupon}
               label="Coupon"
               placeholder="Enter Coupon"
+              error={!!coupon && couponChecked && discount === 0}
+              success={!coupon && couponChecked && discount > 0}
+              description={
+                loading || !coupon
+                  ? ""
+                  : discount > 0
+                  ? "valid"
+                  : couponChecked
+                  ? "invalid"
+                  : ""
+              }
             />
           </div>
         )}

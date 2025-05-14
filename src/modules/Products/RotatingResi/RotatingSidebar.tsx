@@ -8,13 +8,44 @@ import { useState } from "react";
 import WalletIcon from "public/icons/wallet-small.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Bandwidth from "./Bandwidth";
+import useFetch from "@/hooks/useFetch";
+import { getCoupon } from "@/services/api";
+import { useBalance } from "@/hooks/useBalance";
+import { toast } from "react-toastify";
 
 const RotatingSidebar = () => {
   const [amount, setAmount] = useState<number>(0);
   const [coupon, setCoupon] = useState<string>();
+  const [couponChecked, setCouponChecked] = useState(false);
+  const [discount, setDiscount] = useState<number>(0);
 
-  const discount = "";
-  const balance = 0;
+  const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
+    toastOnError: true,
+  });
+
+  const { balance } = useBalance();
+
+  const applyCoupon = async () => {
+    if (!coupon) return;
+
+    setCouponChecked(false);
+    const response = await couponFetch({ coupon_code: coupon });
+    setCouponChecked(true);
+
+    const couponData = response?.[0];
+
+    if (!couponData || !couponData.valid) {
+      setDiscount(0);
+      return;
+    }
+
+    if (couponData.discount_type === "percentage") {
+      setDiscount(couponData.discount);
+      toast.success(`Coupon applied: ${couponData.discount}% off`);
+    } else {
+      toast.info("Only percentage discounts are supported.");
+    }
+  };
 
   return (
     <div
@@ -40,10 +71,26 @@ const RotatingSidebar = () => {
           />
           <InputText
             value={coupon}
-            onChange={(e) => setCoupon(e.target.value)}
+            onChange={(e) => {
+              setCoupon(e.target.value);
+              setDiscount(0);
+              setCouponChecked(false);
+            }}
+            onBlur={applyCoupon}
             label="Coupon"
             placeholder="Enter Coupon"
             className="mt-6 w-full"
+            error={!!coupon && couponChecked && discount === 0}
+            success={!coupon && couponChecked && discount > 0}
+            description={
+              loading || !coupon
+                ? ""
+                : discount > 0
+                ? "valid"
+                : couponChecked
+                ? "invalid"
+                : ""
+            }
           />
         </div>
 
@@ -86,7 +133,9 @@ const RotatingSidebar = () => {
         {discount ?? (
           <div className="mt-3 flex items-center justify-between">
             <p className="text-primary-200 text-base leading-6">Discount</p>
-            <TextBase className="font-semibold text-primary-200">20%</TextBase>
+            <TextBase className="font-semibold text-primary-200">
+              {discount}%
+            </TextBase>
           </div>
         )}
 
