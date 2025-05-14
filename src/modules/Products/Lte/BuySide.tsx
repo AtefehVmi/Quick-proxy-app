@@ -21,17 +21,24 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 
-const portOptions = [{ label: "", value: "" }];
-const lteOptions = [{ label: "", value: "" }];
+const portOptions = [
+  { label: "http|https", value: "http|https" },
+  { label: "socks5", value: "socks5" },
+];
 
-const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
+const BuySide = ({
+  selectedPlan,
+  setSelectedPlan,
+}: {
+  selectedPlan: any;
+  setSelectedPlan: (plan: any) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(true);
   const [amount, setAmount] = useState<number>(2);
   const [coupon, setCoupon] = useState<string>();
   const [country, setCountry] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [port, setPort] = useState<string>("");
-  const [lte, setLte] = useState<string>("");
 
   const { data: countries } = useQuery({
     queryKey: QUERY_KEYS.LTE_REGION,
@@ -66,6 +73,23 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
 
   console.log(plans);
 
+  let lteOptions = [{ label: "", value: "" }];
+  let selectedPlanPrice = 0;
+
+  if (plans) {
+    lteOptions = plans.map((plan: { id: string; name: string }) => ({
+      label: plan.name,
+      value: plan.id.toString(),
+    }));
+
+    if (selectedPlan) {
+      const selected = plans.find(
+        (p) => p.id.toString() === selectedPlan.id?.toString()
+      );
+      selectedPlanPrice = selected?.price ?? 0;
+    }
+  }
+
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
@@ -99,7 +123,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
   const discount = 0;
   const balance = 0;
 
-  const total = selectedPlan.price * amount;
+  const total = selectedPlanPrice * amount;
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
 
   const onSubmit = async () => {
@@ -165,16 +189,19 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
             <Autocomplete
               variant="primary"
               options={lteOptions}
-              value={lte}
-              onChange={({ value }) => setLte(value)}
+              value={selectedPlan?.id?.toString() ?? ""}
+              onChange={({ value }) => {
+                const plan = plans?.find((p) => p.id.toString() === value);
+                setSelectedPlan(plan || null);
+              }}
               label="LTE"
-              placeholder="Select"
+              placeholder="Select Lte"
             />
             <InputText
               value={coupon}
               onChange={(e) => setCoupon(e.target.value)}
               label="Coupon"
-              placeholder="Enter"
+              placeholder="Enter Coupon"
             />
           </div>
         )}
@@ -237,7 +264,7 @@ const BuySide = ({ selectedPlan }: { selectedPlan: any }) => {
               Proxy Price per month
             </p>
             <TextBase className="font-semibold text-white">
-              ${selectedPlan?.price ?? 0}
+              ${selectedPlanPrice ?? 0}
             </TextBase>
           </div>
 

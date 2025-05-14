@@ -97,7 +97,7 @@ const PassChangeSide = ({ className }: { className?: string }) => {
               passwordError ? "Password must be at least 8 characters." : ""
             }
             label="New Password"
-            placeholder="Enter Password"
+            placeholder="Enter New Password"
             className="mt-12"
             onChange={(e) => setNewPass(e.target.value)}
           />
@@ -105,7 +105,7 @@ const PassChangeSide = ({ className }: { className?: string }) => {
             value={confirmPass}
             showPassWeakness={false}
             label="Confirm New Password"
-            placeholder="Enter Password"
+            placeholder="Enter New Password"
             className="mt-12"
             onChange={(e) => setConfirmPass(e.target.value)}
             error={confirmError}

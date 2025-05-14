@@ -140,7 +140,7 @@ const IspSidebar = () => {
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
             label="Quantity"
-            placeholder="Enter"
+            placeholder="Enter Quantity"
             type="number"
           />
           <Autocomplete
@@ -149,13 +149,13 @@ const IspSidebar = () => {
             value={location}
             onChange={({ value }) => setLocation(value)}
             label="Location"
-            placeholder="Select"
+            placeholder="Select Location"
           />
           <InputText
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
             label="Coupon"
-            placeholder="Enter"
+            placeholder="Enter Coupon"
           />
         </div>
 

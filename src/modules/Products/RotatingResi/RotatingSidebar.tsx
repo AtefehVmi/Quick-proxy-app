@@ -35,14 +35,14 @@ const RotatingSidebar = () => {
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
             label="Amount"
-            placeholder="Enter"
+            placeholder="Enter Amount"
             className="w-full"
           />
           <InputText
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
             label="Coupon"
-            placeholder="Enter"
+            placeholder="Enter Coupon"
             className="mt-6 w-full"
           />
         </div>

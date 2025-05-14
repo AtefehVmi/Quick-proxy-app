@@ -47,7 +47,10 @@ const LteProxy = () => {
       </div>
 
       <div className="xl:col-span-8">
-        <LteSidebar selectedPlan={selectedPlan} />
+        <LteSidebar
+          setSelectedPlan={setSelectedPlan}
+          selectedPlan={selectedPlan}
+        />
       </div>
     </div>
   );

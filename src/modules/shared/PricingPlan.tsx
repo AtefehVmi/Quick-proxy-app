@@ -47,8 +47,6 @@ const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
     },
   });
 
-  console.log(plans);
-
   useEffect(() => {
     if (plans && plans.length > 0) {
       setSelectedPlan?.(plans[0]);
