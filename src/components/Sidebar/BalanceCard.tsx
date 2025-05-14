@@ -1,41 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Card from "@/components/Card/Card";
 import WalletIcon from "public/icons/wallet.svg";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
-import { supabase } from "@/services/supabaseClient";
-import { QUERY_KEYS } from "@/constants/keys";
-import { getAccount } from "@/services/api";
-import { useQuery } from "@tanstack/react-query";
 import Loader from "../Loader";
+import { useBalance } from "@/hooks/useBalance";
 
 const BalanceCard = ({ className }: { className?: string }) => {
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session?.user) {
-        setUserId(session.user.id);
-      }
-    };
-    getSession();
-  }, []);
-
-  const { data: accountData, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
-    queryFn: () => getAccount(userId!),
-    enabled: !!userId,
-  });
-
-  const balance =
-    Array.isArray(accountData) && accountData.length > 0
-      ? accountData[0].balance
-      : null;
+  const { balance, isLoading } = useBalance();
 
   return (
     <Card className={cn("flex items-end justify-between", className)}>

@@ -8,34 +8,10 @@ import { QUERY_KEYS } from "@/constants/keys";
 import Card from "@/components/Card/Card";
 import BalanceModal from "../Modals/BalanceModal";
 import Loader from "@/components/Loader";
+import { useBalance } from "@/hooks/useBalance";
 
 const Balance = () => {
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session?.user) {
-        setUserId(session.user.id);
-      }
-    };
-    getSession();
-  }, []);
-
-  const { data: accountData, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
-    queryFn: () => getAccount(userId!),
-    enabled: !!userId,
-  });
-
-  const balance =
-    Array.isArray(accountData) && accountData.length > 0
-      ? accountData[0].balance
-      : null;
-
-  console.log(balance);
+  const { balance, isLoading } = useBalance();
 
   return (
     <Card className="py-4 px-4.5 bg-balance">

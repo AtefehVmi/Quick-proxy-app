@@ -20,6 +20,7 @@ import {
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
+import { useBalance } from "@/hooks/useBalance";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -71,7 +72,7 @@ const BuySide = ({
     },
   });
 
-  console.log(plans);
+  const { balance, isLoading } = useBalance();
 
   let lteOptions = [{ label: "", value: "" }];
   let selectedPlanPrice = 0;
@@ -121,7 +122,6 @@ const BuySide = ({
   }, [country, usCities]);
 
   const discount = 0;
-  const balance = 0;
 
   const total = selectedPlanPrice * amount;
   const discountedTotal = discount ? total - (discount * total) / 100 : total;

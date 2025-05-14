@@ -1,0 +1,38 @@
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import { supabase } from "@/services/supabaseClient";
+import { getAccount } from "@/services/api";
+
+export const useBalance = () => {
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUserId(session.user.id);
+      }
+    };
+    getSession();
+  }, []);
+
+  const {
+    data: accountData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
+    queryFn: () => getAccount(userId!),
+    enabled: !!userId,
+  });
+
+  const balance =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].balance
+      : null;
+
+  return { balance, isLoading, error };
+};
