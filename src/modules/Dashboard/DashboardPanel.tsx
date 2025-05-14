@@ -26,7 +26,7 @@ const DashboardPanel = () => {
 
       //   const hasOnboarded = user.user_metadata?.has_onboarded ?? false;
       //   setShowOnboarding(!hasOnboarded);
-      //   setLoading(false);
+      setLoading(false);
     };
 
     checkOnboardingStatus();
@@ -35,7 +35,7 @@ const DashboardPanel = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <Loader />
+        Loading...
       </div>
     );
   }
