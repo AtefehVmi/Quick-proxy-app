@@ -11,24 +11,17 @@ import Autocomplete from "@/components/Autocomplete";
 import useFetch from "@/hooks/useFetch";
 import { CreateOrder } from "@/services/customApi";
 import { toast } from "react-toastify";
-import Loader from "@/components/Loader";
 
 const paymentOptions = [
-  { label: "Credit Cart", value: "lemon" },
-  { label: "Crypto currency", value: "heleket" },
+  { label: "Credit Cart", value: "1" },
+  { label: "Crypto currency", value: "2" },
 ];
 
-const BalanceModal = ({
-  className,
-  variant,
-}: {
-  className?: string;
-  variant: "primary" | "outlined" | "black" | "text";
-}) => {
+const BandwidthModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState("");
   const [amount, setAmount] = useState(0);
-  const { fetch: createOrderFetch, loading } = useFetch(CreateOrder, false, {
+  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
 
@@ -39,15 +32,9 @@ const BalanceModal = ({
   const onSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const payload = { type: "balance", amount: amount, provider: payment };
-      const res = await createOrderFetch(payload);
-
-      if (res?.data?.url) {
-        toast.success("Redirecting...");
-        window.location.href = res.data.url;
-      } else {
-        toast.error("No redirect URL found.");
-      }
+      const payload = { type: "bandwidth", amount: amount, provider: "lemon" };
+      await createOrderFetch(payload);
+      toast.success("Redirecting...");
     } catch (error) {
       console.log("failed", error);
     }
@@ -55,19 +42,9 @@ const BalanceModal = ({
 
   return (
     <div>
-      {variant === "text" ? (
-        <Button onClick={() => setOpen(true)} variant="black">
-          Add charge
-        </Button>
-      ) : (
-        <Button
-          variant={variant}
-          onClick={() => setOpen(true)}
-          className={cn("p-3.5 h-fit w-fit", className)}
-        >
-          <AddIcon />
-        </Button>
-      )}
+      <Button onClick={() => setOpen(true)} variant="black" className="p-3.5">
+        <AddIcon />
+      </Button>
 
       {open && (
         <Dialog
@@ -79,7 +56,7 @@ const BalanceModal = ({
           <DialogPanel as="form" className={cn("w-139", "bg-black-3 p-6")}>
             <div className="flex items-center justify-between pb-6 border-b border-black-border">
               <p className="text-2xl leading-9 font-bold text-white">
-                Add Balance
+                Add Bandwidth
               </p>
               <CrossIcon
                 className="cursor-pointer"
@@ -116,15 +93,7 @@ const BalanceModal = ({
               <Button onClick={handleCloseButton} variant="outlined">
                 Cancel
               </Button>
-              <Button onClick={onSubmit}>
-                {loading ? (
-                  <>
-                    Top Up <Loader />
-                  </>
-                ) : (
-                  "Top Up"
-                )}
-              </Button>
+              <Button onClick={onSubmit}>Top Up</Button>
             </div>
           </DialogPanel>
         </Dialog>
@@ -132,4 +101,4 @@ const BalanceModal = ({
     </div>
   );
 };
-export default BalanceModal;
+export default BandwidthModal;

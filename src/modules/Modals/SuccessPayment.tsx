@@ -9,15 +9,23 @@ import SuccessImage from "public/images/success-payment.png";
 import Image from "next/image";
 import Button from "@/components/Button";
 import AddIcon from "public/icons/add.svg";
+import { useBalance } from "@/hooks/useBalance";
 
 type Props = {
   className?: string;
   title: string;
   type: "bandwidth" | "plan" | "balance";
+  paymentMethod?: "Credit cart" | "Crypto";
 };
 
-const SuccessPayment: React.FC<Props> = ({ className, title, type }) => {
+const SuccessPayment: React.FC<Props> = ({
+  className,
+  title,
+  type,
+  paymentMethod = "Credit cart",
+}) => {
   const [open, setOpen] = useState(false);
+  const { balance } = useBalance();
 
   const handleCloseButton = () => {
     setOpen(false);
@@ -95,13 +103,13 @@ const SuccessPayment: React.FC<Props> = ({ className, title, type }) => {
               <p className="flex items-center gap-1">
                 Available Balance:
                 <span className="text-white font-bold text-2xl leading-9">
-                  $ 876
+                  $ {balance}
                 </span>
               </p>
               <p className="flex items-center gap-1">
                 Payment:
                 <span className="text-white font-bold text-2xl leading-9">
-                  Credit cart
+                  {paymentMethod}
                 </span>
               </p>
             </div>

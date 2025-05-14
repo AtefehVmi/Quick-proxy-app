@@ -1,8 +1,6 @@
-import Button from "@/components/Button";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
-import SuccessPayment from "@/modules/Modals/SuccessPayment";
-import AddIcon from "public/icons/add.svg";
+import BandwidthModal from "@/modules/Modals/BandwidthModal";
 
 const BandwidthCard = () => {
   return (
@@ -17,7 +15,8 @@ const BandwidthCard = () => {
         </div>
       </div>
 
-      <SuccessPayment title="Add Bandwidth" type="bandwidth" />
+      <BandwidthModal />
+      {/* <SuccessPayment title="Add Bandwidth" type="bandwidth" /> */}
     </div>
   );
 };

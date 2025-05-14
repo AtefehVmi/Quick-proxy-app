@@ -1,5 +1,9 @@
+"use client";
+
+import Loader from "@/components/Loader";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
+import { useBalance } from "@/hooks/useBalance";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
 
@@ -10,6 +14,8 @@ const Wallet = ({
   className?: string;
   title: string;
 }) => {
+  const { balance, isLoading } = useBalance();
+
   return (
     <div className={cn(className)}>
       <p className="text-xl lg:text-2xl leading-9 text-white font-bold">
@@ -20,7 +26,9 @@ const Wallet = ({
         <div>
           <div className="pl-4.5 pt-4.5">
             <TextSm className="text-grey-500">Available Balance</TextSm>
-            <p className="text-2xl leading-9 text-white font-bold">$00.00</p>
+            <p className="text-2xl leading-9 text-white font-bold">
+              ${isLoading ? <Loader /> : `${balance ?? "00.00"}`}
+            </p>
           </div>
 
           <div className="mt-4 pl-4.5 flex items-center gap-19.25">

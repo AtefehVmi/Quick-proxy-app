@@ -1,8 +1,6 @@
-import MainDashboard from "@/modules/Dashboard/MainDashboard";
-import OnboardingDashboard from "@/modules/Dashboard/onborading/OnboardingDashboard";
+import DashboardPanel from "@/modules/Dashboard/DashboardPanel";
 
 const Dashboard = () => {
-  // if(onboarding) return <OnboardingDashboard />
-  return <MainDashboard />;
+  return <DashboardPanel />;
 };
 export default Dashboard;
