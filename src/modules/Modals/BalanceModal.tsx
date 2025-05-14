@@ -35,16 +35,16 @@ const BalanceModal = ({
     setOpen(false);
   };
 
-  // const onSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   try {
-  //     const payload = { type: "balance", amount: amount, provider: "lemon" };
-  //     await createOrderFetch(payload);
-  //     toast.success("Balance successfully updated!");
-  //   } catch (error) {
-  //     console.log("failed", error);
-  //   }
-  // };
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const payload = { type: "balance", amount: amount, provider: "lemon" };
+      await createOrderFetch(payload);
+      toast.success("Redirecting...");
+    } catch (error) {
+      console.log("failed", error);
+    }
+  };
 
   return (
     <div>
@@ -84,7 +84,7 @@ const BalanceModal = ({
               <InputText
                 value={amount}
                 onChange={(e) => setAmount(Number(e.target.value))}
-                placeholder="Enter"
+                placeholder="Enter Amount"
                 label="Amount"
                 className="max-w-[508px] w-full"
               />
@@ -96,7 +96,7 @@ const BalanceModal = ({
                 options={paymentOptions}
                 label="Payment method"
                 variant="primary"
-                placeholder="Select"
+                placeholder="Select Payment"
               />
             </div>
 
@@ -109,7 +109,7 @@ const BalanceModal = ({
               <Button onClick={handleCloseButton} variant="outlined">
                 Cancel
               </Button>
-              <Button type="submit">Top Up</Button>
+              <Button onClick={onSubmit}>Top Up</Button>
             </div>
           </DialogPanel>
         </Dialog>
