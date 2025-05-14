@@ -61,11 +61,7 @@ const InputText = (props: InputTextProps) => {
   };
 
   const classes = {
-    root: cn(
-      "flex flex-col gap-2 placeholder:text-white",
-      fullWidth && "w-full",
-      className
-    ),
+    root: cn("flex flex-col gap-2", fullWidth && "w-full", className),
     label: cn(
       "absolute -top-2.5 left-3 px-1 text-sm pointer-events-none z-10",
       focus ? "text-primary-400" : "text-grey",
@@ -88,7 +84,7 @@ const InputText = (props: InputTextProps) => {
       disabled && "bg-[#FEFEFE]/5"
     ),
     input: cn(
-      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white",
+      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white/75",
       startAdornment && "pl-11",
       endAdornment && "pr-9"
     ),

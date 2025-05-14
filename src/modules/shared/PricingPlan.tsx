@@ -10,28 +10,22 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { getPriceList } from "@/services/customApi";
 
-type Plans = {
-  days: number;
-  quantity: number;
-  discount: number;
-  price: number;
-  pricePerMonth: number;
-};
-
 type Props = {
   plan: "residential" | "lte";
   type: "Static" | "Rotating" | "LTE Proxy";
   setSelectedPlan?: (plan: any) => void;
+  selectedPlan?: any;
 };
 
-const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
+const PricingPlan: React.FC<Props> = ({
+  plan,
+  type,
+  setSelectedPlan,
+  selectedPlan,
+}) => {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
 
-  const {
-    data: plans,
-    error,
-    isLoading,
-  } = useQuery({
+  const { data: plans } = useQuery({
     queryKey: [...QUERY_KEYS.PRICING, plan, type],
     queryFn: () => getPriceList(),
     select: (data) => {
@@ -48,10 +42,17 @@ const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
   });
 
   useEffect(() => {
-    if (plans && plans.length > 0) {
+    if (plans && plans.length > 0 && !selectedPlan) {
       setSelectedPlan?.(plans[0]);
     }
   }, [plans]);
+
+  useEffect(() => {
+    if (!plans || !selectedPlan) return;
+    const index = plans.findIndex((p) => p.id === selectedPlan.id);
+    setSelectedPlanIndex(index !== -1 ? index : null);
+  }, [selectedPlan, plans]);
+
   return (
     <div className="bg-black-2">
       <p
@@ -118,7 +119,9 @@ const PricingPlan: React.FC<Props> = ({ plan, type, setSelectedPlan }) => {
 
                 <div className="flex items-center gap-1">
                   <TextXs className="text-white">Price / per month :</TextXs>
-                  <TextBase className="text-white font-semibold">$2</TextBase>
+                  <TextBase className="text-white font-semibold">
+                    ${plan.price}
+                  </TextBase>
                 </div>
               </div>
             </div>

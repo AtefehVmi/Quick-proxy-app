@@ -72,24 +72,16 @@ const BuySide = ({
     },
   });
 
-  const { balance, isLoading } = useBalance();
+  const { balance } = useBalance();
 
   let lteOptions = [{ label: "", value: "" }];
-  let selectedPlanPrice = 0;
+  let selectedPlanPrice = selectedPlan?.price ?? 0;
 
-  if (plans) {
-    lteOptions = plans.map((plan: { id: string; name: string }) => ({
+  lteOptions =
+    plans?.map((plan: { id: string; name: string }) => ({
       label: plan.name,
       value: plan.id.toString(),
-    }));
-
-    if (selectedPlan) {
-      const selected = plans.find(
-        (p) => p.id.toString() === selectedPlan.id?.toString()
-      );
-      selectedPlanPrice = selected?.price ?? 0;
-    }
-  }
+    })) || [];
 
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
     toastOnError: true,

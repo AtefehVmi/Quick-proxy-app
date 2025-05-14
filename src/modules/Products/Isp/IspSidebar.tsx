@@ -19,12 +19,18 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { getCoupon } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
+import { useBalance } from "@/hooks/useBalance";
 
-const IspSidebar = () => {
+const IspSidebar = ({
+  selectedPlan,
+  setSelectedPlan,
+}: {
+  selectedPlan: any;
+  setSelectedPlan: (plan: any) => void;
+}) => {
   const [amount, setAmount] = useState<number>(1);
   const [coupon, setCoupon] = useState<string>("");
   const [discount, setDiscount] = useState<number>(0);
-  const [plan, setPlan] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
   const { data: locations } = useQuery({
@@ -59,6 +65,8 @@ const IspSidebar = () => {
     },
   });
 
+  const { balance } = useBalance();
+
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
@@ -72,13 +80,11 @@ const IspSidebar = () => {
       value: plan.id.toString(),
     }));
 
-    if (plan) {
-      const selectedPlan = plans.find((p) => p.id.toString() === plan);
-      selectedPlanPrice = selectedPlan?.price ?? 0;
+    if (selectedPlan) {
+      selectedPlanPrice = selectedPlan.price ?? 0;
     }
   }
 
-  const balance = 0;
   let locationOptions = [{ label: "", value: "" }];
 
   if (locations?.data) {
@@ -94,25 +100,22 @@ const IspSidebar = () => {
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
 
   const onSubmit = async () => {
-    const selectedPlan = plans?.find((p) => p.id.toString() === plan);
-    if (!selectedPlan) return toast.error("Please select a plan");
+    const selectedPlanObj = plans?.find(
+      (p) => p.id.toString() === selectedPlan
+    );
+    if (!selectedPlanObj) return toast.error("Please select a plan");
     if (balance < discountedTotal) return toast.error("Balance is not enough!");
 
-    try {
-      const payload = {
-        type: "proxy",
-        product: selectedPlan.typeId,
-        plan: selectedPlan.id,
-        quantity: amount,
-        location,
-        coupon,
-      };
+    const payload = {
+      type: "proxy",
+      product: selectedPlanObj.typeId,
+      plan: selectedPlanObj.id,
+      quantity: amount,
+      location,
+      coupon,
+    };
 
-      await createOrderFetch(payload);
-      toast.success("Successfully created!");
-    } catch (error) {
-      console.log("failed", error);
-    }
+    await createOrderFetch(payload);
   };
 
   return (
@@ -131,11 +134,17 @@ const IspSidebar = () => {
           <Autocomplete
             variant="primary"
             options={planOptions}
-            value={plan}
-            onChange={({ value }) => setPlan(value)}
+            value={selectedPlan?.id?.toString() || ""}
+            onChange={({ value }) => {
+              const selected = plans?.find((p) => p.id.toString() === value);
+              if (selected) {
+                setSelectedPlan(selected);
+              }
+            }}
             label="Plan"
             placeholder="Select plan"
           />
+
           <InputText
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
