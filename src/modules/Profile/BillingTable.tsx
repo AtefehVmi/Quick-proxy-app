@@ -333,7 +333,7 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
   });
 
   return (
-    <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
+    <Card className={cn("flex flex-col max-h-[840px] px-0", className)}>
       <div className="flex items-center justify-between pt-4.5">
         <div className="flex items-center gap-2">
           <RecentActivityIcon />
