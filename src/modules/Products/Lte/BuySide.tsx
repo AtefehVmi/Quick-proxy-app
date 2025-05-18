@@ -75,8 +75,7 @@ const BuySide = ({
     },
   });
 
-  // const { balance } = useBalance();
-  const balance = 20;
+  const { balance } = useBalance();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
@@ -133,6 +132,7 @@ const BuySide = ({
         type: "proxy",
         product: 5,
         plan: selectedPlan.id,
+        // location: country,
         coupon: coupon,
       };
 
