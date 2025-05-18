@@ -326,14 +326,14 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
       }
     : null;
 
-  const { data: ordersData } = useQuery({
+  const { data: ordersData, isLoading } = useQuery({
     queryKey: isUserReady ? [...QUERY_KEYS.ORDERS, queryParams] : [],
     queryFn: () => getOrders(queryParams!),
     enabled: isUserReady,
   });
 
   return (
-    <Card className={cn("flex flex-col max-h-[840px] px-0", className)}>
+    <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
       <div className="flex items-center justify-between pt-4.5">
         <div className="flex items-center gap-2">
           <RecentActivityIcon />
@@ -352,7 +352,11 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
       </div>
 
       <div className="flex-1 mt-7.5 mb-3 custom-scrollbar px-4.5 max-w-full relative w-full overflow-auto">
-        <Table columns={columns} data={ordersData ?? []} />
+        <Table
+          isLoading={isLoading}
+          columns={columns}
+          data={ordersData ?? []}
+        />
       </div>
 
       <div className="border-t border-black-2 pt-3 px-4.5">
