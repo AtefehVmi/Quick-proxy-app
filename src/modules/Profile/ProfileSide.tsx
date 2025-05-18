@@ -4,7 +4,7 @@ import PassChangeSide from "./PassChangeSide";
 
 const ProfileSide = () => {
   return (
-    <div className={cn("bg-black-3 h-screen grow px-8", "flex flex-col")}>
+    <div className={cn("bg-black-3 h-full grow px-8", "flex flex-col")}>
       <Wallet title="Your Balance" className="mt-6" />
 
       <div className="mt-8">

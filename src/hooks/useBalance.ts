@@ -34,5 +34,5 @@ export const useBalance = () => {
       ? accountData[0].balance
       : null;
 
-  return { balance, isLoading, error };
+  return { balance, isLoading, error, userId };
 };

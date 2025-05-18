@@ -2,7 +2,6 @@ import Balance from "@/modules/Dashboard/Balance";
 import ProductCard from "@/modules/Dashboard/ProductCard";
 import ProductOverview from "@/modules/Dashboard/ProductOverview";
 import ProxyUsage from "@/modules/Dashboard/ProxyUsage";
-import RecentActivities from "@/modules/Dashboard/RecentActivities";
 import StatsCard from "@/modules/Dashboard/StatsCard";
 import Heading from "@/modules/shared/Heading";
 import DashboardIcon from "public/icons/dashboard-icon.svg";
@@ -10,6 +9,7 @@ import BgClockImage from "public/images/alarm-clock.png";
 import BgCartImage from "public/images/cart-shopping-fast.png";
 import BgCubeImage from "public/images/cube.png";
 import Locations from "../Products/RotatingResi/Locations";
+import BillingTable from "../Profile/BillingTable";
 
 const MainDashboard = () => {
   return (
@@ -41,7 +41,7 @@ const MainDashboard = () => {
               <ProductOverview />
             </div>
             <div className="w-full 2xl:w-1/2">
-              <RecentActivities />
+              <BillingTable size="5" />
             </div>
           </div>
           <Locations className="mt-5" heading={false} />

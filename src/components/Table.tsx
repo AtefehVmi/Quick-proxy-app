@@ -34,8 +34,8 @@ const Table = <T extends object>({
   });
 
   return (
-    <div className={cn("overflow-auto scrollbar-hide", className)}>
-      <table className="w-full text-left">
+    <div className={cn("overflow-auto scrollbar-hide table-fixed", className)}>
+      <table className="w-full text-left overflow-x-auto">
         <thead className="bg-black-2 border-b border-black">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

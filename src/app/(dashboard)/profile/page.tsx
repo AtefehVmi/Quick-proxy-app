@@ -11,7 +11,7 @@ const ProfilePage = () => {
     <div className={cn("w-full", "grid grid-cols-1 xl:grid-cols-24 gap-5")}>
       <div className="xl:col-span-16 px-8 pt-6 pb-8">
         <Heading title="Profile & Billing" Icon={ProfileIcon} />
-        <BillingTable className="mt-6" />
+        <BillingTable filters={true} size="10" className="mt-6" />
       </div>
 
       <div className="xl:col-span-8 h-full">

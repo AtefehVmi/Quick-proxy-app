@@ -6,4 +6,5 @@ export const QUERY_KEYS = {
   LTE_US: ["lte-us"],
   ISP_LOCATION: ["isp-location"],
   GET_ACCOUNT: ["get-account"],
+  ORDERS: ["orders"],
 };

@@ -62,3 +62,7 @@ export async function getCoupon(payload: {
 export async function getAccount(id: string): Promise<any> {
   return await instance.get(`/accounts?user_id=eq.${id}`);
 }
+
+export async function getOrders(params?: Record<string, any>): Promise<any> {
+  return await instance.get("/orders", { params });
+}

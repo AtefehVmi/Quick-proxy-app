@@ -22,9 +22,19 @@ export type LteRecent = {
 };
 
 export type Billing = {
+  user_id: string;
+  id: string;
   type: string;
+  product_id: number | null;
+  plan_id: number | null;
+  location_id: number | null;
   price: number;
+  final_price: number;
+  provider: string;
+  quantity: number;
+  coupon_id: number | string;
   status: string;
-  date: string;
-  description: number;
+  status_reason: string | null;
+  created_at: string;
+  updated_at: string;
 };
