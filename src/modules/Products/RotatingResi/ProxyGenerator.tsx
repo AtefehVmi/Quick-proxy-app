@@ -74,7 +74,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         quantity: quantity,
         rotation: rotation,
         country: "",
-        subuser: 1,
         port: port,
         format: format,
       };

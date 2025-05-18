@@ -20,7 +20,7 @@ const DashboardPanel = () => {
       } = await supabase.auth.getUser();
 
       if (error || !user) {
-        router.push("/login");
+        router.push("/sign-in");
         return;
       }
 
