@@ -57,7 +57,7 @@ const Pagination: React.FC<PaginationProps> = ({
     const newLimit = Number(e.target.value);
     const params = new URLSearchParams(searchParams);
     params.set("limit", newLimit.toString());
-    params.set("offset", "0"); // Reset offset when limit changes
+    params.set("offset", "0");
     setCurrentLimit(newLimit);
     setCurrentOffset(0);
     const url = `${pathname}?${params.toString()}`;

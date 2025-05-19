@@ -307,7 +307,7 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
   const ordering = searchParams.get("ordering") ?? "";
   const search = searchParams.get("search") ?? "";
   const page = Number(searchParams.get("page") ?? "1");
-  const pageSize = Number(searchParams.get("pageSize") ?? size);
+  const pageSize = Number(searchParams.get("pageSize") ?? size ?? "10");
 
   const { userId } = useBalance();
 
@@ -364,7 +364,7 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
           limit={pageSize}
           offset={(page - 1) * pageSize}
           isDataAvailable={ordersData?.length >= pageSize}
-          totalCount={ordersData?.length}
+          totalCount={ordersData?.totalCount}
         />
       </div>
     </Card>
