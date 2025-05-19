@@ -99,3 +99,8 @@ export async function CreateOrder(payload: {
 }): Promise<any> {
   return await customInstance.post("orders", payload);
 }
+
+export async function getUserDetails(id: number) {
+  const { data } = await customInstance.get(`subusers/${id}`);
+  return data;
+}

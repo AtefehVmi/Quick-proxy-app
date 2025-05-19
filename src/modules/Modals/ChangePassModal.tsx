@@ -6,11 +6,22 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import CrossIcon from "public/icons/cross-small.svg";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
-import EditIcon from "public/icons/file-edit.svg";
+import PasswordInput from "@/components/PasswordInput";
+import { useBalance } from "@/hooks/useBalance";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import { getUserDetails } from "@/services/customApi";
 
 const ChangePassModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
-  const [pass, setPass] = useState("********");
+  const { id } = useBalance();
+
+  const { data: accountDetails, isLoading } = useQuery({
+    queryKey: QUERY_KEYS.USER_DETAILS,
+    queryFn: () => getUserDetails(id!),
+  });
+
+  const [pass, setPass] = useState(accountDetails?.password);
 
   const handleCloseButton = () => {
     setOpen(false);
@@ -32,9 +43,12 @@ const ChangePassModal = ({ className }: { className?: string }) => {
           transition
           className="z-50 fixed inset-0 flex w-screen items-center justify-center bg-modal-bg transition duration-300 ease-out data-[closed]:opacity-0"
         >
-          <DialogPanel as="form" className={cn("w-139", "bg-black-3 p-6")}>
+          <DialogPanel
+            as="form"
+            className={cn("max-w-139 lg:w-full", "bg-black-3 p-6")}
+          >
             <div className="flex items-center justify-between pb-6 border-b border-black-border">
-              <p className="text-2xl leading-9 font-bold text-white">
+              <p className="text-lg lg:text-2xl leading-9 font-bold text-white">
                 Change Password
               </p>
               <CrossIcon
@@ -47,11 +61,12 @@ const ChangePassModal = ({ className }: { className?: string }) => {
               <InputText
                 placeholder="Enter"
                 label="Username"
-                value={"Ali1234@#"}
+                value={accountDetails?.username ?? ""}
                 readOnly
               />
 
-              <InputText
+              <PasswordInput
+                showPassWeakness={false}
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
                 label="Password"

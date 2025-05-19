@@ -63,14 +63,6 @@ const MobileMenu: React.FC<Props> = ({ className, setCloseMenu }) => {
             </div>
             <Image src={Logo} alt="logo" />
           </div>
-
-          <div className="flex items-center gap-3 py-5.5">
-            <ProfileDropdown className="m-4 cursor-pointer" />
-            <div className="bg-black-2 w-px h-14"></div>
-            <div className="">
-              <NotifModal className="flex items-center gap-2" />
-            </div>
-          </div>
         </header>
 
         <div className="px-5 mt-6">

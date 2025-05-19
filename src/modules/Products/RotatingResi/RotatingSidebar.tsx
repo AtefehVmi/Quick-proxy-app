@@ -57,7 +57,7 @@ const RotatingSidebar = () => {
       <div className="">
         <Bandwidth />
 
-        <p className="text-white font-bold text-xl leading-7.5 py-6 border-b border-black-border">
+        <p className="text-white font-bold text-lg lg:text-xl leading-7.5 py-6 border-b border-black-border">
           Get Started
         </p>
 

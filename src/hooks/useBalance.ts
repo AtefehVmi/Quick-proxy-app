@@ -34,5 +34,10 @@ export const useBalance = () => {
       ? accountData[0].balance
       : null;
 
-  return { balance, isLoading, error, userId };
+  const id =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].subuser
+      : null;
+
+  return { balance, isLoading, error, userId, id };
 };

@@ -118,7 +118,7 @@ const PasswordInput = (props: InputTextProps) => {
       disabled && "bg-[#FEFEFE]/5"
     ),
     input: cn(
-      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white",
+      "pt-2 pb-2 px-4 w-full h-full absolute text-xs focus:outline-none bg-transparent text-white placeholder:text-white/50",
       startAdornment && "pl-11",
       endAdornment && "pr-9"
     ),

@@ -1,37 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import MainDashboard from "./MainDashboard";
-import { supabase } from "@/services/supabaseClient";
-import { useRouter } from "next/navigation";
 
 const DashboardPanel = () => {
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  // const [loading, setLoading] = useState(true);
+  // const router = useRouter();
 
-  useEffect(() => {
-    const checkOnboardingStatus = async () => {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
+  // useEffect(() => {
+  //   const checkOnboardingStatus = async () => {
+  //     const {
+  //       data: { user },
+  //       error,
+  //     } = await supabase.auth.getUser();
 
-      if (error || !user) {
-        router.push("/sign-in");
-        return;
-      }
-    };
+  //     if (error || !user) {
+  //       router.push("/sign-in");
+  //       return;
+  //     }
+  //   };
 
-    checkOnboardingStatus();
-  }, [supabase, router]);
+  //   checkOnboardingStatus();
+  // }, [supabase, router]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        Loading...
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-screen">
+  //       Loading...
+  //     </div>
+  //   );
+  // }
 
   return <MainDashboard />;
 };

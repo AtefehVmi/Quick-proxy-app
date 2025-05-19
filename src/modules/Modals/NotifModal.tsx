@@ -46,7 +46,7 @@ const NotifModal = ({ className }: { className?: string }) => {
       </button>
 
       {isOpen && (
-        <div className="bg-black-3 absolute top-25 right-0 lg:right-20 w-[556px] p-6 z-50">
+        <div className="bg-black-3 absolute top-25 right-0 lg:right-20 max-w-[556px] w-full p-6 z-50">
           <div className="flex items-center justify-between pb-6 border-b border-black-border">
             <p className="text-2xl leading-9 font-bold text-white">
               Notification

@@ -81,7 +81,10 @@ const SuccessPayment: React.FC<Props> = ({
           transition
           className="z-50 fixed inset-0 flex w-screen items-center justify-center bg-modal-bg transition duration-300 ease-out data-[closed]:opacity-0"
         >
-          <DialogPanel as="form" className={cn("w-139", "bg-black-3 p-6")}>
+          <DialogPanel
+            as="form"
+            className={cn("max-w-139 lg:w-full", "bg-black-3 p-6")}
+          >
             <div className="flex items-center justify-between pb-6 border-b border-black-border">
               <p className="text-2xl leading-9 font-bold text-white">{title}</p>
               <CrossIcon

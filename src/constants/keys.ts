@@ -7,4 +7,5 @@ export const QUERY_KEYS = {
   ISP_LOCATION: ["isp-location"],
   GET_ACCOUNT: ["get-account"],
   ORDERS: ["orders"],
+  USER_DETAILS: ["user_details"],
 };
