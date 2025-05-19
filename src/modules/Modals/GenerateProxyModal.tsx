@@ -18,7 +18,7 @@ interface GenerateProxyModalProps {
   open: boolean;
   setOpen: (value: boolean) => void;
   className?: string;
-  data: string | LteRecent;
+  data: any;
 }
 
 const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
@@ -27,6 +27,7 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
   setOpen,
   data,
 }) => {
+  console.log(data);
   const handleCloseButton = () => {
     setOpen(false);
   };

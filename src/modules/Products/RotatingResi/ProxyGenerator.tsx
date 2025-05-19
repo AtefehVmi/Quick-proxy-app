@@ -54,6 +54,7 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
   const [rotation, setRotation] = useState(rotationOptions[0].value);
   const [quantity, setQuantity] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
+  const [res, setRes] = useState<any>(null);
 
   const { fetch: generateFetch, loading } = useFetch(
     GenerateRotatingResi,
@@ -78,7 +79,8 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         format: format,
       };
 
-      const res = await generateFetch(payload);
+      const response = await generateFetch(payload);
+      setRes(response);
       toast.success("Generated Successfully!");
       setOpenModal(true);
     } catch (error) {
@@ -142,7 +144,11 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
       </div>
 
       <div className="flex items-center justify-end pr-6">
-        <GenerateProxyModal data={""} open={openModal} setOpen={setOpenModal} />
+        <GenerateProxyModal
+          data={res?.data}
+          open={openModal}
+          setOpen={setOpenModal}
+        />
       </div>
 
       <div className="flex items-center justify-end py-6 pr-6">
