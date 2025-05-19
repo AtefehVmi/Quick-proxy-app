@@ -61,7 +61,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
       {isOpen && (
         <div
           className={cn(
-            "absolute top-20 right-0 lg:right-28 w-32 z-50",
+            "absolute top-20 right-0 lg:right-18.5 w-32 z-50",
             "bg-black-3"
           )}
         >
