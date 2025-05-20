@@ -19,7 +19,7 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import { getCoupon } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 
 const IspSidebar = ({
   selectedPlan,
@@ -66,7 +66,7 @@ const IspSidebar = ({
     },
   });
 
-  const { balance } = useBalance();
+  const { balance } = useUser();
 
   const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
     toastOnError: true,

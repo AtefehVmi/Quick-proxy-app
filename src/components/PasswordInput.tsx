@@ -136,6 +136,7 @@ const PasswordInput = (props: InputTextProps) => {
           </span>
 
           <Input
+            autoComplete={"new-password"}
             ref={inputRef}
             type={isOpen ? "text" : "password"}
             className={classes.input}

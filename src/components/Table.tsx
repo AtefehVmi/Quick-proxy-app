@@ -18,6 +18,7 @@ interface TableProps<T extends object> {
   isLoading?: boolean;
   className?: string;
   noDataClassName?: string;
+  tableHeight?: string;
 }
 
 const Table = <T extends object>({
@@ -26,6 +27,7 @@ const Table = <T extends object>({
   isLoading,
   className,
   noDataClassName,
+  tableHeight,
 }: TableProps<T>) => {
   const table = useReactTable({
     data,
@@ -34,8 +36,14 @@ const Table = <T extends object>({
   });
 
   return (
-    <div className={cn("overflow-auto scrollbar-hide table-fixed", className)}>
-      <table className="w-full text-left overflow-x-auto">
+    <div
+      className={cn(
+        "overflow-auto scrollbar-hide table-fixed",
+        className,
+        tableHeight ?? "h-full"
+      )}
+    >
+      <table className={cn("w-full text-left overflow-x-auto")}>
         <thead className="bg-black-2 border-b border-black">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

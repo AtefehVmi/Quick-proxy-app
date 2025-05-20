@@ -20,7 +20,7 @@ import {
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 import { getCoupon } from "@/services/api";
 
 const portOptions = [
@@ -75,7 +75,7 @@ const BuySide = ({
     },
   });
 
-  const { balance } = useBalance();
+  const { balance } = useUser();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,

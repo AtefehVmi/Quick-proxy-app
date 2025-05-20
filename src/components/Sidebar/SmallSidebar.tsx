@@ -31,7 +31,7 @@ const sidebarItems = [
       { href: ROUTES.ROTATING_LTE, Icon: MobileIcon },
     ],
   },
-  { Icon: SettingIcon, href: "/settings" },
+  // { Icon: SettingIcon, href: "/settings" },
   { Icon: UserIcon, href: ROUTES.PROFILE },
 ];
 

@@ -4,7 +4,7 @@ import { QUERY_KEYS } from "@/constants/keys";
 import { supabase } from "@/services/supabaseClient";
 import { getAccount } from "@/services/api";
 
-export const useBalance = () => {
+export const useUser = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,5 +39,29 @@ export const useBalance = () => {
       ? accountData[0].subuser
       : null;
 
-  return { balance, isLoading, error, userId, id };
+  const total_spending =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].total_spending
+      : null;
+
+  const total_orders =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].total_orders
+      : null;
+
+  const updated_at =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].updated_at
+      : null;
+
+  return {
+    balance,
+    isLoading,
+    error,
+    userId,
+    id,
+    total_spending,
+    total_orders,
+    updated_at,
+  };
 };

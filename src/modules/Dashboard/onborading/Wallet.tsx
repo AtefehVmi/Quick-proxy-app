@@ -3,7 +3,7 @@
 import Loader from "@/components/Loader";
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
 
@@ -14,7 +14,19 @@ const Wallet = ({
   className?: string;
   title: string;
 }) => {
-  const { balance, isLoading } = useBalance();
+  const { balance, isLoading, updated_at } = useUser();
+
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })
+      .format(date)
+      .toUpperCase();
+  };
 
   return (
     <div className={cn(className)}>
@@ -48,7 +60,9 @@ const Wallet = ({
 
           <div className="mt-4 pl-4.5 flex items-center gap-2">
             <TextXs className="text-white">Last Activity at</TextXs>
-            <TextSm className="font-semibold text-white">-</TextSm>
+            <TextSm className="font-semibold text-white">
+              {formatDate(updated_at)}
+            </TextSm>
           </div>
         </div>
 

@@ -5,10 +5,10 @@ import WalletIcon from "public/icons/wallet.svg";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import cn from "@/utils/cn";
 import Loader from "../Loader";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 
 const BalanceCard = ({ className }: { className?: string }) => {
-  const { balance, isLoading } = useBalance();
+  const { balance, isLoading } = useUser();
 
   return (
     <Card className={cn("flex items-end justify-between", className)}>

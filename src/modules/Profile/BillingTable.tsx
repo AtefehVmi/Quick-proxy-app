@@ -17,12 +17,13 @@ import CaretRightIcon from "public/icons/status.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { getOrders } from "@/services/api";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 
 interface BillingTableProps {
   className?: string;
   size?: string;
   filters?: boolean;
+  tableHeight?: string;
 }
 
 const columnHelper = createColumnHelper<Billing>();
@@ -299,7 +300,12 @@ const columns = [
 
 const data: Billing[] = [];
 
-const BillingTable = ({ className, size, filters }: BillingTableProps) => {
+const BillingTable = ({
+  className,
+  size,
+  filters,
+  tableHeight,
+}: BillingTableProps) => {
   const searchParams = useSearchParams();
 
   const product = searchParams.get("product") ?? "";
@@ -309,7 +315,7 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? size ?? "10");
 
-  const { userId } = useBalance();
+  const { userId } = useUser();
 
   const isUserReady = !!userId;
 
@@ -353,6 +359,7 @@ const BillingTable = ({ className, size, filters }: BillingTableProps) => {
 
       <div className="flex-1 mt-7.5 mb-3 custom-scrollbar px-4.5 max-w-full relative w-full overflow-auto">
         <Table
+          tableHeight={tableHeight}
           isLoading={isLoading}
           columns={columns}
           data={ordersData ?? []}

@@ -10,7 +10,7 @@ import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Bandwidth from "./Bandwidth";
 import useFetch from "@/hooks/useFetch";
 import { getCoupon } from "@/services/api";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 import { toast } from "react-toastify";
 
 const RotatingSidebar = () => {
@@ -23,7 +23,7 @@ const RotatingSidebar = () => {
     toastOnError: true,
   });
 
-  const { balance } = useBalance();
+  const { balance } = useUser();
 
   const applyCoupon = async () => {
     if (!coupon) return;

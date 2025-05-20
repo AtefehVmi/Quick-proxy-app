@@ -7,14 +7,14 @@ import CrossIcon from "public/icons/cross-small.svg";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import PasswordInput from "@/components/PasswordInput";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { getUserDetails } from "@/services/customApi";
 
 const ChangePassModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
-  const { id } = useBalance();
+  const { id } = useUser();
 
   const { data: accountDetails, isLoading } = useQuery({
     queryKey: QUERY_KEYS.USER_DETAILS,

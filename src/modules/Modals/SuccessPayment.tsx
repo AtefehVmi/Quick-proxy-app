@@ -9,7 +9,7 @@ import SuccessImage from "public/images/success-payment.png";
 import Image from "next/image";
 import Button from "@/components/Button";
 import AddIcon from "public/icons/add.svg";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 
 type Props = {
   className?: string;
@@ -25,7 +25,7 @@ const SuccessPayment: React.FC<Props> = ({
   paymentMethod = "Credit cart",
 }) => {
   const [open, setOpen] = useState(false);
-  const { balance } = useBalance();
+  const { balance } = useUser();
 
   const handleCloseButton = () => {
     setOpen(false);

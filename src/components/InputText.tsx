@@ -102,6 +102,7 @@ const InputText = (props: InputTextProps) => {
           </span>
 
           <Input
+            autoComplete="new-password"
             ref={inputRef}
             type={type}
             className={classes.input}

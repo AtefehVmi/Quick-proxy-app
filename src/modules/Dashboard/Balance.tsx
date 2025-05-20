@@ -1,17 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/services/supabaseClient";
-import { getAccount } from "@/services/api";
-import { QUERY_KEYS } from "@/constants/keys";
 import Card from "@/components/Card/Card";
 import BalanceModal from "../Modals/BalanceModal";
 import Loader from "@/components/Loader";
-import { useBalance } from "@/hooks/useBalance";
+import { useUser } from "@/hooks/useUser";
 
 const Balance = () => {
-  const { balance, isLoading } = useBalance();
+  const { balance, isLoading } = useUser();
 
   return (
     <Card className="py-4 px-4.5 bg-balance">
