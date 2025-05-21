@@ -1,3 +1,5 @@
+"use client";
+
 import { useUser } from "@/hooks/useUser";
 import Balance from "./Balance";
 import StatsCard from "./StatsCard";

@@ -1,6 +1,6 @@
-import DashboardPanel from "@/modules/Dashboard/DashboardPanel";
+import MainDashboard from "@/modules/Dashboard/MainDashboard";
 
 const Dashboard = () => {
-  return <DashboardPanel />;
+  return <MainDashboard />;
 };
 export default Dashboard;
