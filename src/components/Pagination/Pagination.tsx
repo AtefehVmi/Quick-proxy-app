@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import style from "./pagination.module.css";
-
 import NextIcon from "public/icons/chevron-right.svg";
 import PaginationButton from "./PaginationButton";
 import PaginationButtton from "./PaginationButton";
@@ -148,20 +146,17 @@ const Pagination: React.FC<PaginationProps> = ({
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const currentPage = Math.floor(currentOffset / currentLimit) + 1;
-
   return (
     <div className="flex flex-col lg:flex-row pt-0.5 justify-between">
       <p className="text-sm leading-6 text-bgGrey-100">
-        <span className="">{isDataAvailable ? currentOffset + 1 : 0}</span>
+        <span>{totalCount === 0 ? 0 : currentOffset + 1}</span>
         {"–"}
-        <span className="text-bgGrey-100">
-          {isDataAvailable
-            ? Math.min(currentOffset + currentLimit, totalCount ?? 0)
-            : 0}
+        <span>
+          {totalCount === 0
+            ? 0
+            : Math.min(currentOffset + currentLimit, totalCount ?? 0)}
         </span>{" "}
-        of {totalCount}
+        of {totalCount ?? 0}
       </p>
 
       <div className="flex items-center justify-center gap-1 px-3">

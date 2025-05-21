@@ -18,6 +18,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { getOrders } from "@/services/api";
 import { useUser } from "@/hooks/useUser";
+import { supabase } from "@/services/supabaseClient";
 
 interface BillingTableProps {
   className?: string;
@@ -298,8 +299,6 @@ const columns = [
   }),
 ];
 
-const data: Billing[] = [];
-
 const BillingTable = ({
   className,
   size,
@@ -308,35 +307,32 @@ const BillingTable = ({
 }: BillingTableProps) => {
   const searchParams = useSearchParams();
 
-  const product = searchParams.get("product") ?? "";
-  const status = searchParams.get("status") ?? "";
-  const ordering = searchParams.get("ordering") ?? "";
-  const search = searchParams.get("search") ?? "";
-  const page = Number(searchParams.get("page") ?? "1");
-  const pageSize = Number(searchParams.get("pageSize") ?? size ?? "10");
+  const offset = Number(searchParams.get("offset") ?? "0");
+  const limit = Number(searchParams.get("limit") ?? size ?? "10");
 
   const { userId } = useUser();
-
   const isUserReady = !!userId;
 
-  const queryParams = isUserReady
-    ? {
-        user_id: `eq.${userId}`,
-        select: "*",
-        limit: pageSize,
-        offset: (page - 1) * pageSize,
-        ...(product && { name: `eq.${product}` }),
-        ...(status && { status: `eq.${status}` }),
-        ...(ordering && { order: ordering }),
-        ...(search && { search: `ilike.*${search}*` }),
-      }
-    : null;
+  const fetchPaginatedOrders = async (from: number, to: number) => {
+    const { data, error, count } = await supabase
+      .from("orders")
+      .select("*", { count: "exact" })
+      .range(from, to);
 
-  const { data: ordersData, isLoading } = useQuery({
-    queryKey: isUserReady ? [...QUERY_KEYS.ORDERS, queryParams] : [],
-    queryFn: () => getOrders(queryParams!),
+    if (error) throw new Error(error.message);
+    return { data, count };
+  };
+
+  const from = offset;
+  const to = offset + limit - 1;
+
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.ORDERS, offset, limit],
+    queryFn: () => fetchPaginatedOrders(from, to),
     enabled: isUserReady,
   });
+
+  console.log(data);
 
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
@@ -362,16 +358,16 @@ const BillingTable = ({
           tableHeight={tableHeight}
           isLoading={isLoading}
           columns={columns}
-          data={ordersData ?? []}
+          data={data?.data ?? []}
         />
       </div>
 
       <div className="border-t border-black-2 pt-3 px-4.5">
         <Pagination
-          limit={pageSize}
-          offset={(page - 1) * pageSize}
-          isDataAvailable={ordersData?.length >= pageSize}
-          totalCount={ordersData?.totalCount}
+          limit={limit}
+          offset={offset}
+          isDataAvailable={(data?.data?.length ?? 0) >= limit}
+          totalCount={data?.count ?? undefined}
         />
       </div>
     </Card>
