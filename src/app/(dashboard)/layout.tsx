@@ -8,15 +8,15 @@ const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <ProtectedRoute>
-      <div className="flex w-full h-screen text-black">
-        <ToggleSidebar className="hidden md:block" />
-        <div className="grow flex flex-col min-h-screen">
-          <NavbarWrapper />
+    <div className="flex w-full h-screen text-black">
+      <ToggleSidebar className="hidden md:block" />
+      <div className="grow flex flex-col min-h-screen">
+        <NavbarWrapper />
+        <ProtectedRoute>
           <main className="flex-1 overflow-auto">{children}</main>
-        </div>
+        </ProtectedRoute>
       </div>
-    </ProtectedRoute>
+    </div>
   );
 };
 
