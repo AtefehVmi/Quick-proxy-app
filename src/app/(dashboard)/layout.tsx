@@ -2,7 +2,7 @@
 
 import ToggleSidebar from "@/components/Sidebar/ToggleSidebar";
 import NavbarWrapper from "@/modules/Dashboard/Navbar/NavbarWrapper";
-import ProtectedRoute from "@/components/ProtectedRoute"; // Adjust path as needed
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
   children,
