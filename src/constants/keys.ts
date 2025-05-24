@@ -8,4 +8,6 @@ export const QUERY_KEYS = {
   GET_ACCOUNT: ["get-account"],
   ORDERS: ["orders"],
   USER_DETAILS: ["user_details"],
+  LTE_ORDERS: ["lte_orders"],
+  ISP_ORDERS: ["isp_orders"],
 };
