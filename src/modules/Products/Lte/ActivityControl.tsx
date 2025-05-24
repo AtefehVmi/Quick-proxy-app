@@ -25,7 +25,7 @@ const ActivityControl = ({
   setSelectedRow,
   selectedRow,
 }: {
-  setSelectedRow: (row: LteRecent | null) => void;
+  setSelectedRow: (row: any | null) => void;
   selectedRow: LteRecent | null;
 }) => {
   const searchParams = useSearchParams();

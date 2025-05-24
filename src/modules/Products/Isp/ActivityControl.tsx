@@ -19,30 +19,50 @@ import { toast } from "react-toastify";
 import InterrogationIcon from "public/icons/interrogation.svg";
 import ArrowRightIcon from "public/icons/arrow-small-right.svg";
 import ActivityTable from "@/modules/shared/ActivityTable";
+import { supabase } from "@/services/supabaseClient";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
 
-const data: IspRecent[] = [];
-
-const columnHelper = createColumnHelper<IspRecent>();
+const columnHelper = createColumnHelper<any>();
 
 const ActivityControl = () => {
-  const [selectedRow, setSelectedRow] = useState<IspRecent | null>(null);
-  const params = useSearchParams();
+  const [selectedRow, setSelectedRow] = useState<any | null>(null);
+  const searchParams = useSearchParams();
 
-  const limit = params.get("limit") ? parseInt(params.get("limit")!) : 3;
-  const offset = params.get("offset") ? parseInt(params.get("offset")!) : 0;
+  const offset = Number(searchParams.get("offset") ?? "0");
+  const limit = Number(searchParams.get("limit") ?? "10");
+
+  const fetchPaginatedOrders = async (from: number, to: number) => {
+    const { data, error, count } = await supabase
+      .from("orders")
+      .select("*", { count: "exact" })
+      .range(from, to)
+      .eq("type", "proxy")
+      .eq("product_id", 4);
+
+    if (error) throw new Error(error.message);
+    return { data, count };
+  };
+
+  const from = offset;
+  const to = offset + limit - 1;
+
+  const { data: orders } = useQuery({
+    queryKey: [...QUERY_KEYS.ISP_ORDERS, offset, limit],
+    queryFn: () => fetchPaginatedOrders(from, to),
+  });
+
+  console.log(orders);
 
   const columns = [
-    columnHelper.accessor("plan", {
+    columnHelper.accessor("user_id", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Plan
+          User ID
         </TextSm>
       ),
       cell: (info) => (
-        <div className="flex items-center gap-2">
-          <div className="bg-black-2">
-            <HomeIcon className="m-2.5" />
-          </div>
+        <div className="flex items-center gap-1">
           <div className="whitespace-nowrap">
             <TextSm className="font-semibold text-grey-100">
               {info.getValue()}
@@ -51,10 +71,10 @@ const ActivityControl = () => {
         </div>
       ),
     }),
-    columnHelper.accessor("location", {
+    columnHelper.accessor("id", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Location
+          ID
         </TextSm>
       ),
       cell: (info) => (
@@ -65,10 +85,86 @@ const ActivityControl = () => {
         </div>
       ),
     }),
-    columnHelper.accessor("remain_time", {
+    columnHelper.accessor("product_id", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          remaining Time
+          Product ID
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-1">
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("plan_id", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Plan ID
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="whitespace-nowrap">
+          <TextSm className="font-semibold text-grey-100">
+            {info.getValue()}
+          </TextSm>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("price", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Price
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-1">
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("final_price", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Final Price
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="whitespace-nowrap">
+          <TextSm className="font-semibold text-grey-100">
+            {info.getValue()}
+          </TextSm>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("location_id", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Location ID
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-1">
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("provider", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Provider
         </TextSm>
       ),
       cell: (info) => (
@@ -83,6 +179,22 @@ const ActivityControl = () => {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
           Quantity
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-1">
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("type", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Type
         </TextSm>
       ),
       cell: (info) => (
@@ -101,19 +213,27 @@ const ActivityControl = () => {
       ),
       cell: (info) => {
         const value = info.getValue();
+        const successStatuses = ["processed", "processing", "refunded"];
+        const dangerStatuses = [
+          "failed",
+          "canceled",
+          "wrong_amount",
+          "system_error",
+          "refund_failed",
+        ];
+
         return (
           <div
             className={cn(
               "flex items-center w-fit gap-1",
-              value === "Active"
+              successStatuses.includes(value)
                 ? "text-success"
-                : value === "Non active"
+                : dangerStatuses.includes(value)
                 ? "text-danger"
                 : "text-warning"
             )}
           >
             <CaretRightIcon />
-
             <TextSm className="font-medium whitespace-nowrap">
               {value || "null"}
             </TextSm>
@@ -121,10 +241,26 @@ const ActivityControl = () => {
         );
       },
     }),
-    columnHelper.accessor("date", {
+    columnHelper.accessor("status_reason", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Date
+          Status Reason
+        </TextSm>
+      ),
+      cell: (info) => (
+        <div className="flex items-center gap-1">
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {info.getValue()}
+            </TextSm>
+          </div>
+        </div>
+      ),
+    }),
+    columnHelper.accessor("created_at", {
+      header: () => (
+        <TextSm className="text-grey-700 whitespace-nowrap font-normal">
+          Created At
         </TextSm>
       ),
       cell: (info) => {
@@ -145,14 +281,28 @@ const ActivityControl = () => {
         );
       },
     }),
-    columnHelper.accessor("auto_renew", {
+    columnHelper.accessor("updated_at", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
-          Auto renew
+          Updated At
         </TextSm>
       ),
       cell: (info) => {
-        return <ToggleBox checked={info.getValue()} />;
+        const formatDate = (timestamp: string): string => {
+          const date = new Date(timestamp);
+          const day = date.getDate();
+          const month = date.toLocaleString("en-GB", { month: "long" });
+          const year = date.getFullYear().toString().slice(2);
+          return `${day} ${month}, ${year}`;
+        };
+
+        return (
+          <div className="whitespace-nowrap">
+            <TextSm className="font-semibold text-grey-100">
+              {formatDate(info.getValue())}
+            </TextSm>
+          </div>
+        );
       },
     }),
     columnHelper.display({
@@ -201,7 +351,7 @@ const ActivityControl = () => {
             </>
           }
           columns={columns}
-          data={data}
+          data={orders?.data ?? []}
           className="mt-6"
         />
       </div>

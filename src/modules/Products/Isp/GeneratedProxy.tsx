@@ -9,7 +9,7 @@ import Image from "next/image";
 import NoDataImage from "public/images/no-data.png";
 import { IspRecent, LteRecent } from "@/constants/types";
 
-const GeneratedProxy = ({ data }: { data: IspRecent | null | LteRecent }) => {
+const GeneratedProxy = ({ data }: { data: any | null }) => {
   const text = data ? JSON.stringify(data, null, 2) : "";
 
   const copyText = () => {
@@ -41,7 +41,7 @@ const GeneratedProxy = ({ data }: { data: IspRecent | null | LteRecent }) => {
         </p>
 
         {data ? (
-          <TextSm className="mt-6 text-white whitespace-pre-line max-h-[522px] h-full overflow-auto scrollbar-hide">
+          <TextSm className="mt-6 text-white whitespace-pre-line max-h-[222px] h-full overflow-auto scrollbar-hide">
             {text}
           </TextSm>
         ) : (
