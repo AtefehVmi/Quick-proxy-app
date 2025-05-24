@@ -32,7 +32,7 @@ const IspProxy = () => {
               selectedPlan={selectedPlan}
               setSelectedPlan={setSelectedPlan}
               plan="residential"
-              type="Static"
+              type="static"
             />
           }
           image={DatabaseImage}

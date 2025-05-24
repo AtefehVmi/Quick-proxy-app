@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react";
 import CheckIcon from "public/icons/check-icon.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import { getPriceList } from "@/services/customApi";
+import { getPriceList } from "@/services/api";
 
 type Props = {
   plan: "residential" | "lte";
-  type: "Static" | "Rotating" | "LTE Proxy";
+  type: "static" | "rotating";
   setSelectedPlan?: (plan: any) => void;
   selectedPlan?: any;
 };
@@ -26,18 +26,15 @@ const PricingPlan: React.FC<Props> = ({
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
 
   const { data: plans } = useQuery({
-    queryKey: [...QUERY_KEYS.PRICING, plan, type],
+    queryKey: [...QUERY_KEYS.PRICING, type, plan],
     queryFn: () => getPriceList(),
     select: (data) => {
-      const products = data?.data?.products || [];
+      const allPlans = data || [];
 
-      if (!products) return [];
-
-      const matchingProduct = products.find((product) => product.id === plan);
-      const matchingType = matchingProduct?.types.find(
-        (planType) => planType.name === type
+      return allPlans.filter(
+        (item: any) =>
+          item.plan_category === type && item.product_category === plan
       );
-      return matchingType?.plans || [];
     },
   });
 
@@ -89,7 +86,7 @@ const PricingPlan: React.FC<Props> = ({
                   <CheckIcon />
                 </Button>
                 <p className="text-white font-bold text-xl leading-7.5">
-                  {plan.name}
+                  {plan.plan_name}
                 </p>
               </div>
 

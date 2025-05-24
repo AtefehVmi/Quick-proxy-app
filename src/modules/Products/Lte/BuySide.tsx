@@ -15,13 +15,12 @@ import {
   CreateOrder,
   getLteRegions,
   getLteUsRegions,
-  getPriceList,
 } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
-import { getCoupon } from "@/services/api";
+import { getCoupon, getPriceList } from "@/services/api";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -58,22 +57,16 @@ const BuySide = ({
     queryKey: QUERY_KEYS.PRICING,
     queryFn: () => getPriceList(),
     select: (data) => {
-      const products = data?.data?.products || [];
+      const allPlans = data || [];
 
-      if (!products) return [];
-
-      const matchingProduct = products.find((product) => product.id === "lte");
-      const matchingType = matchingProduct?.types.find(
-        (planType) => planType.name === "Rotating"
-      ) as { id: number; name: string; plans: any[] } | undefined;
-      return (
-        matchingType?.plans.map((plan: any) => ({
-          ...plan,
-          typeId: matchingType.id,
-        })) || []
+      return allPlans.filter(
+        (item: any) =>
+          item.plan_category === "rotating" && item.product_category === "lte"
       );
     },
   });
+
+  console.log(plans);
 
   const { balance } = useUser();
 
@@ -85,8 +78,8 @@ const BuySide = ({
   let selectedPlanPrice = selectedPlan?.price ?? 0;
 
   lteOptions =
-    plans?.map((plan: { id: string; name: string }) => ({
-      label: plan.name,
+    plans?.map((plan: { id: string; plan_name: string }) => ({
+      label: plan.plan_name,
       value: plan.id.toString(),
     })) || [];
 

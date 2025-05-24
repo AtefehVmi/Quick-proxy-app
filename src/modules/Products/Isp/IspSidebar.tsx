@@ -10,14 +10,10 @@ import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Autocomplete from "@/components/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import {
-  CreateOrder,
-  getIspCountries,
-  getPriceList,
-} from "@/services/customApi";
+import { CreateOrder, getIspCountries } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
-import { getCoupon } from "@/services/api";
+import { getCoupon, getPriceList } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
 
@@ -43,25 +39,12 @@ const IspSidebar = ({
     queryKey: QUERY_KEYS.PRICING,
     queryFn: () => getPriceList(),
     select: (data) => {
-      const products = data?.data?.products || [];
-      const matchingProduct = products.find(
-        (product) => product.id === "residential"
-      );
-      const matchingType = matchingProduct?.types.find(
-        (planType) => planType.name === "Static"
-      ) as
-        | {
-            id: number;
-            name: string;
-            plans: any[];
-          }
-        | undefined;
+      const allPlans = data || [];
 
-      return (
-        matchingType?.plans.map((plan: any) => ({
-          ...plan,
-          typeId: matchingType.id,
-        })) || []
+      return allPlans.filter(
+        (item: any) =>
+          item.plan_category === "static" &&
+          item.product_category === "residential"
       );
     },
   });
@@ -80,8 +63,8 @@ const IspSidebar = ({
   let selectedPlanPrice = 0;
 
   if (plans) {
-    planOptions = plans.map((plan: { id: string; name: string }) => ({
-      label: plan.name,
+    planOptions = plans.map((plan: { id: string; plan_name: string }) => ({
+      label: plan.plan_name,
       value: plan.id.toString(),
     }));
 

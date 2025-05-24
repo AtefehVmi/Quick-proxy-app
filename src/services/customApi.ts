@@ -51,9 +51,9 @@ customInstance.interceptors.response.use(
   }
 );
 
-export async function getPriceList(): Promise<PriceListApiResponse> {
-  return await customInstance.get("pricing");
-}
+// export async function getPriceList(): Promise<PriceListApiResponse> {
+//   return await customInstance.get("pricing");
+// }
 
 export async function getResiCountries(): Promise<any> {
   return await customInstance.get(`residential/countries`);

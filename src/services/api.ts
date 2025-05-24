@@ -66,3 +66,7 @@ export async function getAccount(id: string): Promise<any> {
 export async function getOrders(params?: Record<string, any>): Promise<any> {
   return await instance.get("/orders", { params });
 }
+
+export async function getPriceList(): Promise<any[]> {
+  return await instance.get("/pricing");
+}

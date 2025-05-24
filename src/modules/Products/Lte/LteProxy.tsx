@@ -34,7 +34,7 @@ const LteProxy = () => {
             <PricingPlan
               setSelectedPlan={setSelectedPlan}
               plan="lte"
-              type="Rotating"
+              type="rotating"
             />
           }
           image={DatabaseImage}
