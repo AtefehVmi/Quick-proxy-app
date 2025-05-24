@@ -72,6 +72,7 @@ const SignInPage = () => {
             />
 
             <PasswordInput
+              showPassWeakness={false}
               onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
               startAdornment={<PassIcon />}
