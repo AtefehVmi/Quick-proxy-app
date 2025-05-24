@@ -48,12 +48,12 @@ const BuySide = ({
     queryFn: () => getLteRegions(),
   });
 
+  console.log(countries);
+
   const { data: usCities } = useQuery({
     queryKey: QUERY_KEYS.LTE_US,
     queryFn: () => getLteUsRegions(),
   });
-
-  console.log(usCities);
 
   const { data: plans } = useQuery({
     queryKey: QUERY_KEYS.PRICING,

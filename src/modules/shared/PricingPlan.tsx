@@ -9,6 +9,7 @@ import CheckIcon from "public/icons/check-icon.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { getPriceList } from "@/services/api";
+import Loader from "@/components/Loader";
 
 type Props = {
   plan: "residential" | "lte";
@@ -25,7 +26,7 @@ const PricingPlan: React.FC<Props> = ({
 }) => {
   const [selectedPlanIndex, setSelectedPlanIndex] = useState<number | null>(0);
 
-  const { data: plans } = useQuery({
+  const { data: plans, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.PRICING, type, plan],
     queryFn: () => getPriceList(),
     select: (data) => {
@@ -60,6 +61,12 @@ const PricingPlan: React.FC<Props> = ({
       >
         Pricing Plan
       </p>
+
+      {isLoading && (
+        <p className="text-center text-white/80 font-medium">
+          Loading... <Loader />
+        </p>
+      )}
 
       <div className="border-t border-t-black-border border-b border-b-black">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 lg:gap-0 mx-7">

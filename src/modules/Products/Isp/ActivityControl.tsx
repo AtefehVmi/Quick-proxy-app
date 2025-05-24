@@ -47,7 +47,7 @@ const ActivityControl = () => {
   const from = offset;
   const to = offset + limit - 1;
 
-  const { data: orders } = useQuery({
+  const { data: orders, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.ISP_ORDERS, offset, limit],
     queryFn: () => fetchPaginatedOrders(from, to),
   });
@@ -338,6 +338,7 @@ const ActivityControl = () => {
       <div className="xl:col-span-16 px-8 pt-6 pb-8">
         <Heading title="ISP Proxies (Static residential)" Icon={IspIcon} />
         <ActivityTable
+          isLoading={isLoading}
           tableClass="min-h-[800px]"
           limit={limit}
           offset={offset}

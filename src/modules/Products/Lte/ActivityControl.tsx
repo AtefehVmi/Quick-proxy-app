@@ -49,7 +49,7 @@ const ActivityControl = ({
   const from = offset;
   const to = offset + limit - 1;
 
-  const { data: orders } = useQuery({
+  const { data: orders, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.LTE_ORDERS, offset, limit],
     queryFn: () => fetchPaginatedOrders(from, to),
   });
@@ -339,6 +339,7 @@ const ActivityControl = ({
   return (
     <>
       <ActivityTable
+        isLoading={isLoading}
         className="mt-5"
         data={orders?.data ?? []}
         columns={columns}

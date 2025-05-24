@@ -16,6 +16,7 @@ interface ActivityTableProps<T extends object> {
   offset: number;
   className?: string;
   tableClass?: string;
+  isLoading: boolean;
 }
 
 const ActivityTable = <T extends object>({
@@ -26,6 +27,7 @@ const ActivityTable = <T extends object>({
   data,
   columns,
   tableClass,
+  isLoading,
 }: ActivityTableProps<T>) => {
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
@@ -40,7 +42,12 @@ const ActivityTable = <T extends object>({
       </div>
 
       <div className="flex-1 mt-7.5 mb-3 overflow-auto custom-scrollbar px-4.5">
-        <Table columns={columns} data={data} className={tableClass} />
+        <Table
+          isLoading={isLoading}
+          columns={columns}
+          data={data}
+          className={tableClass}
+        />
       </div>
 
       <div className="border-t border-black-2 pt-3 px-4.5">
