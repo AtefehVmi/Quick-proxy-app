@@ -41,7 +41,7 @@ const GeneratedProxy = ({ data }: { data: any | null }) => {
         </p>
 
         {data ? (
-          <TextSm className="mt-6 text-white whitespace-pre-line max-h-[222px] h-full overflow-auto scrollbar-hide">
+          <TextSm className="mt-6 text-white whitespace-pre-line max-h-[522px] h-full overflow-auto scrollbar-hide">
             {text}
           </TextSm>
         ) : (
