@@ -17,6 +17,7 @@ import { getCoupon, getPriceList } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -36,6 +37,7 @@ const IspSidebar = ({
   const [location, setLocation] = useState<string>("");
   const [couponChecked, setCouponChecked] = useState(false);
   const [port, setPort] = useState<string>(portOptions[0].value);
+  const router = useRouter();
 
   const { data: locations } = useQuery({
     queryKey: QUERY_KEYS.ISP_LOCATION,
@@ -104,6 +106,7 @@ const IspSidebar = ({
 
     await createOrderFetch(payload);
     toast.success("order successfully created!");
+    router.replace("/products/isp/recent-activity");
   };
 
   const applyCoupon = async () => {

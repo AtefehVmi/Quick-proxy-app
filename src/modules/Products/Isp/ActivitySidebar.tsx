@@ -11,9 +11,7 @@ interface ActivitySidebarProps {
 
 const ActivitySidebar = ({ data }: ActivitySidebarProps) => {
   return (
-    <div
-      className={cn("bg-black-3 h-screen grow px-8", "flex flex-col gap-12")}
-    >
+    <div className={cn("bg-black-3 h-full grow px-8", "flex flex-col gap-12")}>
       <div>
         <p className="text-white font-bold text-xl leading-7.5 py-6">Plans</p>
         <ActivePlansCard />

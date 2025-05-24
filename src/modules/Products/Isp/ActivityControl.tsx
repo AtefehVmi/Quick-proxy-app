@@ -338,6 +338,7 @@ const ActivityControl = () => {
       <div className="xl:col-span-16 px-8 pt-6 pb-8">
         <Heading title="ISP Proxies (Static residential)" Icon={IspIcon} />
         <ActivityTable
+          tableClass="min-h-[800px]"
           limit={limit}
           offset={offset}
           filterActions={
@@ -356,7 +357,7 @@ const ActivityControl = () => {
         />
       </div>
 
-      <div className="xl:col-span-8">
+      <div className="xl:col-span-8 h-full">
         <ActivitySidebar data={selectedRow} />
       </div>
     </div>
