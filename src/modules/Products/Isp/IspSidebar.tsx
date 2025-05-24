@@ -16,6 +16,12 @@ import { toast } from "react-toastify";
 import { getCoupon, getPriceList } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
+import Loader from "@/components/Loader";
+
+const portOptions = [
+  { label: "http|https", value: "http|https" },
+  { label: "socks5", value: "socks5" },
+];
 
 const IspSidebar = ({
   selectedPlan,
@@ -29,18 +35,20 @@ const IspSidebar = ({
   const [discount, setDiscount] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
   const [couponChecked, setCouponChecked] = useState(false);
+  const [port, setPort] = useState<string>(portOptions[0].value);
 
   const { data: locations } = useQuery({
     queryKey: QUERY_KEYS.ISP_LOCATION,
     queryFn: () => getIspCountries(4),
   });
 
+  console.log(locations);
+
   const { data: plans } = useQuery({
     queryKey: QUERY_KEYS.PRICING,
     queryFn: () => getPriceList(),
     select: (data) => {
       const allPlans = data || [];
-
       return allPlans.filter(
         (item: any) =>
           item.plan_category === "static" &&
@@ -51,59 +59,51 @@ const IspSidebar = ({
 
   const { balance } = useUser();
 
-  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
-    toastOnError: true,
-  });
+  const { fetch: createOrderFetch, loading: loadingOrder } = useFetch(
+    CreateOrder,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
   });
 
-  let planOptions = [{ label: "", value: "" }];
-  let selectedPlanPrice = 0;
+  const planOptions = plans?.map((plan: { id: string; plan_name: string }) => ({
+    label: plan.plan_name,
+    value: plan.id.toString(),
+  })) || [{ label: "", value: "" }];
 
-  if (plans) {
-    planOptions = plans.map((plan: { id: string; plan_name: string }) => ({
-      label: plan.plan_name,
-      value: plan.id.toString(),
-    }));
+  const locationOptions = locations?.data?.map(
+    (location: { id: number; name: string }) => ({
+      label: location.name,
+      value: location.id,
+    })
+  ) || [{ label: "", value: "" }];
 
-    if (selectedPlan) {
-      selectedPlanPrice = selectedPlan.price ?? 0;
-    }
-  }
-
-  let locationOptions = [{ label: "", value: "" }];
-
-  if (locations?.data) {
-    locationOptions = locations.data.map(
-      (location: { id: number; name: string }) => ({
-        label: location.name,
-        value: location.id,
-      })
-    );
-  }
-
+  const selectedPlanPrice = selectedPlan?.price ?? 0;
   const total = selectedPlanPrice * amount;
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
 
   const onSubmit = async () => {
-    const selectedPlanObj = plans?.find(
-      (p) => p.id.toString() === selectedPlan
-    );
-    if (!selectedPlanObj) return toast.error("Please select a plan");
+    if (!selectedPlan) return toast.error("Please select a plan");
+    if (!location) return toast.error("Please select a location");
     if (balance < discountedTotal) return toast.error("Balance is not enough!");
 
     const payload = {
       type: "proxy",
-      product: selectedPlanObj.typeId,
-      plan: selectedPlanObj.id,
+      product: selectedPlan.product_id,
+      plan: selectedPlan.plan_id,
       quantity: amount,
-      location,
-      coupon,
+      location: location,
+      port: port,
+      coupon: coupon,
     };
 
     await createOrderFetch(payload);
+    toast.success("order successfully created!");
   };
 
   const applyCoupon = async () => {
@@ -161,7 +161,9 @@ const IspSidebar = ({
             label="Quantity"
             placeholder="Enter Quantity"
             type="number"
+            min={1}
           />
+
           <Autocomplete
             variant="primary"
             options={locationOptions}
@@ -170,6 +172,16 @@ const IspSidebar = ({
             label="Location"
             placeholder="Select Location"
           />
+
+          <Autocomplete
+            variant="primary"
+            options={portOptions}
+            value={port}
+            onChange={({ value }) => setPort(value)}
+            label="Port"
+            placeholder="Select Port"
+          />
+
           <InputText
             value={coupon}
             onChange={(e) => {
@@ -194,7 +206,7 @@ const IspSidebar = ({
           />
         </div>
 
-        {balance < amount && (
+        {balance < discountedTotal && (
           <div
             className={cn(
               "mt-8 bg-black-2 border-b border-danger py-3 px-4.5",
@@ -266,7 +278,14 @@ const IspSidebar = ({
             className="font-semibold w-full py-4"
             RightIcon={ArrowIcon}
           >
-            Purchase
+            {loadingOrder ? (
+              <>
+                <Loader />
+                Purchasing...
+              </>
+            ) : (
+              "Purchase"
+            )}
           </Button>
         </div>
       </div>

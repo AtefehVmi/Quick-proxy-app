@@ -35,7 +35,7 @@ const BuySide = ({
   setSelectedPlan: (plan: any) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [amount, setAmount] = useState<number>(2);
+  const [amount, setAmount] = useState<number>(1);
   const [coupon, setCoupon] = useState<string>();
   const [country, setCountry] = useState<string>("");
   const [city, setCity] = useState<string>("");
@@ -53,6 +53,8 @@ const BuySide = ({
     queryFn: () => getLteUsRegions(),
   });
 
+  console.log(usCities);
+
   const { data: plans } = useQuery({
     queryKey: QUERY_KEYS.PRICING,
     queryFn: () => getPriceList(),
@@ -65,8 +67,6 @@ const BuySide = ({
       );
     },
   });
-
-  console.log(plans);
 
   const { balance } = useUser();
 
@@ -93,7 +93,7 @@ const BuySide = ({
       ? countries.data.map(
           (location: { country_code: number; country: string }) => ({
             label: location.country,
-            value: location.country_code.toString(),
+            value: location.country_code,
           })
         )
       : []),
@@ -124,9 +124,11 @@ const BuySide = ({
       const payload = {
         type: "proxy",
         product: 5,
-        plan: selectedPlan.id,
-        // location: country,
+        plan: selectedPlan.plan_id,
+        location: country,
         coupon: coupon,
+        port: port,
+        quantity: amount,
       };
 
       await createOrderFetch(payload);
@@ -197,6 +199,14 @@ const BuySide = ({
               onChange={({ value }) => setPort(value)}
               label="Port"
               placeholder="Select Port"
+            />
+            <InputText
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              label="Quantity"
+              placeholder="Enter Quantity"
+              type="number"
+              min={1}
             />
             <Autocomplete
               variant="primary"
