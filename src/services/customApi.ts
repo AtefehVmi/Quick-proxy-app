@@ -67,6 +67,10 @@ export async function getLteRegions(): Promise<any> {
   return await customInstance.get(`products/lte/regions`);
 }
 
+export async function getLteRegionId(country: string): Promise<any> {
+  return await customInstance.get(`products/lte/plans?country=${country}`);
+}
+
 export async function getLteUsRegions(): Promise<any> {
   return await customInstance.get("products/lte/regions/us");
 }

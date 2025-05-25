@@ -10,4 +10,5 @@ export const QUERY_KEYS = {
   USER_DETAILS: ["user_details"],
   LTE_ORDERS: ["lte_orders"],
   ISP_ORDERS: ["isp_orders"],
+  LTE_ID: ["lte_id"],
 };

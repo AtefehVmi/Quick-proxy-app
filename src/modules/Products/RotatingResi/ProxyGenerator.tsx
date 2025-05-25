@@ -15,10 +15,11 @@ import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 import { toast } from "react-toastify";
 import MagicwandIcon from "public/icons/magic-wand.svg";
 import ErrorIcon from "public/icons/document.svg";
-
+import InterrogationIcon from "public/icons/interrogation.svg";
 import Button from "@/components/Button";
 import useFetch from "@/hooks/useFetch";
 import { GenerateRotatingResi } from "@/services/customApi";
+import Loader from "@/components/Loader";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -44,8 +45,8 @@ const formatOptions = [
 ];
 
 const rotationOptions = [
-  { label: "random", value: "random" },
-  { label: "sticky", value: "sticky" },
+  { label: "Random", value: "random" },
+  { label: "Sticky", value: "sticky" },
 ];
 
 const ProxyGenerator = ({ className }: { className?: string }) => {
@@ -62,21 +63,42 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
     { toastOnError: true }
   );
 
-  const handleGenerateProxyButtonClick = async () => {
-    if (!port || !format || !rotation || !quantity) {
-      toast.error("Fill in the fields first", {
-        icon: <ErrorIcon />,
+  const handleGenerateProxyButtonClick = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    if (!port) {
+      toast.error("Please select a port type", { icon: <InterrogationIcon /> });
+      return;
+    }
+
+    if (!rotation) {
+      toast.error("Please select a rotation type", {
+        icon: <InterrogationIcon />,
+      });
+      return;
+    }
+
+    if (!format) {
+      toast.error("Please select a format", { icon: <InterrogationIcon /> });
+      return;
+    }
+
+    if (!quantity || quantity <= 0) {
+      toast.error("Please enter a valid quantity", {
+        icon: <InterrogationIcon />,
       });
       return;
     }
 
     try {
       const payload = {
-        quantity: quantity,
-        rotation: rotation,
+        quantity,
+        rotation,
         country: "",
-        port: port,
-        format: format,
+        port,
+        format,
       };
 
       const response = await generateFetch(payload);
@@ -102,46 +124,64 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
         </div>
       </div>
 
-      <div className="mt-12 grid grid-cols-2 gap-7 px-6">
-        <Autocomplete
-          startAdornment={<PortIcon />}
-          options={portOptions}
-          placeholder="Select Port"
-          label="Port"
-          value={port}
-          onChange={({ value }) => setPort(value)}
-          variant="primary"
-        />
+      <form onSubmit={handleGenerateProxyButtonClick}>
+        <div className="mt-12 grid grid-cols-2 gap-7 px-6">
+          <Autocomplete
+            startAdornment={<PortIcon />}
+            options={portOptions}
+            placeholder="Select Port"
+            label="Port"
+            value={port}
+            onChange={({ value }) => setPort(value)}
+            variant="primary"
+          />
 
-        <Autocomplete
-          startAdornment={<RotationIcon />}
-          options={rotationOptions}
-          placeholder="Select Rotation"
-          label="Rotation"
-          value={rotation}
-          onChange={({ value }) => setRotation(value)}
-          variant="primary"
-        />
+          <Autocomplete
+            startAdornment={<RotationIcon />}
+            options={rotationOptions}
+            placeholder="Select Rotation"
+            label="Rotation"
+            value={rotation}
+            onChange={({ value }) => setRotation(value)}
+            variant="primary"
+          />
 
-        <Autocomplete
-          startAdornment={<FormatIcon />}
-          options={formatOptions}
-          placeholder="Select Format"
-          label="Format"
-          value={format}
-          onChange={({ value }) => setFormat(value)}
-          variant="primary"
-        />
+          <Autocomplete
+            startAdornment={<FormatIcon />}
+            options={formatOptions}
+            placeholder="Select Format"
+            label="Format"
+            value={format}
+            onChange={({ value }) => setFormat(value)}
+            variant="primary"
+          />
 
-        <InputText
-          type="number"
-          label="Quantity"
-          placeholder="Enter"
-          startAdornment={<QuantityIcon />}
-          value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
-        />
-      </div>
+          <InputText
+            type="number"
+            label="Quantity"
+            placeholder="Enter"
+            startAdornment={<QuantityIcon />}
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+          />
+        </div>
+
+        <div className="flex items-center justify-end py-6 pr-6">
+          <Button
+            type="submit"
+            Icon={MagicwandIcon}
+            className="py-3 px-10 font-semibold"
+          >
+            {loading ? (
+              <>
+                Generating Proxy <Loader />
+              </>
+            ) : (
+              "Generate Proxy"
+            )}
+          </Button>
+        </div>
+      </form>
 
       <div className="flex items-center justify-end pr-6">
         <GenerateProxyModal
@@ -149,16 +189,6 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
           open={openModal}
           setOpen={setOpenModal}
         />
-      </div>
-
-      <div className="flex items-center justify-end py-6 pr-6">
-        <Button
-          onClick={handleGenerateProxyButtonClick}
-          Icon={MagicwandIcon}
-          className="py-3 px-10 font-semibold"
-        >
-          Generate Proxy
-        </Button>
       </div>
     </Card>
   );

@@ -130,7 +130,7 @@ const RotatingSidebar = () => {
           </TextBase>
         </div>
 
-        {discount ?? (
+        {discount > 0 && (
           <div className="mt-3 flex items-center justify-between">
             <p className="text-primary-200 text-base leading-6">Discount</p>
             <TextBase className="font-semibold text-primary-200">

@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import {
   CreateOrder,
+  getLteRegionId,
   getLteRegions,
   getLteUsRegions,
 } from "@/services/customApi";
@@ -21,6 +22,7 @@ import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
 import { getCoupon, getPriceList } from "@/services/api";
+import Loader from "@/components/Loader";
 
 const portOptions = [
   { label: "http|https", value: "http|https" },
@@ -48,8 +50,6 @@ const BuySide = ({
     queryFn: () => getLteRegions(),
   });
 
-  console.log(countries);
-
   const { data: usCities } = useQuery({
     queryKey: QUERY_KEYS.LTE_US,
     queryFn: () => getLteUsRegions(),
@@ -68,6 +68,12 @@ const BuySide = ({
     },
   });
 
+  const { data: regionId } = useQuery({
+    queryKey: [QUERY_KEYS.LTE_ID, country],
+    queryFn: () => getLteRegionId(country),
+    enabled: !!country,
+  });
+
   const { balance } = useUser();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
@@ -83,9 +89,13 @@ const BuySide = ({
       value: plan.id.toString(),
     })) || [];
 
-  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
-    toastOnError: true,
-  });
+  const { fetch: createOrderFetch, loading: orderLoading } = useFetch(
+    CreateOrder,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
 
   const countryOptions = [
     { label: "United States", value: "US" },
@@ -125,7 +135,7 @@ const BuySide = ({
         type: "proxy",
         product: 5,
         plan: selectedPlan.plan_id,
-        location: country,
+        location: regionId,
         coupon: coupon,
         port: port,
         quantity: amount,
@@ -322,7 +332,14 @@ const BuySide = ({
               className="font-semibold w-full py-4"
               RightIcon={ArrowIcon}
             >
-              Purchase
+              {orderLoading ? (
+                <>
+                  <Loader />
+                  Purchasing...
+                </>
+              ) : (
+                "Purchase"
+              )}
             </Button>
           </div>
         </div>
