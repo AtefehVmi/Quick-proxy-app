@@ -9,7 +9,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
   return (
     <div
       className={cn(
-        "h-25 border-b border-black-border ml-5 pr-5 md:ml-0 md:pr-8",
+        "h-25 border-b border-black-border pl-5 pr-5 ml-0 md:pr-8",
         "flex items-center justify-between z-0 relative"
       )}
     >

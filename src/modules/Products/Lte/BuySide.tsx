@@ -6,7 +6,7 @@ import Autocomplete from "@/components/Autocomplete";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import TextBase from "@/components/Typography/TextBase";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/chevron-down.svg";
 import { useQuery } from "@tanstack/react-query";
@@ -24,11 +24,6 @@ import { useUser } from "@/hooks/useUser";
 import { getCoupon, getPriceList } from "@/services/api";
 import Loader from "@/components/Loader";
 
-const portOptions = [
-  { label: "http|https", value: "http|https" },
-  { label: "socks5", value: "socks5" },
-];
-
 const BuySide = ({
   selectedPlan,
   setSelectedPlan,
@@ -44,6 +39,7 @@ const BuySide = ({
   const [port, setPort] = useState<string>("");
   const [couponChecked, setCouponChecked] = useState(false);
   const [discount, setDiscount] = useState<number>(0);
+  const [regionProxies, setRegionProxies] = useState<any[]>([]);
 
   const { data: countries } = useQuery({
     queryKey: QUERY_KEYS.LTE_REGION,
@@ -70,15 +66,39 @@ const BuySide = ({
 
   const { data: regionId } = useQuery({
     queryKey: [QUERY_KEYS.LTE_ID, country],
-    queryFn: () => getLteRegionId(country),
+    queryFn: () => getLteRegionId(country!),
     enabled: !!country,
   });
+
+  console.log(regionId);
 
   const { balance } = useUser();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
   });
+
+  const { fetch: createOrderFetch, loading: orderLoading } = useFetch(
+    CreateOrder,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
+
+  useEffect(() => {
+    if (regionId?.data?.results) {
+      setRegionProxies(regionId.data.results);
+    }
+  }, [regionId]);
+
+  const portOptions = useMemo(() => {
+    const types = Array.from(new Set(regionProxies.map((p) => p.proxy_type)));
+    return types.map((type) => ({
+      label: type.toUpperCase(),
+      value: type,
+    }));
+  }, [regionProxies]);
 
   let lteOptions = [{ label: "", value: "" }];
   let selectedPlanPrice = selectedPlan?.price ?? 0;
@@ -88,14 +108,6 @@ const BuySide = ({
       label: plan.plan_name,
       value: plan.id.toString(),
     })) || [];
-
-  const { fetch: createOrderFetch, loading: orderLoading } = useFetch(
-    CreateOrder,
-    false,
-    {
-      toastOnError: true,
-    }
-  );
 
   const countryOptions = [
     { label: "United States", value: "US" },
@@ -129,13 +141,16 @@ const BuySide = ({
   const onSubmit = async () => {
     if (!selectedPlan) return toast.error("Please select a plan");
     if (balance < discountedTotal) return toast.error("Balance is not enough!");
+    const selectedProxy = regionProxies.find((p) => p.proxy_type === port);
+    if (!selectedProxy)
+      return toast.error("No proxy available for selected port");
 
     try {
       const payload = {
         type: "proxy",
         product: 5,
         plan: selectedPlan.plan_id,
-        location: regionId,
+        location: selectedProxy.proxy_id,
         coupon: coupon,
         port: port,
         quantity: amount,
