@@ -40,7 +40,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
         <Logo />
       </div>
 
-      <div className="flex items-center gap-3 py-5.5 z-50">
+      <div className="flex items-center gap-3 py-5.5 z-10">
         <ProfileDropdown className="m-4 cursor-pointer" />
         <div className="bg-black-2 w-px h-14"></div>
         <div className="">
