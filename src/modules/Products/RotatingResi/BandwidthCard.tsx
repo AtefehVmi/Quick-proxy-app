@@ -6,7 +6,6 @@ import TextXs from "@/components/Typography/TextXs";
 import { QUERY_KEYS } from "@/constants/keys";
 import { useUser } from "@/hooks/useUser";
 import BandwidthModal from "@/modules/Modals/BandwidthModal";
-import SuccessPayment from "@/modules/Modals/SuccessPayment";
 import { getUserDetails } from "@/services/customApi";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,9 +16,11 @@ const BandwidthCard = () => {
     queryKey: QUERY_KEYS.USER_DETAILS,
     queryFn: () => getUserDetails(subuser!),
     enabled: !!subuser,
+    staleTime: 1 * 60 * 1000,
   });
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "-";
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-GB", {
       day: "2-digit",
@@ -41,7 +42,7 @@ const BandwidthCard = () => {
         <div className="flex items-center gap-2 mt-5">
           <TextXs className="text-black-border">Last purhcase at</TextXs>
           <TextSm className="font-semibold">
-            {isLoading ? <Loader /> : formatDate(data?.created_at) ?? "-"}
+            {isLoading ? <Loader /> : `${formatDate(data?.created_at) ?? "-"}`}
           </TextSm>
         </div>
       </div>

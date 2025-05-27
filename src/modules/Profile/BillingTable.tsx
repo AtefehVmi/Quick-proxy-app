@@ -217,9 +217,9 @@ const columns = [
         <div
           className={cn(
             "flex items-center w-fit gap-1",
-            value === "Active"
+            value === "processed"
               ? "text-success"
-              : value === "Non active"
+              : value === "failed"
               ? "text-danger"
               : "text-warning"
           )}

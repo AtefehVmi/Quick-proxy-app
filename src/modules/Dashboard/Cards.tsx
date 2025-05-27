@@ -15,13 +15,15 @@ const Cards = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-5 mt-6">
       <StatsCard
         title="All Time Spending"
-        data={isLoading ? <Loader /> : `$${total_spending?.toFixed(2)}`}
+        data={
+          isLoading ? <Loader /> : `$${total_spending?.toFixed(2) ?? "0.00"}`
+        }
         bgImage={BgClockImage}
       />
 
       <StatsCard
         title="Total purchases"
-        data={isLoading ? <Loader /> : `$${total_orders?.toFixed(2)}`}
+        data={isLoading ? <Loader /> : `${total_orders ?? 0}`}
         bgImage={BgCartImage}
       />
 

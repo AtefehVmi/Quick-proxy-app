@@ -41,6 +41,7 @@ const BandwidthModal = ({ className }: { className?: string }) => {
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_DETAILS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
 
       toast.success("Bandwidth added successfully!");
       setOpen(false);

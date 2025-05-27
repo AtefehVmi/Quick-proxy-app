@@ -62,12 +62,12 @@ const SuccessPayment: React.FC<Props> = ({
               ${balance}
             </span>
           </p>
-          <p className="flex items-center gap-1">
+          {/* <p className="flex items-center gap-1">
             Payment:
             <span className="text-white font-bold text-2xl leading-9">
               {paymentMethod}
             </span>
-          </p>
+          </p> */}
         </div>
 
         <div className="mt-12 border-t border-black-border pt-6 flex items-center justify-end">

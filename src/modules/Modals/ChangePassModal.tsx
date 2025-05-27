@@ -19,6 +19,7 @@ const ChangePassModal = ({ className }: { className?: string }) => {
   const { data: accountDetails, isLoading } = useQuery({
     queryKey: QUERY_KEYS.USER_DETAILS,
     queryFn: () => getUserDetails(id!),
+    staleTime: 1 * 60 * 1000,
   });
 
   const [pass, setPass] = useState(accountDetails?.password);

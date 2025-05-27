@@ -39,7 +39,7 @@ const Wallet = ({
           <div className="pl-4.5 pt-4.5">
             <TextSm className="text-grey-500">Available Balance</TextSm>
             <p className="text-2xl leading-9 text-white font-bold">
-              ${isLoading ? <Loader /> : `${balance.toFixed(2) ?? "00.00"}`}
+              ${isLoading ? <Loader /> : `${balance?.toFixed(2) ?? "00.00"}`}
             </p>
           </div>
 
