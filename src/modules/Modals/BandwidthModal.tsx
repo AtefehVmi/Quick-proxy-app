@@ -7,21 +7,15 @@ import CrossIcon from "public/icons/cross-small.svg";
 import Button from "@/components/Button";
 import InputText from "@/components/InputText";
 import AddIcon from "public/icons/add.svg";
-import Autocomplete from "@/components/Autocomplete";
 import useFetch from "@/hooks/useFetch";
-import { CreateOrder } from "@/services/customApi";
+import { CreateOrder, getUserDetails } from "@/services/customApi";
 import { toast } from "react-toastify";
-
-const paymentOptions = [
-  { label: "Credit Cart", value: "1" },
-  { label: "Crypto currency", value: "2" },
-];
+import Loader from "@/components/Loader";
 
 const BandwidthModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
-  const [payment, setPayment] = useState("");
   const [amount, setAmount] = useState(0);
-  const { fetch: createOrderFetch } = useFetch(CreateOrder, false, {
+  const { fetch: createOrderFetch, loading } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
 
@@ -32,9 +26,14 @@ const BandwidthModal = ({ className }: { className?: string }) => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const payload = { type: "bandwidth", amount: amount, provider: "lemon" };
+      const payload = {
+        type: "proxy",
+        quantity: amount,
+        product: 9,
+        plan: 20,
+      };
       await createOrderFetch(payload);
-      toast.success("Redirecting...");
+      toast.success("Bandwidth added successfully!");
     } catch (error) {
       console.log("failed", error);
     }
@@ -75,16 +74,6 @@ const BandwidthModal = ({ className }: { className?: string }) => {
                 label="Amount"
                 className="max-w-[508px] w-full"
               />
-
-              <Autocomplete
-                className="max-w-[508px] w-full"
-                onChange={({ value }) => setPayment(value)}
-                value={payment}
-                options={paymentOptions}
-                label="Payment method"
-                variant="primary"
-                placeholder="Select Payment"
-              />
             </div>
 
             <div
@@ -96,7 +85,16 @@ const BandwidthModal = ({ className }: { className?: string }) => {
               <Button onClick={handleCloseButton} variant="outlined">
                 Cancel
               </Button>
-              <Button onClick={onSubmit}>Top Up</Button>
+              <Button onClick={onSubmit}>
+                {loading ? (
+                  <>
+                    Top Up
+                    <Loader />
+                  </>
+                ) : (
+                  "Top Up"
+                )}
+              </Button>
             </div>
           </DialogPanel>
         </Dialog>

@@ -62,6 +62,7 @@ const ActivityControl = () => {
   const { data: orders, isLoading } = useQuery({
     queryKey: [...QUERY_KEYS.ISP_ORDERS, offset, limit, statusFilter],
     queryFn: () => fetchPaginatedOrders(from, to, statusFilter),
+    staleTime: 1 * 60 * 1000,
   });
 
   console.log(orders);

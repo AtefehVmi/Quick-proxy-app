@@ -8,7 +8,7 @@ import { useState } from "react";
 import WalletIcon from "public/icons/wallet-small.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Autocomplete from "@/components/Autocomplete";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { CreateOrder, getIspCountries } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
@@ -38,6 +38,7 @@ const IspSidebar = ({
   const [couponChecked, setCouponChecked] = useState(false);
   const [port, setPort] = useState<string>(portOptions[0].value);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { data: locations } = useQuery({
     queryKey: QUERY_KEYS.ISP_LOCATION,
@@ -105,6 +106,11 @@ const IspSidebar = ({
     };
 
     await createOrderFetch(payload);
+
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ISP_ORDERS });
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
+    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+
     toast.success("order successfully created!");
     router.replace("/products/isp/recent-activity");
   };

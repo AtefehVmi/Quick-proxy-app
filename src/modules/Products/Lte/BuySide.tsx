@@ -9,7 +9,7 @@ import TextBase from "@/components/Typography/TextBase";
 import { useEffect, useMemo, useState } from "react";
 import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/chevron-down.svg";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import {
   CreateOrder,
@@ -45,6 +45,7 @@ const BuySide = ({
   const [discount, setDiscount] = useState<number>(0);
   const [regionProxies, setRegionProxies] = useState<any[]>([]);
   const [selectedProxyId, setSelectedProxyId] = useState<string>("");
+  const queryClient = useQueryClient();
 
   const { data: countries } = useQuery({
     queryKey: QUERY_KEYS.LTE_REGION,
@@ -69,6 +70,8 @@ const BuySide = ({
     queryFn: () => getLteRegionId(country!),
     enabled: !!country,
   });
+
+  console.log(regionId);
 
   const { balance } = useUser();
 
@@ -166,6 +169,11 @@ const BuySide = ({
       };
 
       await createOrderFetch(payload);
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LTE_ORDERS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+
       toast.success("Successfully created!");
     } catch (error) {
       console.log("failed", error);

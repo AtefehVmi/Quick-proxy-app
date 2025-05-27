@@ -338,6 +338,7 @@ const BillingTable = ({
     queryKey: [QUERY_KEYS.ORDERS, offset, limit, statusFilter],
     queryFn: () => fetchPaginatedOrders(from, to, statusFilter),
     enabled: isUserReady,
+    staleTime: 1 * 60 * 1000,
   });
 
   return (

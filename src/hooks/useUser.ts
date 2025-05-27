@@ -29,6 +29,7 @@ export const useUser = () => {
     queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
     queryFn: () => getAccount(userId!),
     enabled: !!userId,
+    staleTime: 1 * 60 * 1000,
   });
 
   const balance =
@@ -55,6 +56,10 @@ export const useUser = () => {
     Array.isArray(accountData) && accountData.length > 0
       ? accountData[0].updated_at
       : null;
+  const subuser =
+    Array.isArray(accountData) && accountData.length > 0
+      ? accountData[0].subuser
+      : null;
 
   return {
     balance,
@@ -65,5 +70,6 @@ export const useUser = () => {
     total_spending,
     total_orders,
     updated_at,
+    subuser,
   };
 };

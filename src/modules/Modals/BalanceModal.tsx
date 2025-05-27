@@ -38,13 +38,23 @@ const BalanceModal = ({
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (amount <= 0) {
+      toast.error("Amount must be greater than 0!");
+      return;
+    }
+    if (!payment) {
+      toast.error("Select a payment method!");
+      return;
+    }
+
     try {
       const payload = { type: "balance", amount: amount, provider: payment };
       const res = await createOrderFetch(payload);
 
       if (res?.data?.url) {
         toast.success("Redirecting...");
-        window.location.href = res.data.url;
+        window.open(res.data.url, "_blank", "noopener,noreferrer");
       } else {
         toast.error("No redirect URL found.");
       }
