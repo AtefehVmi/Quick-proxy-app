@@ -32,12 +32,20 @@ const PricingPlan: React.FC<Props> = ({
     select: (data) => {
       const allPlans = data || [];
 
-      return allPlans.filter(
-        (item: any) =>
-          item.plan_category === type && item.product_category === plan
-      );
+      return allPlans.filter((item: any) => {
+        const isMatchingCategory =
+          item.plan_category === type && item.product_category === plan;
+
+        if (plan === "lte") {
+          return isMatchingCategory && item.plan_name === "Bandwidth";
+        }
+
+        return isMatchingCategory;
+      });
     },
   });
+
+  console.log(plans);
 
   useEffect(() => {
     if (plans && plans.length > 0 && !selectedPlan) {

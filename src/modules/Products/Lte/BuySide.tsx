@@ -60,10 +60,14 @@ const BuySide = ({
 
       return allPlans.filter(
         (item: any) =>
-          item.plan_category === "rotating" && item.product_category === "lte"
+          item.plan_category === "rotating" &&
+          item.product_category === "lte" &&
+          item.plan_name === "Bandwidth"
       );
     },
   });
+
+  console.log(plans);
 
   const { data: regionId } = useQuery({
     queryKey: [QUERY_KEYS.LTE_ID, country],
