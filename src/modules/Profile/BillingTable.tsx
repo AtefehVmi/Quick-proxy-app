@@ -8,7 +8,6 @@ import Pagination from "@/components/Pagination/Pagination";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useSearchParams } from "next/navigation";
 import Button from "@/components/Button";
-import StatusIcon from "public/icons/bars-filter.svg";
 import FilterIcon from "public/icons/filter.svg";
 import { Billing } from "@/constants/types";
 import TextSm from "@/components/Typography/TextSm";
@@ -16,9 +15,10 @@ import HomeIcon from "public/icons/map-marker-home.svg";
 import CaretRightIcon from "public/icons/status.svg";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
-import { getOrders } from "@/services/api";
 import { useUser } from "@/hooks/useUser";
 import { supabase } from "@/services/supabaseClient";
+import { useState } from "react";
+import StatusFilter from "@/components/StatusFilter";
 
 interface BillingTableProps {
   className?: string;
@@ -306,6 +306,7 @@ const BillingTable = ({
   tableHeight,
 }: BillingTableProps) => {
   const searchParams = useSearchParams();
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
   const offset = Number(searchParams.get("offset") ?? "0");
   const limit = Number(searchParams.get("limit") ?? size ?? "10");
@@ -313,11 +314,18 @@ const BillingTable = ({
   const { userId } = useUser();
   const isUserReady = !!userId;
 
-  const fetchPaginatedOrders = async (from: number, to: number) => {
-    const { data, error, count } = await supabase
-      .from("orders")
-      .select("*", { count: "exact" })
-      .range(from, to);
+  const fetchPaginatedOrders = async (
+    from: number,
+    to: number,
+    status?: string | null
+  ) => {
+    let query = supabase.from("orders").select("*", { count: "exact" });
+
+    if (status) {
+      query = query.eq("status", status);
+    }
+
+    const { data, error, count } = await query.range(from, to);
 
     if (error) throw new Error(error.message);
     return { data, count };
@@ -327,12 +335,10 @@ const BillingTable = ({
   const to = offset + limit - 1;
 
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.ORDERS, offset, limit],
-    queryFn: () => fetchPaginatedOrders(from, to),
+    queryKey: [QUERY_KEYS.ORDERS, offset, limit, statusFilter],
+    queryFn: () => fetchPaginatedOrders(from, to, statusFilter),
     enabled: isUserReady,
   });
-
-  console.log(data);
 
   return (
     <Card className={cn("flex flex-col max-h-[840px] p-0", className)}>
@@ -343,9 +349,11 @@ const BillingTable = ({
         </div>
         {filters && (
           <div className="flex items-center gap-2 pt-1 pr-4.5">
-            <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
-              Status
-            </Button>
+            <StatusFilter
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
+
             <Button variant="black" className="p-2">
               <FilterIcon />
             </Button>

@@ -43,21 +43,6 @@ const Wallet = ({
             </p>
           </div>
 
-          <div className="mt-4 pl-4.5 flex items-center gap-19.25">
-            <div>
-              <TextXs className="text-grey-500">Transactions</TextXs>
-              <p className="text-base leading-7 text-white font-semibold">
-                $00.00
-              </p>
-            </div>
-            <div>
-              <TextXs className="text-grey-500">Wallets</TextXs>
-              <p className="text-base leading-7 text-white font-semibold">
-                $00.00
-              </p>
-            </div>
-          </div>
-
           <div className="mt-4 pl-4.5 flex items-center gap-2">
             <TextXs className="text-white">Last Activity at</TextXs>
             <TextSm className="font-semibold text-white">

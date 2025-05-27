@@ -18,6 +18,7 @@ import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import { supabase } from "@/services/supabaseClient";
+import StatusFilter from "@/components/StatusFilter";
 
 const columnHelper = createColumnHelper<any>();
 
@@ -30,17 +31,28 @@ const ActivityControl = ({
 }) => {
   const searchParams = useSearchParams();
   const [openModal, setOpenModal] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
   const offset = Number(searchParams.get("offset") ?? "0");
   const limit = Number(searchParams.get("limit") ?? "10");
 
-  const fetchPaginatedOrders = async (from: number, to: number) => {
-    const { data, error, count } = await supabase
+  const fetchPaginatedOrders = async (
+    from: number,
+    to: number,
+    status?: string | null
+  ) => {
+    let query = supabase
       .from("orders")
       .select("*", { count: "exact" })
       .range(from, to)
       .eq("type", "proxy")
       .eq("product_id", 5);
+
+    if (status) {
+      query = query.eq("status", status);
+    }
+
+    const { data, count, error } = await query;
 
     if (error) throw new Error(error.message);
     return { data, count };
@@ -50,8 +62,8 @@ const ActivityControl = ({
   const to = offset + limit - 1;
 
   const { data: orders, isLoading } = useQuery({
-    queryKey: [...QUERY_KEYS.LTE_ORDERS, offset, limit],
-    queryFn: () => fetchPaginatedOrders(from, to),
+    queryKey: [...QUERY_KEYS.LTE_ORDERS, offset, limit, statusFilter],
+    queryFn: () => fetchPaginatedOrders(from, to, statusFilter),
   });
 
   console.log(orders);
@@ -339,6 +351,7 @@ const ActivityControl = ({
   return (
     <>
       <ActivityTable
+        tableHeight="max-h-[300px]"
         isLoading={isLoading}
         className="mt-5"
         data={orders?.data ?? []}
@@ -347,9 +360,10 @@ const ActivityControl = ({
         offset={offset}
         filterActions={
           <>
-            <Button variant="black" className="py-2 px-4" Icon={StatusIcon}>
-              Status
-            </Button>
+            <StatusFilter
+              statusFilter={statusFilter}
+              setStatusFilter={setStatusFilter}
+            />
             <Button variant="black" className="p-2">
               <FilterIcon />
             </Button>
