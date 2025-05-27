@@ -11,13 +11,18 @@ import useFetch from "@/hooks/useFetch";
 import { CreateOrder, getUserDetails } from "@/services/customApi";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
+import { useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import SuccessPayment from "./SuccessPayment";
 
 const BandwidthModal = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { fetch: createOrderFetch, loading } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
+  const queryClient = useQueryClient();
 
   const handleCloseButton = () => {
     setOpen(false);
@@ -33,7 +38,13 @@ const BandwidthModal = ({ className }: { className?: string }) => {
         plan: 20,
       };
       await createOrderFetch(payload);
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_DETAILS });
+
       toast.success("Bandwidth added successfully!");
+      setOpen(false);
+      setShowSuccess(true);
     } catch (error) {
       console.log("failed", error);
     }
@@ -98,6 +109,15 @@ const BandwidthModal = ({ className }: { className?: string }) => {
             </div>
           </DialogPanel>
         </Dialog>
+      )}
+
+      {showSuccess && (
+        <SuccessPayment
+          title="Add Bandwidth"
+          type="bandwidth"
+          open={showSuccess}
+          onClose={() => setShowSuccess(false)}
+        />
       )}
     </div>
   );

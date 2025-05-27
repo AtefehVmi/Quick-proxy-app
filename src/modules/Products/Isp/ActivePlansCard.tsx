@@ -1,8 +1,13 @@
+"use client";
+
 import TextSm from "@/components/Typography/TextSm";
 import TextXs from "@/components/Typography/TextXs";
 import SuccessPayment from "@/modules/Modals/SuccessPayment";
+import { useState } from "react";
 
 const ActivePlansCard = () => {
+  const [showSuccess, setShowSuccess] = useState(false);
+
   return (
     <div className="bg-bandwidth p-4.5 flex items-end justify-between">
       <div>
@@ -15,7 +20,12 @@ const ActivePlansCard = () => {
         </div>
       </div>
 
-      <SuccessPayment title="Get Plan" type="plan" />
+      <SuccessPayment
+        open={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        title="Get Plan"
+        type="plan"
+      />
     </div>
   );
 };
