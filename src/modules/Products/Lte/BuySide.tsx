@@ -15,7 +15,6 @@ import {
   CreateOrder,
   getLteRegionId,
   getLteRegions,
-  getLteUsRegions,
 } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
@@ -23,6 +22,11 @@ import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
 import { getCoupon, getPriceList } from "@/services/api";
 import Loader from "@/components/Loader";
+
+const portOptions = [
+  { label: "http|https", value: "http|https" },
+  { label: "socks5", value: "socks5" },
+];
 
 const BuySide = ({
   selectedPlan,
@@ -40,15 +44,11 @@ const BuySide = ({
   const [couponChecked, setCouponChecked] = useState(false);
   const [discount, setDiscount] = useState<number>(0);
   const [regionProxies, setRegionProxies] = useState<any[]>([]);
+  const [selectedProxyId, setSelectedProxyId] = useState<string>("");
 
   const { data: countries } = useQuery({
     queryKey: QUERY_KEYS.LTE_REGION,
     queryFn: () => getLteRegions(),
-  });
-
-  const { data: usCities } = useQuery({
-    queryKey: QUERY_KEYS.LTE_US,
-    queryFn: () => getLteUsRegions(),
   });
 
   const { data: plans } = useQuery({
@@ -70,8 +70,6 @@ const BuySide = ({
     enabled: !!country,
   });
 
-  console.log(regionId);
-
   const { balance } = useUser();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
@@ -92,22 +90,7 @@ const BuySide = ({
     }
   }, [regionId]);
 
-  const portOptions = useMemo(() => {
-    const types = Array.from(new Set(regionProxies.map((p) => p.proxy_type)));
-    return types.map((type) => ({
-      label: type.toUpperCase(),
-      value: type,
-    }));
-  }, [regionProxies]);
-
-  let lteOptions = [{ label: "", value: "" }];
   let selectedPlanPrice = selectedPlan?.price ?? 0;
-
-  lteOptions =
-    plans?.map((plan: { id: string; plan_name: string }) => ({
-      label: plan.plan_name,
-      value: plan.id.toString(),
-    })) || [];
 
   const countryOptions = [
     { label: "United States", value: "US" },
@@ -122,18 +105,39 @@ const BuySide = ({
   ];
 
   const cityOptions = useMemo(() => {
-    if (country === "US") {
-      return (
-        usCities?.data?.map(
-          (region: { region: string; region_code: string }) => ({
-            label: region.region,
-            value: region.region_code,
-          })
-        ) || []
-      );
-    }
-    return [];
-  }, [country, usCities]);
+    const locations = regionId?.data?.results;
+
+    if (!locations) return [];
+
+    const uniqueCities = Array.from(
+      new Set(
+        locations.filter((loc: any) => loc.city).map((loc: any) => loc.city)
+      )
+    );
+
+    return uniqueCities.map((city) => ({
+      label: String(city),
+      value: String(city),
+    }));
+  }, [regionId]);
+
+  const lteOptions = useMemo(() => {
+    if (!regionProxies?.length || !city || !port) return [];
+
+    const portLabel = port.toLowerCase() === "socks5" ? "socks5" : "http";
+
+    return regionProxies
+      .filter((loc) => {
+        const portFromType = loc.proxy_type?.toLowerCase() || "";
+        const isSamePort = portFromType.includes(portLabel);
+        const isSameCity = loc.city?.toLowerCase() === city.toLowerCase();
+        return isSamePort && isSameCity;
+      })
+      .map((loc) => ({
+        label: `IP: ${loc.public_ip} (${loc.proxy_type}) ISP: ${loc.isp}`,
+        value: loc.proxy_id.toString(),
+      }));
+  }, [regionProxies, city, port]);
 
   const total = selectedPlanPrice * amount;
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
@@ -141,9 +145,14 @@ const BuySide = ({
   const onSubmit = async () => {
     if (!selectedPlan) return toast.error("Please select a plan");
     if (balance < discountedTotal) return toast.error("Balance is not enough!");
-    const selectedProxy = regionProxies.find((p) => p.proxy_type === port);
+    if (!selectedProxyId) return toast.error("Please select an LTE proxy");
+
+    const selectedProxy = regionProxies.find(
+      (p) => p.proxy_id.toString() === selectedProxyId
+    );
+
     if (!selectedProxy)
-      return toast.error("No proxy available for selected port");
+      return toast.error("No proxy available for selected LTE proxy");
 
     try {
       const payload = {
@@ -236,14 +245,28 @@ const BuySide = ({
             <Autocomplete
               variant="primary"
               options={lteOptions}
-              value={selectedPlan?.id?.toString() ?? ""}
-              onChange={({ value }) => {
-                const plan = plans?.find((p) => p.id.toString() === value);
-                setSelectedPlan(plan || null);
-              }}
+              value={selectedProxyId}
+              onChange={({ value }) => setSelectedProxyId(value)}
               label="LTE"
-              placeholder="Select Lte"
+              placeholder="Select LTE"
             />
+            <Autocomplete
+              variant="primary"
+              options={
+                plans?.map((plan: any) => ({
+                  label: plan.plan_name,
+                  value: plan.plan_id,
+                })) || []
+              }
+              value={selectedPlan?.plan_id || ""}
+              onChange={({ value }) => {
+                const selected = plans?.find((p: any) => p.plan_id === value);
+                setSelectedPlan(selected);
+              }}
+              label="Plan"
+              placeholder="Select a Plan"
+            />
+
             <InputText
               value={coupon}
               onChange={(e) => {
