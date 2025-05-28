@@ -9,19 +9,48 @@ import WalletIcon from "public/icons/wallet-small.svg";
 import ArrowIcon from "public/icons/arrow-small-right.svg";
 import Bandwidth from "./Bandwidth";
 import useFetch from "@/hooks/useFetch";
-import { getCoupon } from "@/services/api";
+import { getCoupon, getPriceList } from "@/services/api";
 import { useUser } from "@/hooks/useUser";
 import { toast } from "react-toastify";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/keys";
+import Loader from "@/components/Loader";
+import { CreateOrder } from "@/services/customApi";
+import SuccessPayment from "@/modules/Modals/SuccessPayment";
 
 const RotatingSidebar = () => {
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(1);
   const [coupon, setCoupon] = useState<string>();
   const [couponChecked, setCouponChecked] = useState(false);
   const [discount, setDiscount] = useState<number>(0);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const { fetch: createOrderFetch, loading: loadingOrder } = useFetch(
+    CreateOrder,
+    false,
+    {
+      toastOnError: true,
+    }
+  );
+  const queryClient = useQueryClient();
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
   });
+
+  const { data: plans, isLoading } = useQuery({
+    queryKey: QUERY_KEYS.PRICING,
+    queryFn: () => getPriceList(),
+    select: (data) => {
+      const allPlans = data || [];
+      return allPlans.filter(
+        (item: any) =>
+          item.plan_category === "rotating" &&
+          item.product_category === "residential"
+      );
+    },
+  });
+
+  const price = plans?.[0]?.price;
 
   const { balance } = useUser();
 
@@ -47,6 +76,37 @@ const RotatingSidebar = () => {
     }
   };
 
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (amount <= 0) {
+      toast.error("Amount must be greater than 0!");
+      return;
+    }
+
+    try {
+      const payload = {
+        type: "proxy",
+        quantity: amount,
+        product: 9,
+        plan: 20,
+      };
+      await createOrderFetch(payload);
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_DETAILS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
+
+      toast.success("Bandwidth added successfully!");
+      setShowSuccess(true);
+    } catch (error) {
+      console.log("failed", error);
+    }
+  };
+
+  const total = price * amount;
+  const discountedTotal = discount ? total - (discount * total) / 100 : total;
+
   return (
     <div
       className={cn(
@@ -68,6 +128,9 @@ const RotatingSidebar = () => {
             label="Amount"
             placeholder="Enter Amount"
             className="w-full"
+            type="number"
+            error={amount <= 0}
+            description={amount <= 0 ? "Amount must be greater than 0" : ""}
           />
           <InputText
             value={coupon}
@@ -94,7 +157,7 @@ const RotatingSidebar = () => {
           />
         </div>
 
-        {balance < amount && (
+        {balance < discountedTotal && (
           <div
             className={cn(
               "mt-8 bg-black-2 border-b border-danger py-3 px-4.5",
@@ -126,7 +189,7 @@ const RotatingSidebar = () => {
         <div className="mt-8 flex items-center justify-between">
           <p className="text-white text-base leading-6">Price</p>
           <TextBase className="font-semibold text-white">
-            $ {amount ?? 0}
+            {isLoading ? <Loader /> : `$${price?.toFixed(2) ?? "0.00"}`}
           </TextBase>
         </div>
 
@@ -139,18 +202,46 @@ const RotatingSidebar = () => {
           </div>
         )}
 
+        <div className="mt-3 flex items-center justify-between">
+          <p className="text-white text-base leading-6">Quantity</p>
+          <TextBase className="font-semibold text-white">{amount}</TextBase>
+        </div>
+
         <div className="bg-black-border h-px w-full my-6"></div>
 
         <div className="flex items-center justify-between">
           <p className="text-base text-white leading-6">Total Price</p>
-          <p className="text-white font-bold text-32 leading-12">$ {amount}</p>
+          <p className="text-white font-bold text-32 leading-12">
+            $ {discountedTotal}
+          </p>
         </div>
 
         <div className="mt-6">
-          <Button className="font-semibold w-full py-4" RightIcon={ArrowIcon}>
-            Purchase
+          <Button
+            onClick={onSubmit}
+            disabled={balance < discountedTotal || amount <= 0}
+            className="font-semibold w-full py-4"
+            RightIcon={ArrowIcon}
+          >
+            {loadingOrder ? (
+              <>
+                <Loader />
+                Purchasing...
+              </>
+            ) : (
+              "Purchase"
+            )}
           </Button>
         </div>
+
+        {showSuccess && (
+          <SuccessPayment
+            title="Add Bandwidth"
+            type="bandwidth"
+            open={showSuccess}
+            onClose={() => setShowSuccess(false)}
+          />
+        )}
       </div>
     </div>
   );

@@ -29,8 +29,6 @@ const BandwidthCard = () => {
     }).format(date);
   };
 
-  console.log(data);
-
   return (
     <div className="mt-5 bg-bandwidth p-4.5 flex items-end justify-between">
       <div>
@@ -46,9 +44,6 @@ const BandwidthCard = () => {
           </TextSm>
         </div>
       </div>
-
-      <BandwidthModal />
-      {/* <SuccessPayment title="Add Bandwidth" type="bandwidth" /> */}
     </div>
   );
 };
