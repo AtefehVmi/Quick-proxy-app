@@ -53,7 +53,7 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
   const [port, setPort] = useState(portOptions[0].value);
   const [format, setFormat] = useState(formatOptions[0].value);
   const [rotation, setRotation] = useState(rotationOptions[0].value);
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
   const [openModal, setOpenModal] = useState(false);
   const [res, setRes] = useState<any>(null);
 
@@ -162,6 +162,8 @@ const ProxyGenerator = ({ className }: { className?: string }) => {
             placeholder="Enter"
             startAdornment={<QuantityIcon />}
             value={quantity}
+            error={quantity <= 0}
+            description={quantity <= 0 ? "Quantity must be greater than 0" : ""}
             onChange={(e) => setQuantity(Number(e.target.value))}
           />
         </div>
