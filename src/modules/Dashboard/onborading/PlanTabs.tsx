@@ -42,44 +42,44 @@ const PlanTabs = ({ className }: { className?: string }) => {
         />
       ),
     },
-    {
-      id: 3,
-      header: "Static Datacenter",
-      content: (
-        <ProxyCardContent
-          title="Static Datacenter"
-          features={[
-            "34 Million IP Pool",
-            "Traffic Never Expires",
-            "all 195 countries",
-            "City/State Targeting",
-            "IPv6 Supported",
-            "IPv4 Supported",
-            "No Connection Limits",
-            "Sticky Sessions",
-          ]}
-        />
-      ),
-    },
-    {
-      id: 4,
-      header: "Rotating Datacenter",
-      content: (
-        <ProxyCardContent
-          title="Rotating Datacenter"
-          features={[
-            "34 Million IP Pool",
-            "Traffic Never Expires",
-            "all 195 countries",
-            "City/State Targeting",
-            "IPv6 Supported",
-            "IPv4 Supported",
-            "No Connection Limits",
-            "Sticky Sessions",
-          ]}
-        />
-      ),
-    },
+    // {
+    //   id: 3,
+    //   header: "Static Datacenter",
+    //   content: (
+    //     <ProxyCardContent
+    //       title="Static Datacenter"
+    //       features={[
+    //         "34 Million IP Pool",
+    //         "Traffic Never Expires",
+    //         "all 195 countries",
+    //         "City/State Targeting",
+    //         "IPv6 Supported",
+    //         "IPv4 Supported",
+    //         "No Connection Limits",
+    //         "Sticky Sessions",
+    //       ]}
+    //     />
+    //   ),
+    // },
+    // {
+    //   id: 4,
+    //   header: "Rotating Datacenter",
+    //   content: (
+    //     <ProxyCardContent
+    //       title="Rotating Datacenter"
+    //       features={[
+    //         "34 Million IP Pool",
+    //         "Traffic Never Expires",
+    //         "all 195 countries",
+    //         "City/State Targeting",
+    //         "IPv6 Supported",
+    //         "IPv4 Supported",
+    //         "No Connection Limits",
+    //         "Sticky Sessions",
+    //       ]}
+    //     />
+    //   ),
+    // },
     {
       id: 5,
       header: "Rotating Mobile",

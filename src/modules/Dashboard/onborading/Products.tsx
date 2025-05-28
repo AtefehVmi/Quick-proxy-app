@@ -56,6 +56,7 @@ const Products = ({ className }: { className?: string }) => {
         className="flex gap-5 mt-6 overflow-auto scrollbar-hide"
       >
         <ProductCard
+          href="/products/rotating-residential"
           Icon={RotatingResiIcon}
           title="Rotating Residential"
           desc="Protect your data with encrypted connections."
@@ -64,6 +65,7 @@ const Products = ({ className }: { className?: string }) => {
         />
 
         <ProductCard
+          href="/products/isp"
           Icon={StaticResiIcon}
           title="Static Residential"
           desc="Protect your data with encrypted connections."
@@ -71,7 +73,7 @@ const Products = ({ className }: { className?: string }) => {
           isActive={activeProduct === "StaticResi"}
         />
 
-        <ProductCard
+        {/* <ProductCard
           Icon={StaticDataIcon}
           title="Static Datacenter"
           desc="Protect your data with encrypted connections."
@@ -85,9 +87,10 @@ const Products = ({ className }: { className?: string }) => {
           desc="Protect your data with encrypted connections."
           onClick={() => handleProductClick("RotatingData")}
           isActive={activeProduct === "RotatingData"}
-        />
+        /> */}
 
         <ProductCard
+          href="/products/lte"
           Icon={MobileIcon}
           title="Static Mobile"
           desc="Protect your data with encrypted connections."
@@ -96,6 +99,7 @@ const Products = ({ className }: { className?: string }) => {
         />
 
         <ProductCard
+          href="/products/rotating-mobile"
           Icon={MobileIcon}
           title="Rotating Mobile"
           desc="Protect your data with encrypted connections."

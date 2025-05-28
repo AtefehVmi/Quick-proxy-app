@@ -2,6 +2,7 @@ import React, { FC, SVGProps } from "react";
 import InfoIcon from "public/icons/info.svg";
 import TextSm from "@/components/Typography/TextSm";
 import cn from "@/utils/cn";
+import Link from "next/link";
 
 type Props = {
   title: string;
@@ -9,6 +10,7 @@ type Props = {
   Icon: FC<SVGProps<SVGElement>>;
   onClick?: () => void;
   isActive: boolean;
+  href: string;
 };
 
 const ProductCard: React.FC<Props> = ({
@@ -17,9 +19,11 @@ const ProductCard: React.FC<Props> = ({
   Icon,
   onClick,
   isActive,
+  href,
 }) => {
   return (
-    <div
+    <Link
+      href={href}
       className={`bg-black border border-black-2 min-w-[240px] w-full ${
         isActive ? "border-primary-400" : ""
       } cursor-pointer`}
@@ -49,7 +53,7 @@ const ProductCard: React.FC<Props> = ({
         <TextSm className="font-semibold">Learn More</TextSm>
         <InfoIcon />
       </div>
-    </div>
+    </Link>
   );
 };
 
