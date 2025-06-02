@@ -37,7 +37,7 @@ const PricingPlan: React.FC<Props> = ({
           item.plan_category === type && item.product_category === plan;
 
         if (plan === "lte") {
-          return isMatchingCategory && item.plan_name === "IP Reveal";
+          return isMatchingCategory && item.plan_name === "Bandwidth";
         }
 
         return isMatchingCategory;
