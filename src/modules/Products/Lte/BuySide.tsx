@@ -62,7 +62,7 @@ const BuySide = ({
         (item: any) =>
           item.plan_category === "rotating" &&
           item.product_category === "lte" &&
-          item.plan_name === "Bandwidth"
+          item.plan_name === "IP Reveal"
       );
     },
   });

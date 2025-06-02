@@ -9,7 +9,7 @@ const PlanTabs = ({ className }: { className?: string }) => {
       header: "Rotating Residential",
       content: (
         <ProxyCardContent
-          title="Rotating Residential"
+          type="rotatingresidential"
           features={[
             "34 Million IP Pool",
             "Traffic Never Expires",
@@ -28,7 +28,7 @@ const PlanTabs = ({ className }: { className?: string }) => {
       header: "Static Residential",
       content: (
         <ProxyCardContent
-          title="Static Residential"
+          type="staticresidential"
           features={[
             "34 Million IP Pool",
             "Traffic Never Expires",
@@ -42,50 +42,11 @@ const PlanTabs = ({ className }: { className?: string }) => {
         />
       ),
     },
-    // {
-    //   id: 3,
-    //   header: "Static Datacenter",
-    //   content: (
-    //     <ProxyCardContent
-    //       title="Static Datacenter"
-    //       features={[
-    //         "34 Million IP Pool",
-    //         "Traffic Never Expires",
-    //         "all 195 countries",
-    //         "City/State Targeting",
-    //         "IPv6 Supported",
-    //         "IPv4 Supported",
-    //         "No Connection Limits",
-    //         "Sticky Sessions",
-    //       ]}
-    //     />
-    //   ),
-    // },
-    // {
-    //   id: 4,
-    //   header: "Rotating Datacenter",
-    //   content: (
-    //     <ProxyCardContent
-    //       title="Rotating Datacenter"
-    //       features={[
-    //         "34 Million IP Pool",
-    //         "Traffic Never Expires",
-    //         "all 195 countries",
-    //         "City/State Targeting",
-    //         "IPv6 Supported",
-    //         "IPv4 Supported",
-    //         "No Connection Limits",
-    //         "Sticky Sessions",
-    //       ]}
-    //     />
-    //   ),
-    // },
     {
       id: 5,
       header: "Rotating Mobile",
       content: (
         <ProxyCardContent
-          title="Rotating Mobile"
           features={[
             "34 Million IP Pool",
             "Traffic Never Expires",
@@ -104,7 +65,6 @@ const PlanTabs = ({ className }: { className?: string }) => {
       header: "Static Mobile",
       content: (
         <ProxyCardContent
-          title="Static Mobile"
           features={[
             "34 Million IP Pool",
             "Traffic Never Expires",
