@@ -43,28 +43,11 @@ const PlanTabs = ({ className }: { className?: string }) => {
       ),
     },
     {
-      id: 5,
-      header: "Rotating Mobile",
-      content: (
-        <ProxyCardContent
-          features={[
-            "34 Million IP Pool",
-            "Traffic Never Expires",
-            "all 195 countries",
-            "City/State Targeting",
-            "IPv6 Supported",
-            "IPv4 Supported",
-            "No Connection Limits",
-            "Sticky Sessions",
-          ]}
-        />
-      ),
-    },
-    {
-      id: 6,
+      id: 3,
       header: "Static Mobile",
       content: (
         <ProxyCardContent
+          type="IP Reveal"
           features={[
             "34 Million IP Pool",
             "Traffic Never Expires",

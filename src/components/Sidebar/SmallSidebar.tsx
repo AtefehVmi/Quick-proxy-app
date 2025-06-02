@@ -27,7 +27,6 @@ const sidebarItems = [
     children: [
       { href: ROUTES.ROTATING_RESIDENTIAL, Icon: RotatingResiIcon },
       { href: ROUTES.ISP, Icon: IspIcon },
-      { href: ROUTES.ROTATING_MOBILE, Icon: RotatingMobileIcon },
       { href: ROUTES.ROTATING_LTE, Icon: MobileIcon },
     ],
   },

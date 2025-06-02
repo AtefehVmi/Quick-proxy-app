@@ -24,6 +24,13 @@ const ProxyCardContent: React.FC<Props> = ({ features, type }) => {
     select: (data) => {
       if (!type) return null;
 
+      const isLte = ["Bandwidth", "IP Reveal"].includes(type);
+      if (isLte) {
+        return data.find(
+          (item) => item.product_category === "lte" && item.plan_name === type
+        );
+      }
+
       const [planCategory, productCategory] = [
         type.replace("residential", ""),
         "residential",

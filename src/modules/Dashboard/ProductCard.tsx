@@ -15,25 +15,10 @@ const products = [
     icon: RotatingResiIcon,
     href: "products/rotating-residential",
   },
-  // {
-  //   product: "Rotating Datacenter",
-  //   icon: RotatingDataIcon,
-  //   href: "products/rotating-datacenter",
-  // },
   {
     product: "Static Residential",
     icon: StaticResiIcon,
     href: "products/isp",
-  },
-  // {
-  //   product: "Static Datacenter",
-  //   icon: StaticDataIcon,
-  //   href: "products/static-datacenter",
-  // },
-  {
-    product: "Rotating Mobile",
-    icon: MobileIcon,
-    href: "products/rotating-mobile",
   },
   { product: "Static Mobile", icon: MobileIcon, href: "products/lte" },
 ];
