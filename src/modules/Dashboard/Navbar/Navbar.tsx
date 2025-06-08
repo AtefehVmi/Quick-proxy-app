@@ -4,6 +4,7 @@ import ProfileDropdown from "@/modules/Dropdown/ProfileDropdown";
 import NotifModal from "@/modules/Modals/NotifModal";
 import Logo from "public/logo-small.svg";
 import ToggleMenu from "./ToggleMenu";
+import ProfileDetails from "./ProfileDetails";
 
 const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
   return (
@@ -40,13 +41,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
         <Logo />
       </div>
 
-      <div className="flex items-center gap-3 py-5.5 z-10">
-        <ProfileDropdown className="m-4 cursor-pointer" />
-        <div className="bg-black-2 w-px h-14"></div>
-        <div className="">
-          <NotifModal className="flex items-center gap-2" />
-        </div>
-      </div>
+      <ProfileDropdown />
     </div>
   );
 };

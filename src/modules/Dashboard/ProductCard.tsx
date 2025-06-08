@@ -20,7 +20,7 @@ const products = [
     icon: StaticResiIcon,
     href: "products/isp",
   },
-  { product: "Static Mobile", icon: MobileIcon, href: "products/lte" },
+  { product: "Mobile/LTE", icon: MobileIcon, href: "products/lte" },
 ];
 
 const ProductCard = ({ className }: { className?: string }) => {

@@ -44,7 +44,7 @@ const PlanTabs = ({ className }: { className?: string }) => {
     },
     {
       id: 3,
-      header: "Static Mobile",
+      header: "Mobile/LTE",
       content: (
         <ProxyCardContent
           type="IP Reveal"

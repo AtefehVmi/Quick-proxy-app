@@ -8,9 +8,15 @@ import LogoutIcon from "public/icons/exit.svg";
 import { supabase } from "@/services/supabaseClient";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import TextSm from "@/components/Typography/TextSm";
+import Loader from "@/components/Loader";
+import ArrowDownIcon from "public/icons/chevron-down.svg";
+import { useUser } from "@/hooks/useUser";
 
 const ProfileDropdown = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { email, isLoading } = useUser();
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -54,14 +60,30 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
 
   return (
     <div ref={dropdownRef}>
-      <button onClick={() => setIsOpen(!isOpen)} className={cn(className)}>
-        <UserIcon className="text-white" />
-      </button>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-0.5 cursor-pointer"
+      >
+        <div className={cn(className, "bg-black-2 p-4")}>
+          <UserIcon className="text-white" />
+        </div>
+        <button className="flex items-center gap-2 p-4 cursor-pointer">
+          <TextSm className="font-semibold text-grey-500">
+            {isLoading ? <Loader /> : email}
+          </TextSm>
+          <ArrowDownIcon
+            className={cn("transition-transform duration-300", {
+              "rotate-180": isOpen,
+              "rotate-0": !isOpen,
+            })}
+          />
+        </button>
+      </div>
 
       {isOpen && (
         <div
           className={cn(
-            "absolute top-20 right-0 lg:right-18.5 w-32 z-50",
+            "absolute top-21.5 right-0 lg:right-64.5 w-32 z-50",
             "bg-black-3"
           )}
         >

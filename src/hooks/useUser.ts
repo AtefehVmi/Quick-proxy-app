@@ -8,6 +8,7 @@ import { getAccount } from "@/services/api";
 
 export const useUser = () => {
   const [userId, setUserId] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const getSession = async () => {
@@ -16,6 +17,11 @@ export const useUser = () => {
       } = await supabase.auth.getSession();
       if (session?.user) {
         setUserId(session.user.id);
+        if (session?.user?.email) {
+          setEmail(session.user.email);
+        } else {
+          setEmail(null);
+        }
       }
     };
     getSession();
@@ -71,5 +77,6 @@ export const useUser = () => {
     total_orders,
     updated_at,
     subuser,
+    email,
   };
 };

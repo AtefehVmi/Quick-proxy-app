@@ -5,9 +5,7 @@ import cn from "@/utils/cn";
 import ChevronIcon from "public/icons/angle-small-right.svg";
 import ProductCard from "./ProductCard";
 import RotatingResiIcon from "public/icons/map-home.svg";
-import RotatingDataIcon from "public/icons/database.svg";
 import StaticResiIcon from "public/icons/location.svg";
-import StaticDataIcon from "public/icons/network.svg";
 import MobileIcon from "public/icons/mobile.svg";
 import Button from "@/components/Button";
 
@@ -73,38 +71,13 @@ const Products = ({ className }: { className?: string }) => {
           isActive={activeProduct === "StaticResi"}
         />
 
-        {/* <ProductCard
-          Icon={StaticDataIcon}
-          title="Static Datacenter"
-          desc="Protect your data with encrypted connections."
-          onClick={() => handleProductClick("StaticData")}
-          isActive={activeProduct === "StaticData"}
-        />
-
-        <ProductCard
-          Icon={RotatingDataIcon}
-          title="Rotating Datacenter"
-          desc="Protect your data with encrypted connections."
-          onClick={() => handleProductClick("RotatingData")}
-          isActive={activeProduct === "RotatingData"}
-        /> */}
-
         <ProductCard
           href="/products/lte"
           Icon={MobileIcon}
-          title="Static Mobile"
+          title="Mobile/LTE"
           desc="Protect your data with encrypted connections."
           onClick={() => handleProductClick("StaticMobile")}
           isActive={activeProduct === "StaticMobile"}
-        />
-
-        <ProductCard
-          href="/products/rotating-mobile"
-          Icon={MobileIcon}
-          title="Rotating Mobile"
-          desc="Protect your data with encrypted connections."
-          onClick={() => handleProductClick("RotatingMobile")}
-          isActive={activeProduct === "RotatingMobile"}
         />
       </div>
     </div>
