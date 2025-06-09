@@ -68,7 +68,7 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
           <UserIcon className="text-white" />
         </div>
         <button className="flex items-center gap-2 p-4 cursor-pointer">
-          <TextSm className="font-semibold text-grey-500">
+          <TextSm className="font-semibold text-grey-500 hidden lg:block">
             {isLoading ? <Loader /> : email}
           </TextSm>
           <ArrowDownIcon

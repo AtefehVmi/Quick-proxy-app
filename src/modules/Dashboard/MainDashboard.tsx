@@ -15,11 +15,11 @@ const MainDashboard = () => {
       <Cards />
       <div className="grid grid-cols-1 xl:grid-cols-24 gap-5 mt-6">
         <div className="col-span-1 lg:col-span-16 2xl:col-span-18 gap-5 w-full">
-          <div className="flex flex-col 2xl:flex-row gap-5">
-            <div className="w-full 2xl:w-1/2">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-5">
+            <div className="col-span-1">
               <ProductOverview />
             </div>
-            <div className="w-full 2xl:w-1/2">
+            <div className="col-span-1">
               <BillingTable
                 tableHeight="max-h-[330px] min-h-[330px]"
                 size="5"
