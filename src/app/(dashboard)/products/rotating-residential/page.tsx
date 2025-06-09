@@ -6,6 +6,11 @@ import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
 import RotatingResiIcon from "public/icons/rotating-resi.svg";
 import DatabaseImage from "public/images/database_folders.png";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Fastproxy.gg | Rotating Residential",
+};
 
 const RotatingResidential = () => {
   return (

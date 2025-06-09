@@ -1,10 +1,13 @@
-"use client";
-
 import BillingTable from "@/modules/Profile/BillingTable";
 import ProfileSide from "@/modules/Profile/ProfileSide";
 import Heading from "@/modules/shared/Heading";
 import cn from "@/utils/cn";
+import { Metadata } from "next";
 import ProfileIcon from "public/icons/user.svg";
+
+export const metadata: Metadata = {
+  title: "Fastproxy.gg | Profile & Billing",
+};
 
 const ProfilePage = () => {
   return (
