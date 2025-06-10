@@ -52,7 +52,7 @@ export default function Sidebar({
         className
       )}
     >
-      <div className="ml-8 pb-6.75 2xl:pb-6.75 border-b border-black-border pt-6 relative">
+      <div className="ml-8 pb-8.75 2xl:pb-6.75 border-b border-black-border pt-6 relative">
         <Link href="/">
           <LogoImage className="hidden 2xl:block" />
           <LogoSmallerImage className="block 2xl:hidden" />

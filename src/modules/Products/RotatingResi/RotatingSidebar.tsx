@@ -112,12 +112,7 @@ const RotatingSidebar = () => {
   const discountedTotal = discount ? total - (discount * total) / 100 : total;
 
   return (
-    <div
-      className={cn(
-        "bg-black-3 h-full grow px-8",
-        "flex flex-col justify-between"
-      )}
-    >
+    <div className={cn("bg-black-3 h-full grow px-8", "flex flex-col gap-4")}>
       <div className="">
         <Bandwidth />
 
@@ -180,7 +175,7 @@ const RotatingSidebar = () => {
         )}
       </div>
 
-      <div className="bg-black-2 p-4.5 mb-8 mt-8 xl:mt-0">
+      <div className="bg-black-2 p-4.5 mb-8 mt-2 xl:mt-0">
         <p
           className={cn(
             "text-base leading-7 text-grey-100 font-semibold",

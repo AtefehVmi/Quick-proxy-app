@@ -26,6 +26,10 @@
   --color-success: #14c220;
   --color-warning: #ff7861;
 
+  --breakpoint-3xl: 1600px;
+  --breakpoint-4xl: 1920px;
+  --breakpoint-5xl: 2300px;
+
   --shadow-tooltip: 0px 4px 12px 0px #00000061;
 
   --text-32: 32px;

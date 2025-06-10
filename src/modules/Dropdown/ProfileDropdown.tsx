@@ -62,9 +62,9 @@ const ProfileDropdown = ({ className }: { className?: string }) => {
     <div ref={dropdownRef}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-0.5 cursor-pointer"
+        className={cn("flex items-center gap-0.5 cursor-pointer", className)}
       >
-        <div className={cn(className, "bg-black-2 p-4")}>
+        <div className={cn("bg-black-2 p-4")}>
           <UserIcon className="text-white" />
         </div>
         <button className="flex items-center gap-2 p-4 cursor-pointer">

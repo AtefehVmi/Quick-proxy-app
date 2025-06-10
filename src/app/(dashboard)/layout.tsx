@@ -13,7 +13,9 @@ const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({
       <div className="grow flex flex-col min-h-screen">
         <NavbarWrapper />
         <ProtectedRoute>
-          <main className="flex-1 overflow-auto">{children}</main>
+          <main className="flex-1 overflow-auto scrollbar-hide">
+            {children}
+          </main>
         </ProtectedRoute>
       </div>
     </div>

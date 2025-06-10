@@ -10,17 +10,20 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
   return (
     <div
       className={cn(
-        "h-25 border-b border-black-border pl-5 pr-5 ml-0 md:pr-8",
-        "flex items-center justify-end z-0 relative"
+        "h-25 border-b border-black-border px-5 xl:px-0",
+        "flex items-center justify-between md:justify-end xl:grid xl:grid-cols-24 xl:gap-5"
       )}
     >
+      <div className="hidden xl:col-span-16 xl:block"></div>
       {rightBg && (
         <div
           className={cn(
-            "bg-black-3 w-[32.1%] 2xl:w-[32.7%] h-24.75 top-0 right-0 -z-50 absolute",
-            "hidden xl:block"
+            "bg-black-3 xl:col-span-8 h-24.75",
+            "hidden xl:flex items-center pl-5"
           )}
-        ></div>
+        >
+          <ProfileDropdown />
+        </div>
       )}
 
       <div className="flex items-center gap-3 md:hidden z-20">
@@ -28,7 +31,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
         <Logo />
       </div>
 
-      <ProfileDropdown />
+      <ProfileDropdown className="flex xl:hidden" />
     </div>
   );
 };
