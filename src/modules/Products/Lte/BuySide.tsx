@@ -75,7 +75,7 @@ const BuySide = ({
 
   const { balance, refetch } = useUser();
 
-  const { refetch: refetchOrders } = useQuery({
+  const { data: ordres, refetch: refetchOrders } = useQuery({
     queryKey: QUERY_KEYS.LTE_ORDERS,
     queryFn: () => getOrders(),
     staleTime: 1 * 60 * 1000,
@@ -176,43 +176,42 @@ const BuySide = ({
 
       const response = await createOrderFetch(payload);
 
-      if (!response || response.status === "failed" || response.error) {
+      if (!response || response.error) {
         toast.error("Failed to create order. Please try again.");
         return;
       }
 
-      const orderId = response?.id;
+      const orderId = response?.data?.id;
+      if (!orderId) {
+        toast.error("Order ID missing from response.");
+        return;
+      }
 
-      if (response.status === "pending" && orderId) {
-        let attempts = 0;
-        const maxAttempts = 5;
-        let finalStatus = "pending";
+      let attempts = 0;
+      const maxAttempts = 5;
+      let finalStatus = "pending";
 
-        while (attempts < maxAttempts) {
-          await new Promise((res) => setTimeout(res, 2000));
+      while (attempts < maxAttempts) {
+        await new Promise((res) => setTimeout(res, 5000));
 
-          const refreshedOrders = await refetchOrders();
-          const latestOrder = refreshedOrders?.data?.find(
-            (order: any) => order.id === orderId
-          );
+        const refreshedOrders = await refetchOrders();
+        console.log("ref", refreshedOrders);
+        const latestOrder = refreshedOrders?.data?.find(
+          (order: any) => order.id === orderId
+        );
 
-          if (latestOrder) {
-            finalStatus = latestOrder.status;
-            if (finalStatus === "processed" || finalStatus === "failed") break;
-          }
-
-          attempts++;
+        if (latestOrder) {
+          finalStatus = latestOrder.status;
+          if (finalStatus === "processed" || finalStatus === "failed") break;
         }
 
-        if (finalStatus === "processed") {
-          toast.success("Successfully created!");
-        } else {
-          toast.error("Order failed or timed out.");
-        }
-      } else if (response.status === "processed") {
+        attempts++;
+      }
+
+      if (finalStatus === "processed") {
         toast.success("Successfully created!");
       } else {
-        toast.error("Order status unknown or failed.");
+        toast.error("Order failed or timed out.");
       }
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LTE_ORDERS });

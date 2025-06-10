@@ -26,6 +26,12 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
         </div>
       )}
 
+      {!rightBg && (
+        <div className="hidden xl:col-span-8 h-24.75 items-center justify-end xl:flex pl-5">
+          <ProfileDropdown />
+        </div>
+      )}
+
       <div className="flex items-center gap-3 md:hidden z-20">
         <ToggleMenu />
         <Logo />
