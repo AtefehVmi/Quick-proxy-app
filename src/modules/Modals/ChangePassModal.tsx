@@ -22,8 +22,6 @@ const ChangePassModal = ({ className }: { className?: string }) => {
     staleTime: 1 * 60 * 1000,
   });
 
-  const [pass, setPass] = useState(accountDetails?.password);
-
   const handleCloseButton = () => {
     setOpen(false);
   };
@@ -68,8 +66,7 @@ const ChangePassModal = ({ className }: { className?: string }) => {
 
               <PasswordInput
                 showPassWeakness={false}
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
+                value={accountDetails?.password ?? ""}
                 label="Password"
               />
             </div>

@@ -101,14 +101,14 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
               <Button
                 onClick={copyText}
                 variant="outlined"
-                className="py-4 px-12"
+                className="py-2 px-8"
                 Icon={CopyIcon}
               >
                 Copy
               </Button>
               <Button
                 onClick={downloadText}
-                className="font-semibold px-12 py-4"
+                className="font-semibold px-8 py-2"
                 Icon={DownloadIcon}
               >
                 Download

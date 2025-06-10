@@ -122,7 +122,7 @@ const RotatingSidebar = () => {
         <Bandwidth />
 
         <p className="text-white font-bold text-lg lg:text-xl leading-7.5 py-6 border-b border-black-border">
-          Get Started
+          Purchase Bandwidth
         </p>
 
         <div className="mt-8">
@@ -187,7 +187,7 @@ const RotatingSidebar = () => {
             "pb-4.5 border-b border-black-border"
           )}
         >
-          Subscription Summary
+          Order Summary
         </p>
 
         <div className="mt-8 flex items-center justify-between">

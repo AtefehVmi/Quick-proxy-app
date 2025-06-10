@@ -253,19 +253,28 @@ const BillingTable = ({
       cell: (info) => {
         const value =
           info.getValue().charAt(0).toUpperCase() + info.getValue().slice(1);
+
+        const successStatuses = ["Processed", "Processing", "Refunded"];
+        const dangerStatuses = [
+          "Failed",
+          "Canceled",
+          "Wrong_amount",
+          "System_error",
+          "Refund_failed",
+        ];
+
         return (
           <div
             className={cn(
               "flex items-center w-fit gap-1",
-              value === "Processed"
+              successStatuses.includes(value)
                 ? "text-success"
-                : value === "Failed"
+                : dangerStatuses.includes(value)
                 ? "text-danger"
                 : "text-warning"
             )}
           >
             <CaretRightIcon />
-
             <TextSm className="font-medium whitespace-nowrap">
               {value || "null"}
             </TextSm>
