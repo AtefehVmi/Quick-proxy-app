@@ -8,7 +8,7 @@ import { useState } from "react";
 import PortIcon from "public/icons/port.svg";
 import RotationIcon from "public/icons/rotation.svg";
 import FormatIcon from "public/icons/format.svg";
-import QuantityIcon from "public/icons/quantity.svg";
+import QuantityIcon from "public/icons/enter-icon.svg";
 import InputText from "@/components/InputText";
 import ChangePassModal from "@/modules/Modals/ChangePassModal";
 import GenerateProxyModal from "@/modules/Modals/GenerateProxyModal";

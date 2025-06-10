@@ -33,6 +33,9 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
   };
 
   const getTextData = () => {
+    if (Array.isArray(data)) {
+      return data.join("\n");
+    }
     return typeof data === "string" ? data : JSON.stringify(data, null, 2);
   };
 
@@ -50,7 +53,7 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "data.txt";
+    link.download = "FastProxyGG-Residential.txt";
     link.click();
 
     toast.success("Downloaded successfully.", {
@@ -79,7 +82,9 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
             </div>
 
             <div className="bg-black-2 p-5 mt-13.5 whitespace-pre-line h-78 overflow-y-auto">
-              {data ? (
+              {data && Array.isArray(data) ? (
+                data.join("\n")
+              ) : data ? (
                 typeof data === "string" ? (
                   data
                 ) : (

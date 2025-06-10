@@ -31,6 +31,7 @@ export const useUser = () => {
     data: accountData,
     isLoading,
     error,
+    refetch,
   } = useQuery({
     queryKey: [QUERY_KEYS.GET_ACCOUNT, userId],
     queryFn: () => getAccount(userId!),
@@ -78,5 +79,6 @@ export const useUser = () => {
     updated_at,
     subuser,
     email,
+    refetch,
   };
 };

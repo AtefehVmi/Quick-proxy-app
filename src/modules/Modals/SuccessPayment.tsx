@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import cn from "@/utils/cn";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import CrossIcon from "public/icons/cross-small.svg";
@@ -26,9 +26,15 @@ const SuccessPayment: React.FC<Props> = ({
   type,
   paymentMethod = "Credit cart",
 }) => {
-  const { balance } = useUser();
+  const { balance, refetch } = useUser();
 
   if (!open) return null;
+
+  useEffect(() => {
+    if (open) {
+      refetch();
+    }
+  }, [open, refetch]);
 
   return (
     <Dialog
@@ -46,8 +52,9 @@ const SuccessPayment: React.FC<Props> = ({
           <CrossIcon className="cursor-pointer" onClick={onClose} />
         </div>
 
-        <div className="mt-13.5 flex items-center justify-center">
+        <div className="mt-13.5 flex flex-col items-center justify-center">
           <Image src={SuccessImage} alt="Success" quality={100} />
+          <p className="text-sm font-semibold mt-4">Order Successful</p>
         </div>
 
         <div

@@ -20,7 +20,7 @@ import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
-import { getCoupon, getPriceList } from "@/services/api";
+import { getCoupon, getOrders, getPriceList } from "@/services/api";
 import Loader from "@/components/Loader";
 
 const portOptions = [
@@ -62,12 +62,10 @@ const BuySide = ({
         (item: any) =>
           item.plan_category === "rotating" &&
           item.product_category === "lte" &&
-          item.plan_name === "Bandwidth"
+          item.plan_name === "IP Reveal"
       );
     },
   });
-
-  console.log(plans);
 
   const { data: regionId } = useQuery({
     queryKey: [QUERY_KEYS.LTE_ID, country],
@@ -75,9 +73,13 @@ const BuySide = ({
     enabled: !!country,
   });
 
-  console.log(regionId);
+  const { balance, refetch } = useUser();
 
-  const { balance } = useUser();
+  const { refetch: refetchOrders } = useQuery({
+    queryKey: QUERY_KEYS.LTE_ORDERS,
+    queryFn: () => getOrders(),
+    staleTime: 1 * 60 * 1000,
+  });
 
   const { fetch: couponFetch, loading } = useFetch(getCoupon, false, {
     toastOnError: true,
@@ -176,7 +178,8 @@ const BuySide = ({
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LTE_ORDERS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+      refetch();
+      refetchOrders();
 
       toast.success("Successfully created!");
     } catch (error) {

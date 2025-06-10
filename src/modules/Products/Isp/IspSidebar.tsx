@@ -60,7 +60,7 @@ const IspSidebar = ({
     },
   });
 
-  const { balance } = useUser();
+  const { balance, refetch } = useUser();
 
   const { fetch: createOrderFetch, loading: loadingOrder } = useFetch(
     CreateOrder,
@@ -109,7 +109,7 @@ const IspSidebar = ({
 
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ISP_ORDERS });
     queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
+    refetch();
 
     toast.success("order successfully created!");
     router.replace("/products/isp/recent-activity");

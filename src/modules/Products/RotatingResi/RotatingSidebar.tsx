@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/keys";
 import Loader from "@/components/Loader";
-import { CreateOrder } from "@/services/customApi";
+import { CreateOrder, getUserDetails } from "@/services/customApi";
 import SuccessPayment from "@/modules/Modals/SuccessPayment";
 
 const RotatingSidebar = () => {
@@ -23,7 +23,6 @@ const RotatingSidebar = () => {
   const [coupon, setCoupon] = useState<string>();
   const [couponChecked, setCouponChecked] = useState(false);
   const [discount, setDiscount] = useState<number>(0);
-  const [showSuccess, setShowSuccess] = useState(false);
   const { fetch: createOrderFetch, loading: loadingOrder } = useFetch(
     CreateOrder,
     false,
@@ -52,7 +51,13 @@ const RotatingSidebar = () => {
 
   const price = plans?.[0]?.price;
 
-  const { balance } = useUser();
+  const { balance, refetch, id } = useUser();
+
+  const userDetailsQuery = useQuery({
+    queryKey: QUERY_KEYS.USER_DETAILS,
+    queryFn: () => getUserDetails(id!),
+    enabled: false,
+  });
 
   const applyCoupon = async () => {
     if (!coupon) return;
@@ -93,12 +98,11 @@ const RotatingSidebar = () => {
       };
       await createOrderFetch(payload);
 
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.GET_ACCOUNT });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.USER_DETAILS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
+      refetch();
+      await userDetailsQuery.refetch();
 
       toast.success("Bandwidth added successfully!");
-      setShowSuccess(true);
     } catch (error) {
       console.log("failed", error);
     }
@@ -171,7 +175,7 @@ const RotatingSidebar = () => {
               </TextBase>
             </div>
 
-            <Button variant="black">Add charge</Button>
+            <Button variant="black">Top up Balance</Button>
           </div>
         )}
       </div>
@@ -233,15 +237,6 @@ const RotatingSidebar = () => {
             )}
           </Button>
         </div>
-
-        {showSuccess && (
-          <SuccessPayment
-            title="Add Bandwidth"
-            type="bandwidth"
-            open={showSuccess}
-            onClose={() => setShowSuccess(false)}
-          />
-        )}
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ const BalanceModal = ({
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (amount <= 5) {
+    if (amount <= 4) {
       toast.error("Amount must be greater than 5!");
       return;
     }
@@ -67,7 +67,7 @@ const BalanceModal = ({
     <div>
       {variant === "text" ? (
         <Button onClick={() => setOpen(true)} variant="black">
-          Add charge
+          Top up Balance
         </Button>
       ) : (
         <Button
