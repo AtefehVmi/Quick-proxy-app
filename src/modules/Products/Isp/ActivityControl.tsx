@@ -73,11 +73,11 @@ const ActivityControl = () => {
     queryFn: () => getPriceList(),
   });
 
-  // const { data: orderDetails } = useQuery({
-  //   queryKey: QUERY_KEYS.ORDER_DETAILS,
-  //   queryFn: () => getOrderDetails(7),
-  // });
-  // console.log(orderDetails);
+  const { data: orderDetails } = useQuery({
+    queryKey: QUERY_KEYS.ORDER_DETAILS,
+    queryFn: () => getOrderDetails("efe18f18-df78-410b-957e-6320a2c2681d"),
+  });
+  console.log(orderDetails);
 
   const columns = [
     columnHelper.accessor("id", {

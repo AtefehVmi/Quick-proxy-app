@@ -105,6 +105,6 @@ export async function getUserDetails(id: number) {
   return data;
 }
 
-export async function getOrderDetails(id: number) {
+export async function getOrderDetails(id: string) {
   return await customInstance.get(`orders/${id}`);
 }
