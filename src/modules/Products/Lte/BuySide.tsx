@@ -174,16 +174,54 @@ const BuySide = ({
         quantity: amount,
       };
 
-      await createOrderFetch(payload);
+      const response = await createOrderFetch(payload);
+
+      if (!response || response.status === "failed" || response.error) {
+        toast.error("Failed to create order. Please try again.");
+        return;
+      }
+
+      const orderId = response?.id;
+
+      if (response.status === "pending" && orderId) {
+        let attempts = 0;
+        const maxAttempts = 5;
+        let finalStatus = "pending";
+
+        while (attempts < maxAttempts) {
+          await new Promise((res) => setTimeout(res, 2000));
+
+          const refreshedOrders = await refetchOrders();
+          const latestOrder = refreshedOrders?.data?.find(
+            (order: any) => order.id === orderId
+          );
+
+          if (latestOrder) {
+            finalStatus = latestOrder.status;
+            if (finalStatus === "processed" || finalStatus === "failed") break;
+          }
+
+          attempts++;
+        }
+
+        if (finalStatus === "processed") {
+          toast.success("Successfully created!");
+        } else {
+          toast.error("Order failed or timed out.");
+        }
+      } else if (response.status === "processed") {
+        toast.success("Successfully created!");
+      } else {
+        toast.error("Order status unknown or failed.");
+      }
 
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LTE_ORDERS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
       refetch();
       refetchOrders();
-
-      toast.success("Successfully created!");
     } catch (error) {
       console.log("failed", error);
+      toast.error("An error occurred while creating the order.");
     }
   };
 

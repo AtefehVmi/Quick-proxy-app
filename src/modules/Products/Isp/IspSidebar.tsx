@@ -13,7 +13,7 @@ import { QUERY_KEYS } from "@/constants/keys";
 import { CreateOrder, getIspCountries } from "@/services/customApi";
 import useFetch from "@/hooks/useFetch";
 import { toast } from "react-toastify";
-import { getCoupon, getPriceList } from "@/services/api";
+import { getCoupon, getOrders, getPriceList } from "@/services/api";
 import BalanceModal from "@/modules/Modals/BalanceModal";
 import { useUser } from "@/hooks/useUser";
 import Loader from "@/components/Loader";
@@ -60,6 +60,12 @@ const IspSidebar = ({
     },
   });
 
+  const { refetch: refetchOrders } = useQuery({
+    queryKey: QUERY_KEYS.ISP_ORDERS,
+    queryFn: () => getOrders(),
+    staleTime: 1 * 60 * 1000,
+  });
+
   const { balance, refetch } = useUser();
 
   const { fetch: createOrderFetch, loading: loadingOrder } = useFetch(
@@ -95,24 +101,66 @@ const IspSidebar = ({
     if (!location) return toast.error("Please select a location");
     if (balance < discountedTotal) return toast.error("Balance is not enough!");
 
-    const payload = {
-      type: "proxy",
-      product: selectedPlan.product_id,
-      plan: selectedPlan.plan_id,
-      quantity: amount,
-      location: location,
-      port: port,
-      coupon: coupon,
-    };
+    try {
+      const payload = {
+        type: "proxy",
+        product: selectedPlan.product_id,
+        plan: selectedPlan.plan_id,
+        quantity: amount,
+        location: location,
+        port: port,
+        coupon: coupon,
+      };
 
-    await createOrderFetch(payload);
+      const response = await createOrderFetch(payload);
+      if (!response || response.status === "failed" || response.error) {
+        toast.error("Failed to create order. Please try again.");
+        return;
+      }
 
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ISP_ORDERS });
-    queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
-    refetch();
+      const orderId = response?.id;
 
-    toast.success("order successfully created!");
-    router.replace("/products/isp/recent-activity");
+      if (response.status === "pending" && orderId) {
+        let attempts = 0;
+        const maxAttempts = 5;
+        let finalStatus = "pending";
+
+        while (attempts < maxAttempts) {
+          await new Promise((res) => setTimeout(res, 2000));
+
+          const refreshedOrders = await refetchOrders();
+          const latestOrder = refreshedOrders?.data?.find(
+            (order: any) => order.id === orderId
+          );
+
+          if (latestOrder) {
+            finalStatus = latestOrder.status;
+            if (finalStatus === "processed" || finalStatus === "failed") break;
+          }
+
+          attempts++;
+        }
+
+        if (finalStatus === "processed") {
+          toast.success("Successfully created!");
+          router.replace("/products/isp/recent-activity");
+        } else {
+          toast.error("Order failed or timed out.");
+        }
+      } else if (response.status === "processed") {
+        toast.success("Successfully created!");
+        router.replace("/products/isp/recent-activity");
+      } else {
+        toast.error("Order status unknown or failed.");
+      }
+
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ISP_ORDERS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ORDERS });
+      refetch();
+    } catch (error) {
+      console.log("failed", error);
+      toast.error("An error occurred while creating the order.");
+    }
   };
 
   const applyCoupon = async () => {
