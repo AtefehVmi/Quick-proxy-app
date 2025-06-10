@@ -11,7 +11,7 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
     <div
       className={cn(
         "h-25 border-b border-black-border pl-5 pr-5 ml-0 md:pr-8",
-        "flex items-center justify-between z-0 relative"
+        "flex items-center justify-end z-0 relative"
       )}
     >
       {rightBg && (
@@ -22,19 +22,6 @@ const Navbar = ({ rightBg = true }: { rightBg?: boolean }) => {
           )}
         ></div>
       )}
-
-      <div className="relative text-white ml-7 hidden md:block z-20">
-        <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2" />
-        <input
-          type="text"
-          placeholder="Search"
-          className={cn(
-            "bg-transparent text-white w-81 border border-black-border",
-            "placeholder:text-white placeholder:text-xs placeholder:leading-4.5",
-            "py-4 pl-12 pr-4 focus:border-primary-400  focus:outline-none"
-          )}
-        />
-      </div>
 
       <div className="flex items-center gap-3 md:hidden z-20">
         <ToggleMenu />

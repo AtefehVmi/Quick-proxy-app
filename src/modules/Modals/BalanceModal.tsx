@@ -27,7 +27,7 @@ const BalanceModal = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [payment, setPayment] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(5);
   const { fetch: createOrderFetch, loading } = useFetch(CreateOrder, false, {
     toastOnError: true,
   });
@@ -39,8 +39,8 @@ const BalanceModal = ({
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (amount <= 0) {
-      toast.error("Amount must be greater than 0!");
+    if (amount <= 5) {
+      toast.error("Amount must be greater than 5!");
       return;
     }
     if (!payment) {

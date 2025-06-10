@@ -23,7 +23,13 @@ export default function Sidebar({
   const pathname = usePathname();
   const [expandedSections, setExpandedSections] = useState<
     Record<number, boolean>
-  >({});
+  >(() => {
+    const initialState: Record<number, boolean> = {};
+    sidebarItems.forEach((_, index) => {
+      initialState[index] = true;
+    });
+    return initialState;
+  });
 
   const toggleSection = (index: number) => {
     setExpandedSections((prev) => ({

@@ -21,6 +21,7 @@ const MainDashboard = () => {
             </div>
             <div className="col-span-1">
               <BillingTable
+                showCoupon={false}
                 tableHeight="max-h-[330px] min-h-[330px]"
                 size="5"
               />

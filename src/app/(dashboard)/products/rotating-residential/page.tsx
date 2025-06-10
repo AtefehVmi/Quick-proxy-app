@@ -30,7 +30,6 @@ const RotatingResidential = () => {
           desc="Bypass toughest targets using trusted ASN provider IPs and  unlimited-duration sessions. ISP (Static Residential) proxies have 99.9% success rate with most popular targets. Get proxies with exceptional  speed and transparent pricing."
           className="mt-6"
         />
-        <Locations className="mt-5" />
         <ProxyGenerator className="mt-6" />
       </div>
 
