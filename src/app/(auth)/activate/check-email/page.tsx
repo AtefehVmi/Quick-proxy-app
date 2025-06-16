@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 const CheckEmailPage = () => {
   const router = useRouter();
   const [userEmail, setUserEmail] = useState("");
+  const [isResending, setIsResending] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -54,6 +55,9 @@ const CheckEmailPage = () => {
   }, []);
 
   const handleResendEmail = async () => {
+    if (!userEmail || isResending) return;
+
+    setIsResending(true);
     const { data, error } = await supabase.auth.resend({
       type: "signup",
       email: userEmail,
@@ -66,6 +70,7 @@ const CheckEmailPage = () => {
     }
 
     toast.success("Verification email resent! please check your inbox.");
+    setIsResending(false);
   };
 
   return (
@@ -84,9 +89,10 @@ const CheckEmailPage = () => {
             you receieved the email? if not{" "}
             <button
               onClick={handleResendEmail}
+              disabled={isResending}
               className="text-primary-400 cursor-pointer"
             >
-              Click to resend
+              {isResending ? "Resending..." : "Click to resend"}
             </button>
           </TextBase>
 
