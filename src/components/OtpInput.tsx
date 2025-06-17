@@ -13,18 +13,24 @@ export default function OtpInput({
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    const value = e.target.value;
-    if (!/^\d*$/.test(value)) return;
+    const val = e.target.value;
 
-    if (value && index < 4) {
+    if (!/^\d*$/.test(val)) return;
+
+    const updatedValue = value.split("");
+
+    updatedValue[index] = val.charAt(val.length - 1) || "";
+
+    const fullValue = Array(6)
+      .fill("")
+      .map((_, i) => updatedValue[i] || "")
+      .join("");
+
+    onChange(fullValue);
+
+    if (val && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
-
-    if (value.length > 1) {
-      e.target.value = value.charAt(value.length - 1);
-    }
-
-    onChange(value);
   };
 
   const handleKeyDown = (
@@ -37,11 +43,12 @@ export default function OtpInput({
   };
 
   return (
-    <div className="flex gap-9.25">
-      {[...Array(5)].map((_, index) => (
+    <div className="flex gap-4">
+      {[...Array(6)].map((_, index) => (
         <input
           key={index}
           type="text"
+          inputMode="numeric"
           maxLength={1}
           ref={(el) => {
             if (el) inputRefs.current[index] = el;

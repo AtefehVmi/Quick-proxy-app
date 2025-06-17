@@ -27,8 +27,14 @@ const NewPassPage = () => {
   const handleSetNewPass = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (password.length < 8) return;
-    if (password !== confirmPassword) return;
+    if (password.length < 8) {
+      toast.error("Password must have more than 8 characters!");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords must match!");
+      return;
+    }
 
     setLoading(true);
 
@@ -59,6 +65,7 @@ const NewPassPage = () => {
 
           <form className="mt-14" onSubmit={handleSetNewPass}>
             <PasswordInput
+              showPassWeakness={false}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               labelBg="bg-black"
@@ -73,6 +80,7 @@ const NewPassPage = () => {
             />
 
             <PasswordInput
+              showPassWeakness={false}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               labelBg="bg-black"
@@ -84,7 +92,11 @@ const NewPassPage = () => {
               description={confirmError ? "Passwords must match" : ""}
             />
 
-            <Button type="submit" className="py-3 w-full mt-12">
+            <Button
+              disabled={loading || !password || !confirmPassword}
+              type="submit"
+              className="py-3 w-full mt-12"
+            >
               {loading ? "Setting..." : "Set New Password"}
             </Button>
             <Button

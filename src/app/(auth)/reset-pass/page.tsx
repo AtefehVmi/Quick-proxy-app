@@ -12,14 +12,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { supabase } from "@/services/supabaseClient";
+import Loader from "@/components/Loader";
 
 const ResetPassPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [otpCode, setOtpCode] = useState("");
-  const [loading, setLoading] = useState(false); // For loading state during resend
+  const [loading, setLoading] = useState(false);
 
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,11 +31,15 @@ const ResetPassPage = () => {
       return;
     }
 
+    if (isLoading) return;
+    setIsLoading(true);
+
     const { data, error } = await supabase.auth.verifyOtp({
       email,
       type: "recovery",
       token: otpCode,
     });
+    setIsLoading(false);
 
     if (error) {
       toast.error("Invalid or expired code");
@@ -84,12 +90,22 @@ const ResetPassPage = () => {
                 className="text-primary-400 cursor-pointer"
                 disabled={loading}
               >
-                Click to resend
+                {loading ? (
+                  <>
+                    Click to resend <Loader />
+                  </>
+                ) : (
+                  "Click to resend"
+                )}
               </button>
             </TextBase>
 
-            <Button type="submit" className="py-3 w-full mt-12">
-              Continue
+            <Button
+              disabled={isLoading}
+              type="submit"
+              className="py-3 w-full mt-12"
+            >
+              {isLoading ? "Verifying..." : "Continue"}
             </Button>
             <Button
               Icon={ArrowLeftICon}

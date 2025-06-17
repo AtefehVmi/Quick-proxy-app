@@ -22,6 +22,7 @@ export type LteRecent = {
 };
 
 export type Billing = {
+  readable_id: string | null;
   user_id: string;
   id: string;
   type: string;

@@ -13,17 +13,23 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { supabase } from "@/services/supabaseClient";
 import { toast } from "react-toastify";
+import Loader from "@/components/Loader/Loader";
 
 const SignInPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!email || isLoading) return;
+    setIsLoading(true);
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/new-pass`,
     });
+    setIsLoading(false);
 
     if (error) {
       console.log(error);
@@ -54,8 +60,18 @@ const SignInPage = () => {
               placeholder="Enter your email"
             />
 
-            <Button className="py-3 w-full mt-12" onClick={handleResetPassword}>
-              Reset password
+            <Button
+              disabled={isLoading || !email}
+              className="py-3 w-full mt-12"
+              onClick={handleResetPassword}
+            >
+              {isLoading ? (
+                <>
+                  Reset password <Loader />
+                </>
+              ) : (
+                "Reset password"
+              )}
             </Button>
             <Button
               href={"/sign-in"}
