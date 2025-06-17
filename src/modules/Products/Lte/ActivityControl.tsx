@@ -74,7 +74,7 @@ const ActivityControl = ({
   });
 
   const columns = [
-    columnHelper.accessor("id", {
+    columnHelper.accessor("readable_id", {
       header: () => (
         <TextSm className="text-grey-700 whitespace-nowrap font-normal">
           ID
@@ -83,7 +83,7 @@ const ActivityControl = ({
       cell: (info) => (
         <div className="whitespace-nowrap">
           <TextSm className="font-semibold text-grey-100">
-            {info.getValue()}
+            {info.getValue() === null ? "-" : info.getValue()}
           </TextSm>
         </div>
       ),
