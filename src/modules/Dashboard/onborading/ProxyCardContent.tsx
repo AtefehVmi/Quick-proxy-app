@@ -55,7 +55,7 @@ const ProxyCardContent: React.FC<Props> = ({ features, type }) => {
   return (
     <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-3">
-        <div className="pl-4 pb-4 pr-7.5 col-span-2">
+        <div className="pl-4 pb-4 pr-7.5 col-span-2 z-20">
           {isStaticResidential && Array.isArray(selectedPlan) && (
             <>
               <div className="w-full mt-6">
@@ -87,7 +87,7 @@ const ProxyCardContent: React.FC<Props> = ({ features, type }) => {
                         {...props}
                         className="relative w-7.5 h-7.5 border-4 z-40 border-black bg-primary-400 outline-2 outline-white"
                       >
-                        <div className="absolute -top-1 left-7 px-3 z-40 py-1.25 bg-black-2 border border-black text-white text-sm shadow-tooltip">
+                        <div className="absolute -top-1 left-7 px-3 z-40 py-1.25 bg-black-2 border border-black text-white text-sm whitespace-nowrap shadow-tooltip">
                           {selectedPlan[selectedIndex].plan_name}
                         </div>
                       </div>
@@ -193,7 +193,7 @@ const ProxyCardContent: React.FC<Props> = ({ features, type }) => {
           </div>
         </div>
 
-        <div className="bg-primary-400 col-span-1 relative h-full">
+        <div className="bg-primary-400 col-span-1 relative h-full z-10">
           <Image src={GlobeImage} alt="" className="absolute top-0 left-0" />
           <div className="px-10 pt-10 pb-11 flex flex-col justify-between h-full">
             <div>

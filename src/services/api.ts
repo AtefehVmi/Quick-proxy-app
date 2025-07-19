@@ -70,3 +70,7 @@ export async function getOrders(params?: Record<string, any>): Promise<any> {
 export async function getPriceList(): Promise<any[]> {
   return await instance.get("/pricing");
 }
+
+export async function getOrderDetails(id: string): Promise<any> {
+  return await instance.get(`/orders/${id}`);
+}
