@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { ReactQueryClientProvider } from "@/providers";
 
 export const metadata: Metadata = {
-  title: "FastProxy.gg",
+  title: "Proxy",
 };
 
 export default function RootLayout({

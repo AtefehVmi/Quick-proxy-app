@@ -53,7 +53,7 @@ const GenerateProxyModal: React.FC<GenerateProxyModalProps> = ({
 
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "FastProxyGG-Residential.txt";
+    link.download = "Proxy-Residential.txt";
     link.click();
 
     toast.success("Downloaded successfully.", {

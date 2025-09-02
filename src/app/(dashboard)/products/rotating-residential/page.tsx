@@ -9,7 +9,7 @@ import DatabaseImage from "public/images/database_folders.png";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fastproxy.gg | Rotating Residential",
+  title: "Proxy | Rotating Residential",
 };
 
 const RotatingResidential = () => {

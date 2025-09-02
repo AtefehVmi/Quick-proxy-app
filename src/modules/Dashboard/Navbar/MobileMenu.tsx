@@ -61,7 +61,7 @@ const MobileMenu: React.FC<Props> = ({ className, setCloseMenu }) => {
             >
               <CrossIcon />
             </div>
-            <Image src={Logo} alt="logo" />
+            <Image src={Logo} alt="logo" className="h-10 w-10" />
           </div>
         </header>
 

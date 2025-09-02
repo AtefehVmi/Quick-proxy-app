@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import ProfileIcon from "public/icons/user.svg";
 
 export const metadata: Metadata = {
-  title: "Fastproxy.gg | Profile & Billing",
+  title: "Proxy | Profile & Billing",
 };
 
 const ProfilePage = () => {

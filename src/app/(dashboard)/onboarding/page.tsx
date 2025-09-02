@@ -2,7 +2,7 @@ import OnboardingDashboard from "@/modules/Dashboard/onborading/OnboardingDashbo
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fastproxy.gg | Onboarding Dashboard",
+  title: "Proxy | Onboarding Dashboard",
 };
 
 const OnboardingPage = () => {

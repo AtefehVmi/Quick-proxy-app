@@ -2,7 +2,7 @@ import IspProxy from "@/modules/Products/Isp/IspProxy";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fastproxy.gg | Static Residential",
+  title: "Proxy | Static Residential",
 };
 
 const IspProxies = () => {

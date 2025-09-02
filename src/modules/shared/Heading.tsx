@@ -26,7 +26,7 @@ const Heading: React.FC<HeadingProps> = ({ Icon, title }) => {
         <div>
           <p className="text-white font-bold text-lg lg:text-2xl">{title}</p>
           <p className="text-xs lg:text-base text-grey-600">
-            Welcome Back to Fastproxy
+            Welcome Back to Proxy
           </p>
         </div>
       </div>

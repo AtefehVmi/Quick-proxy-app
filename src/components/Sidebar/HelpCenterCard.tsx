@@ -10,7 +10,7 @@ const HelpCenterCard = () => {
         Help Center!
       </p>
       <p className="text-sm hidden 2xl:block leading-6 text-white">
-        Having trouble in fastproxy
+        Having trouble in proxy
       </p>
       <p className="text-sm hidden 2xl:block leading-6 text-white">
         Please contact us for more question
